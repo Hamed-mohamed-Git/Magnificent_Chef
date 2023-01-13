@@ -3,4 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="applicationName">MagnificentChef</string>
+    <string name="cook">Cook With Confidence</string>
+    <string name="google">Join With Google</string>
+    <string name="email">Join With Email</string>
 </resources>
