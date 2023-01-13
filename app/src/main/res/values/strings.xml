@@ -6,4 +6,16 @@
     <string name="cook">Cook With Confidence</string>
     <string name="google">Join With Google</string>
     <string name="email">Join With Email</string>
+    <string name="account">Already have account?</string>
+    <string name="login">Log In</string>
+    <string name="Magnifient">Magnificent Chef</string>
+    <string name="userName">User name</string>
+    <string name="first">First Name</string>
+    <string name="last">Last Name</string>
+    <string name="emailAccount">Email</string>
+    <string name="password">Password</string>
+    <string name="sign">Sign Up</string>
+    <string name="textLogin">Welcome back! You ‘re just a tap away from something delicious.</string>
+    <string name="term"><![CDATA["By continuing, you agree to the Terms of Service & Privacy Policy "]]></string>
+    <string name="terms"><![CDATA["By continuing, you agree to the\n Terms of Service & Privacy Policy "]]></string>
 </resources>
