@@ -4,74 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingStart="20dp"
     tools:context=".view.sign_up.SignUpFragment">
 
 
     <EditText
-        android:id="@+id/editTextTextPersonName6"
-        android:layout_width="330dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="96dp"
-        android:background="@drawable/round_btn"
+        android:id="@+id/user_nametv3"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/register_edit_text_background"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName5"
-        android:layout_width="330dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="256dp"
-        android:background="@drawable/round_btn"
-        android:ems="10"
-        android:hint="@string/emailAccount"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.456"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        android:paddingStart="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="118dp"
         android:layout_height="32dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="24dp"
         android:text="@string/emailAccount"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_nametv" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/first_nametv" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="118dp"
         android:layout_height="32dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:text="@string/password"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.139"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/user_nametv2" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="118dp"
         android:layout_height="32dp"
-        android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
         android:text="@string/first"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/user_nametv" />
 
     <TextView
@@ -83,8 +66,8 @@
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.71"
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/user_nametv"
         app:layout_constraintVertical_bias="1.0" />
@@ -106,74 +89,187 @@
         android:id="@+id/textView7"
         android:layout_width="133dp"
         android:layout_height="24dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="24dp"
         android:text="@string/userName"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.133"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
     <EditText
         android:id="@+id/user_nametv"
-        android:layout_width="216dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/round_btn"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/register_edit_text_background"
         android:ems="10"
         android:hint="@string/userName"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.184"
-        app:layout_constraintStart_toStartOf="parent"
+        android:paddingStart="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/textView7"
-        tools:ignore="TouchTargetSizeCheck" />
+        tools:ignore="TouchTargetSizeCheck"
+        />
+
+    <EditText
+        android:id="@+id/user_nametv2"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/register_edit_text_background"
+        android:ems="10"
+        android:hint="@string/emailAccount"
+        android:inputType="textPersonName"
+        android:paddingStart="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        tools:ignore="TouchTargetSizeCheck"
+        />
 
     <EditText
         android:id="@+id/first_nametv"
-        android:layout_width="132dp"
-        android:layout_height="24dp"
-        android:background="@drawable/round_btn"
+        android:layout_width="140dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/register_edit_text_background"
         android:ems="10"
         android:hint="@string/first"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName3"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName3"
-        app:layout_constraintHorizontal_bias="0.434"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName3"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
         tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/editTextTextPersonName3"
-        android:layout_width="132dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="52dp"
-        android:background="@drawable/round_btn"
+        android:layout_width="140dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/register_edit_text_background"
         android:ems="10"
         android:hint="@string/last"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.958"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        tools:ignore="TouchTargetSizeCheck"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="1.0"
 
-        />
+        app:layout_constraintStart_toEndOf="@+id/first_nametv"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="324dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="44dp"
+        android:layout_width="313dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="88dp"
         android:background="@drawable/round_btn"
         android:backgroundTint="@color/black"
         android:text="@string/sign"
+        app:backgroundTint="@null"
+
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="30dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="342dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="30dp"
+        android:layout_height="27dp"
+        android:layout_marginEnd="7dp"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+        app:layout_constraintEnd_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="@+id/textView6"
+        app:tint="@color/black" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="99dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/term"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/button4"
+        app:layout_constraintStart_toStartOf="@+id/button4"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Terms of Service &amp; Privacy Policy "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/textView5"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/person"
+        app:layout_constraintBottom_toBottomOf="@+id/user_nametv"
+        app:layout_constraintStart_toStartOf="@+id/user_nametv"
+        app:layout_constraintTop_toTopOf="@+id/user_nametv"
+        app:tint="@color/black" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/email"
+        app:layout_constraintBottom_toBottomOf="@+id/user_nametv2"
+        app:layout_constraintStart_toStartOf="@+id/user_nametv2"
+        app:layout_constraintTop_toTopOf="@+id/user_nametv2"
+        app:tint="@color/black" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/lock"
+        app:layout_constraintBottom_toBottomOf="@+id/user_nametv3"
+        app:layout_constraintStart_toStartOf="@+id/user_nametv3"
+        app:layout_constraintTop_toTopOf="@+id/user_nametv3"
+        app:layout_constraintVertical_bias="0.523" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:src="@drawable/eye"
+        app:layout_constraintBottom_toBottomOf="@+id/user_nametv3"
+        app:layout_constraintEnd_toEndOf="@+id/user_nametv3"
+        app:layout_constraintTop_toTopOf="@+id/user_nametv3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

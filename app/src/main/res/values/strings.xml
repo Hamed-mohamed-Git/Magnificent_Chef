@@ -16,6 +16,6 @@
     <string name="password">Password</string>
     <string name="sign">Sign Up</string>
     <string name="textLogin">Welcome back! You ‘re just a tap away from something delicious.</string>
-    <string name="term"><![CDATA["By continuing, you agree to the Terms of Service & Privacy Policy "]]></string>
-    <string name="terms"><![CDATA["By continuing, you agree to the\n Terms of Service & Privacy Policy "]]></string>
+    <string name="term">By continuing, you agree to the</string>
+
 </resources>
