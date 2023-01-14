@@ -1,5 +1,7 @@
 package com.example.magnificentchef.view.splash;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.ActionBar;
 import android.os.Bundle;
 
@@ -16,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.magnificentchef.R;
 
 
@@ -23,6 +26,7 @@ public class SplashScreenFragment extends Fragment {
 
     private View decorView;
     private int uiOptions;
+    private LottieAnimationView lottieAnimationView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,11 +45,16 @@ public class SplashScreenFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        new Handler(Looper.getMainLooper()).postDelayed(() ->
+        lottieAnimationView = view.findViewById(R.id.animationView);
+        lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
                 Navigation
                         .findNavController(view)
-                        .navigate(R.id.action_splashScreenFragment_to_registerFragment),
-                4500);
+                        .navigate(R.id.action_splashScreenFragment_to_registerFragment);
+                super.onAnimationEnd(animation);
+            }
+        });
     }
 
     @Override

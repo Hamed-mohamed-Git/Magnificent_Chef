@@ -7,7 +7,7 @@
     tools:context=".view.login.loginFragment">
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/loginButton"
         android:layout_width="324dp"
         android:layout_height="54dp"
         android:layout_marginBottom="148dp"
@@ -22,14 +22,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/passwordEditText"
         android:layout_width="330dp"
         android:layout_height="49dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/round_btn"
         android:ems="10"
         android:hint="@string/password"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.308"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,17 +47,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/emailEditText"
         android:layout_width="330dp"
         android:layout_height="49dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/round_btn"
         android:ems="10"
         android:hint="@string/emailAccount"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.308"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,5 +109,17 @@
         android:text="TextView"
         tools:layout_editor_absoluteX="163dp"
         tools:layout_editor_absoluteY="608dp" />
+
+    <TextView
+        android:id="@+id/incorrectMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
+        android:text="@string/your_email_and_password_is_incorrect"
+        android:textColor="#FF0000"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
+        app:layout_constraintEnd_toEndOf="@+id/loginButton"
+        app:layout_constraintStart_toStartOf="@+id/loginButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
