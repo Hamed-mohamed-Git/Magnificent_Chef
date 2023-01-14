@@ -49,9 +49,9 @@ public class SplashScreenFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
+    public void onStop() {
         showStatusBar();
-        super.onDestroy();
+        super.onStop();
     }
 
     private void hideStatusBar(){

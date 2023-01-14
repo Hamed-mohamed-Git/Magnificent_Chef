@@ -20,6 +20,7 @@ import com.example.magnificentchef.presenter.registration.RegisterPresenter;
 public class RegisterFragment extends Fragment implements RegisterInterface {
     Button btn_google;
     View view;
+    private Button signUpButton;
     private RegisterPresenter registerPresenter;
 
     @Override
@@ -39,18 +40,20 @@ public class RegisterFragment extends Fragment implements RegisterInterface {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btn_google= view.findViewById(R.id.btn_google);
-        registerPresenter=new RegisterPresenter(getContext(),requireActivity());
-        btn_google.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registerPresenter.Join();
-            }
+        signUpButton = view.findViewById(R.id.signUpButton);
+
+        btn_google.setOnClickListener(view1 -> {
+            registerPresenter=new RegisterPresenter(getContext(),requireActivity());
+            registerPresenter.Join();
+        });
+        signUpButton.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_registerFragment_to_signUpFragment);
         });
     }
 
     @Override
     public void onClick() {
-//ToDo navigate action put here (modify it)
+    //ToDo navigate action put here (modify it)
         //TODO what well send
 
         Navigation
