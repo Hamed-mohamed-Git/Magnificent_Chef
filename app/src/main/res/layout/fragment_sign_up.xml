@@ -8,7 +8,7 @@
 
 
     <EditText
-        android:id="@+id/editTextTextPersonName6"
+        android:id="@+id/password_tv"
         android:layout_width="330dp"
         android:layout_height="49dp"
         android:layout_marginBottom="96dp"
@@ -16,14 +16,14 @@
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/signUp_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
+        android:id="@+id/email_TV"
         android:layout_width="330dp"
         android:layout_height="49dp"
         android:layout_marginTop="256dp"
@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.139"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@+id/email_TV" />
 
     <TextView
         android:id="@+id/textView8"
@@ -138,16 +138,16 @@
         android:ems="10"
         android:hint="@string/first"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName3"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName3"
+        app:layout_constraintBottom_toBottomOf="@+id/last_nameTv"
+        app:layout_constraintEnd_toStartOf="@+id/last_nameTv"
         app:layout_constraintHorizontal_bias="0.434"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName3"
+        app:layout_constraintTop_toTopOf="@+id/last_nameTv"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/last_nameTv"
         android:layout_width="132dp"
         android:layout_height="24dp"
         android:layout_marginTop="24dp"
@@ -165,7 +165,7 @@
         />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/signUp_btn"
         android:layout_width="324dp"
         android:layout_height="54dp"
         android:layout_marginBottom="44dp"
