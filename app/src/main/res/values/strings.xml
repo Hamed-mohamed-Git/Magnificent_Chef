@@ -19,4 +19,8 @@
     <string name="term"><![CDATA["By continuing, you agree to the Terms of Service & Privacy Policy "]]></string>
     <string name="terms"><![CDATA["By continuing, you agree to the\n Terms of Service & Privacy Policy "]]></string>
     <string name="your_email_and_password_is_incorrect">Your Email and Password is incorrect!</string>
+    <string name="search">Search</string>
+    <string name="Home">home</string>
+    <string name="PlanMeal">PlanMeal</string>
+    <string name="Save">Save</string>
 </resources>
