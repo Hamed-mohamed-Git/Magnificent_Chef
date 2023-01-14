@@ -25,10 +25,6 @@ public class RegisterPresenter {
     private FragmentActivity activity;
 
     public RegisterPresenter(Context context,FragmentActivity activity){
-   googleSignInOptions=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-    googleSignInClient= GoogleSignIn.getClient(context,googleSignInOptions);
-    googleSignInAccount=GoogleSignIn.getLastSignedInAccount(context);
-
     }
 
     public void  Join(){

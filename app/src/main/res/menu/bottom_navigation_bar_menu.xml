@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_screen"
+        android:title="@string/Home"
+        android:icon="@drawable/home"
+        />
+    <item
+        android:id="@+id/search_screen"
+        android:title="@string/search"
+        android:icon="@drawable/search"
+        />
+
+    <item
+        android:id="@+id/save_screen"
+        android:title="@string/Save"
+        android:icon="@drawable/save"
+        />
+
+    <item
+        android:id="@+id/plan_meal_screen"
+        android:title="@string/PlanMeal"
+        android:icon="@drawable/calender"
+        />
+</menu>

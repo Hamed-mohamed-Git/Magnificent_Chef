@@ -14,7 +14,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginPresenter {
-    private static final String TAG = "login Screen";
+    private static final String TAG = "loginScreen";
     private FirebaseAuth auth;
     private Activity activity;
     private LoginPresenterInterface loginPresenterInterface;

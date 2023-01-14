@@ -27,15 +27,31 @@
         <action
             android:id="@+id/action_registerFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_baseFragment"
+            app:destination="@id/baseFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.magnificentchef.view.login.loginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_baseFragment"
+            app:destination="@id/baseFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.magnificentchef.view.sign_up.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_baseFragment"
+            app:destination="@id/baseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/baseFragment"
+        android:name="com.example.magnificentchef.view.base.BaseFragment"
+        android:label="fragment_base"
+        tools:layout="@layout/fragment_base" />
 </navigation>

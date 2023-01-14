@@ -22,6 +22,7 @@
         app:startIconDrawable="@drawable/lock">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/register_edit_text_background"
@@ -109,7 +110,7 @@
         app:startIconDrawable="@drawable/person">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/user_name"
+            android:id="@+id/userNameTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/register_edit_text_background"
@@ -132,10 +133,9 @@
         app:startIconDrawable="@drawable/email">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/user_email"
+            android:id="@+id/emailTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:background="@drawable/register_edit_text_background"
             android:ems="10"
             android:hint="@string/emailAccount"
@@ -154,7 +154,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/userLastName"
+            android:id="@+id/firstNameTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/register_edit_text_background"
@@ -173,7 +173,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/lastName"
+            android:id="@+id/lastNameTextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/register_edit_text_background"
@@ -182,7 +182,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/signUp_Button"
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:background="@drawable/round_btn"
@@ -228,14 +228,15 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/term"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/button4"
-        app:layout_constraintStart_toStartOf="@+id/button4"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        android:gravity="center"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/signUp_Button" />
 
     <TextView
         android:id="@+id/textView12"

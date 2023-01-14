@@ -19,7 +19,7 @@ public class SignUpPresenter {
     }
 
     public void signUp(String userName, String password){
-        auth.signInWithEmailAndPassword(userName, password).addOnCompleteListener(activity, task -> {
+        auth.createUserWithEmailAndPassword(userName, password).addOnCompleteListener(activity, task -> {
             if (task.isSuccessful()){
                 signUpInterface.onSignSuccess();
             }else {
