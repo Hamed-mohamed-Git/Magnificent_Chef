@@ -46,6 +46,6 @@ public class BaseFragment extends Fragment {
         NavigationUI.setupWithNavController(bottomNavigationView,navcontroller);
 
         appBarConfiguration=new AppBarConfiguration.Builder(navcontroller.getGraph()).build();
-        
+
     }
 }
