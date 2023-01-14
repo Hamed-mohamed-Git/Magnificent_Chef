@@ -45,23 +45,41 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
         email=view.findViewById(R.id.email_TV);
         password=view.findViewById(R.id.password_tv);
         signUp=view.findViewById(R.id.signUp_btn);
+
         signUp.setOnClickListener((view1 -> {
+            if(email.getText()==null){
+                email.setError("Email cann't be empty ");
+            }
+            if(password.getText()==null){
+                email.setError("Password cann't be empty ");
+            }
+            if(user_name.getText()==null){
+                email.setError("Username cann't be empty ");
+            }
+            if(first_name.getText()==null){
+                email.setError("Username cann't be empty ");
+            }
+            if(last_name.getText()==null){
+                email.setError("Username cann't be empty ");
+            }
             signUpPresenter = new SignUpPresenter(requireActivity(),this, FirebaseAuth.getInstance());
             signUpPresenter.signUp(email.getText().toString(),
                     password.getText().toString());
         }));
 
 
+
     }
 
     @Override
     public void onSignSuccess() {
-
+Toast.makeText(requireContext(),"SignUp Succesful",Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onSignFailure() {
+        Toast.makeText(requireContext(),"SignUp Fail",Toast.LENGTH_SHORT).show();
 
     }
 }
