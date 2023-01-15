@@ -23,4 +23,7 @@
     <string name="Home">home</string>
     <string name="PlanMeal">PlanMeal</string>
     <string name="Save">Save</string>
+    <string name="daily">Daily Inspiration</string>
+    <string name="reciepes">Search Recipes</string>
+    <string name="ingredients">Search by Ingredients</string>
 </resources>
