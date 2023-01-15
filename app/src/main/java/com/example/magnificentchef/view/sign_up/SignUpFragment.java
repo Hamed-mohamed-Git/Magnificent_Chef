@@ -5,20 +5,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.magnificentchef.R;
-import com.example.magnificentchef.presenter.SignUp.SignUpInterface;
-import com.example.magnificentchef.presenter.SignUp.SignUpPresenter;
-import com.example.magnificentchef.presenter.login.LoginPresenter;
+import com.example.magnificentchef.view.sign_up.presenter.SignUpInterface;
+import com.example.magnificentchef.view.sign_up.presenter.SignUpPresenter;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 

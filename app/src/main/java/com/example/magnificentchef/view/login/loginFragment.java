@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.magnificentchef.R;
-import com.example.magnificentchef.presenter.login.LoginPresenter;
-import com.example.magnificentchef.presenter.login.LoginPresenterInterface;
-import com.google.android.gms.auth.api.Auth;
+import com.example.magnificentchef.view.login.presenter.LoginPresenter;
+import com.example.magnificentchef.view.login.presenter.LoginPresenterInterface;
 import com.google.firebase.auth.FirebaseAuth;
 
 

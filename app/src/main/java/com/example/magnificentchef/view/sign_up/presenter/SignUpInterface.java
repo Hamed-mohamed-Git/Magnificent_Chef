@@ -1,4 +1,4 @@
-package com.example.magnificentchef.presenter.SignUp;
+package com.example.magnificentchef.view.sign_up.presenter;
 
 public interface SignUpInterface {
     void onSignSuccess();

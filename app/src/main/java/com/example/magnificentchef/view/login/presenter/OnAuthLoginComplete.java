@@ -1,4 +1,4 @@
-package com.example.magnificentchef.presenter.login;
+package com.example.magnificentchef.view.login.presenter;
 
 public interface OnAuthLoginComplete {
     void onLoginSuccess();

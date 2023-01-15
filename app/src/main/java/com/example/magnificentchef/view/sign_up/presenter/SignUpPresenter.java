@@ -1,7 +1,6 @@
-package com.example.magnificentchef.presenter.SignUp;
+package com.example.magnificentchef.view.sign_up.presenter;
 
 import android.app.Activity;
-import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 import com.google.firebase.auth.FirebaseAuth;

@@ -1,8 +1,8 @@
-package com.example.magnificentchef.presenter.register;
+package com.example.magnificentchef.view.register.presenter;
 
 import androidx.annotation.NonNull;
 
-import com.example.magnificentchef.presenter.login.OnAuthLoginComplete;
+import com.example.magnificentchef.view.login.presenter.OnAuthLoginComplete;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

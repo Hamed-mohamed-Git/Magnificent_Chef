@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
@@ -23,8 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magnificentchef.R;
-import com.example.magnificentchef.presenter.login.OnAuthLoginComplete;
-import com.example.magnificentchef.presenter.register.RegisterPresenter;
+import com.example.magnificentchef.view.login.presenter.OnAuthLoginComplete;
+import com.example.magnificentchef.view.register.presenter.RegisterPresenter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -51,7 +49,7 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
         activityResultLauncher = registerForActivityResult(new ActivityResultContract<Intent, Task<GoogleSignInAccount>>() {
             @Override
             public Task<GoogleSignInAccount> parseResult(int i, @Nullable Intent intent) {
-                GoogleSignIn.getSignedInAccountFromIntent(intent).getException().printStackTrace();
+                //GoogleSignIn.getSignedInAccountFromIntent(intent).getException().printStackTrace();
                 if (i != Activity.RESULT_OK) return null;
                 return GoogleSignIn.getSignedInAccountFromIntent(intent);
             }
@@ -93,7 +91,7 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
             activityResultLauncher.launch(GoogleSignIn
                     .getClient(requireContext(),
                             new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                    .requestIdToken("33901922212-se6uek32likfrbg0dn4gnscqblcfhage.apps.googleusercontent.com")
+                                    .requestIdToken(getString(R.string.default_web_client_id))
                                     .requestEmail()
                                     .build())
                     .getSignInIntent());

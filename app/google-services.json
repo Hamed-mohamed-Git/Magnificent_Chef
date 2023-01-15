@@ -7,18 +7,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:563217519122:android:140ea357cd0fff42e8becb",
+        "mobilesdk_app_id": "1:563217519122:android:232d3e6007d8695ae8becb",
         "android_client_info": {
           "package_name": "com.example.magnificentchef"
         }
       },
       "oauth_client": [
         {
-          "client_id": "563217519122-d7br1ljdmruc7d6ctnl7ss7t4kn395an.apps.googleusercontent.com",
+          "client_id": "563217519122-gkl49uub3o55n0t3771bd5j5ojnkt1ai.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.magnificentchef",
-            "certificate_hash": "7c41bdf3afcc8dc7f6a0a50faa611a8ba88e0274"
+            "certificate_hash": "f94958b022a1a985cce37440f93afe2ef2ec1f9e"
           }
         },
         {
