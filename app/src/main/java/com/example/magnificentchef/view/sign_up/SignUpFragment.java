@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,13 +76,12 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
 
     @Override
     public void onSignSuccess() {
-        Navigation.findNavController(getView()).navigate(R.id.action_signUpFragment_to_baseFragment);
+        NavHostFragment.findNavController(this).navigate(R.id.action_signUpFragment_to_baseFragment);
 
     }
 
     @Override
     public void onSignFailure() {
-        Toast.makeText(requireContext(),"SignUp Fail",Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(requireContext(),"fail",Toast.LENGTH_LONG).show();
     }
 }
