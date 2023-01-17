@@ -2,65 +2,91 @@ package com.example.magnificentchef.view.search;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.view.search.model.Ingredients;
+import com.example.magnificentchef.view.search.presenter.SearchAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.Arrays;
+import java.util.List;
+
+
 public class SearchFragment extends Fragment {
+    RecyclerView recyclerView,recyclerView2;
+    SearchAdapter searchAdapter;
+    List<Ingredients> data;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public SearchFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+      //  country_images = new int[]
+      //  ingredint_name=new String[]{"fish-Small.png","chicken-Small.png","tomato-Small.png","Lime-Small.png","egg-Small.png","beef-Small.png","Cucumber-Small.png"};
+        //country_name=new String[]{"American","Spanish","Indian","Japanese","British","French","Chinese","Egyptian","Italian","Turkish"};
+        //country_images=new int[]{R.drawable.usa,R.drawable.span,R.drawable.india,R.drawable.japan,R.drawable.uk,R.drawable.franch,R.drawable.china,R.drawable.egypt,R.drawable.italy,R.drawable.turkey};
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_search, container, false);
+
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerView=view.findViewById(R.id.country_recycle_view);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(requireContext());
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+        data= Arrays.asList(
+                new Ingredients("chicken",R.drawable.china),
+                new Ingredients("Meat",R.drawable.china),
+                new Ingredients("Pasta",R.drawable.china),
+                new Ingredients("chicken",R.drawable.china),
+                new Ingredients("Meat",R.drawable.china),
+                new Ingredients("Pasta",R.drawable.china),
+                new Ingredients("chicken",R.drawable.china),
+                new Ingredients("Meat",R.drawable.china),
+                new Ingredients("Pasta",R.drawable.china)
+
+
+
+        );
+        recyclerView2=view.findViewById(R.id.recyclerView2);
+        recyclerView2.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager2=new LinearLayoutManager(requireContext());
+        linearLayoutManager2.setOrientation(RecyclerView.HORIZONTAL);
+
+        recyclerView2.setLayoutManager(linearLayoutManager2);
+        data= Arrays.asList(
+                new Ingredients("USA",R.drawable.usa),
+                new Ingredients("Uk",R.drawable.uk),
+                new Ingredients("China",R.drawable.china),
+        new Ingredients("franch",R.drawable.franch),
+        new Ingredients("span",R.drawable.span),
+        new Ingredients("turkey",R.drawable.turkey),
+                new Ingredients("india",R.drawable.india)
+
+
+
+
+        );
+        searchAdapter=new SearchAdapter(data);
+        recyclerView2.setAdapter(searchAdapter);
+        recyclerView.setAdapter(searchAdapter);
     }
 }
+

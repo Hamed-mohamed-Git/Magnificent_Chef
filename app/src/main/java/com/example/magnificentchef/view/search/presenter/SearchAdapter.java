@@ -12,56 +12,64 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.view.search.model.Ingredients;
 
-public class SearchAdapter extends ArrayAdapter<Ingredients> {
+import java.util.List;
 
-    private Context contexts;
-    private Ingredients[] ingredients;
-
-    public SearchAdapter(@NonNull Context context, @NonNull Ingredients[] ingredient) {
-        super(context, R.layout.row_search,R.id.label,ingredient);
-        contexts =context;
-        ingredients =ingredients;
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
+    public SearchAdapter(List<Ingredients> ingredients) {
+        this.ingredients = ingredients;
     }
+
+    private List<Ingredients>ingredients;
+
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View view=convertView;
-        ViewHolder viewHolder;
-        if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) contexts.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.row_search, parent, false);
-            viewHolder= new ViewHolder(view);
-            view.setTag(viewHolder);
-        }else {
-            viewHolder=(ViewHolder) view.getTag();
-        }
-        viewHolder.getLabel().setText(ingredients[position].getLabel());
-        viewHolder.getImage().setImageResource(ingredients[position].getImage());
-        return view;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view=LayoutInflater.from( parent.getContext()).inflate(R.layout.row_search,parent,false);
+        return new ViewHolder(view);
     }
-    private class ViewHolder{
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.image.setImageResource(ingredients.get(position).getImage());
+        holder.label.setText(ingredients.get(position).getLabel());
+
+
+        //Glide.with(holder.image.getContext()).load(ingredient.getImage()).into(holder.image);
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return ingredients.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         View view;
         TextView label;
         ImageView image;
-        public ViewHolder(View convertView){
-            view=convertView;
+
+       public ViewHolder(@NonNull View itemView) {
+           super(itemView);
+          label=itemView.findViewById(R.id.label);
+          image=itemView.findViewById(R.id.circle);
+
+
+       }
+
+        @Override
+        public void onClick(View view) {
+
         }
-
-        public TextView getLabel(){
-            label=view.findViewById(R.id.label);
-            return label;
-        }
-
-
-        public ImageView getImage(){
-            image=view.findViewById(R.id.circle);
-            return image;
-        }
-
     }
-}
+
+
+
+
+   }
+

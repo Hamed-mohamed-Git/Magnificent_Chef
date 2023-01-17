@@ -58,7 +58,7 @@ public class loginFragment extends Fragment implements LoginPresenterInterface {
     @Override
     public void onLoginSuccess() {
         incorrectTexView.setVisibility(View.INVISIBLE);
-        Navigation.findNavController(getView()).navigate(R.id.action_signUpFragment_to_baseFragment);
+        Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_baseFragment);
     }
 
     @Override

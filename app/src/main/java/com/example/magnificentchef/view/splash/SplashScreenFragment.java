@@ -51,7 +51,7 @@ public class SplashScreenFragment extends Fragment {
             public void onAnimationEnd(Animator animation) {
                 Navigation
                         .findNavController(view)
-                        .navigate(R.id.action_splashScreenFragment_to_registerFragment);
+                        .navigate(R.id.action_splashScreenFragment_to_baseFragment);
                 super.onAnimationEnd(animation);
             }
         });
