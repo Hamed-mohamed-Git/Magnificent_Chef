@@ -76,16 +76,16 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView2"
-            android:layout_width="500dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
             android:layout_marginTop="12dp"
             android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toStartOf="@+id/guideline13"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toBottomOf="@+id/textView18"
-            tools:listitem="@layout/row_search"
             tools:itemCount="10"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+            tools:listitem="@layout/row_search">
 
 
         </androidx.recyclerview.widget.RecyclerView>

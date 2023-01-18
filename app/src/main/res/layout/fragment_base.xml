@@ -31,7 +31,7 @@
         app:layout_constraintVertical_bias="1.0"
         app:navGraph="@navigation/nav_graph2" />
 
-    <androidx.drawerlayout.widget.DrawerLayout
+    <!--<androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,5 +53,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/navigation_drawer_menu" />
 
-    </androidx.drawerlayout.widget.DrawerLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

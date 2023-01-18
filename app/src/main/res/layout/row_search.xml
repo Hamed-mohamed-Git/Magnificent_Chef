@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    >
 
     <TextView
         android:id="@+id/label"
@@ -13,6 +14,8 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/circle"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="@+id/circle"
@@ -21,12 +24,12 @@
     <ImageView
         android:id="@+id/circle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:background="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars"
-        android:background="@drawable/round_btn"
-        android:backgroundTint="@drawable/round_btn"/>
+        tools:srcCompat="@drawable/china" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,9 +13,11 @@ import android.view.ViewGroup;
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.view.search.model.Ingredients;
 import com.example.magnificentchef.view.search.model.RootMeal;
+import com.example.magnificentchef.view.search.model.Country;
 import com.example.magnificentchef.view.search.network.ApiSearch;
 import com.example.magnificentchef.view.search.network.ApiSearchInterface;
-import com.example.magnificentchef.view.search.presenter.SearchAdapter;
+import com.example.magnificentchef.view.search.presenter.SearchAdapterCountres;
+import com.example.magnificentchef.view.search.presenter.SearchAdapterIngredients;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,13 +31,23 @@ import retrofit2.Retrofit;
 
 public class SearchFragment extends Fragment {
     RecyclerView recyclerView, recyclerView2;
-    SearchAdapter searchAdapter;
+    SearchAdapterIngredients searchAdapterIngredients;
+
+    SearchAdapterCountres searchAdapterCountres;
     List<Ingredients> data = new ArrayList<>();
+    List<Country> country = new ArrayList<>();
+
+    String[]country_name;
+    int[]country_images;
+
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        country_name=new String[]{"American","Spanish","Indian","Japanese","British","French","Chinese","Egyptian","Italian","Turkish"};
+        country_images=new int[]{R.drawable.usa,R.drawable.span,R.drawable.india,R.drawable.japan,R.drawable.uk,R.drawable.franch,R.drawable.china,R.drawable.egypt,R.drawable.italy,R.drawable.turkey};
+
 
     }
 
@@ -64,9 +76,9 @@ public class SearchFragment extends Fragment {
                     recyclerView2.setHasFixedSize(true);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
                     recyclerView2.setLayoutManager(linearLayoutManager);
-                    linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-                    searchAdapter = new SearchAdapter(data);
-                    recyclerView2.setAdapter(searchAdapter);
+                    linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+                    searchAdapterIngredients = new SearchAdapterIngredients(data);
+                    recyclerView2.setAdapter(searchAdapterIngredients);
                 }
             }
 
@@ -77,7 +89,29 @@ public class SearchFragment extends Fragment {
         });
 
 
+        recyclerView = view.findViewById(R.id.country_recycle_view);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext());
+        linearLayoutManager2.setOrientation(RecyclerView.HORIZONTAL);
+        recyclerView.setLayoutManager(linearLayoutManager2);
+
+         country = Arrays.asList(
+                new Country("USA", R.drawable.usa),
+                new Country("Uk", R.drawable.uk),
+                new Country("China", R.drawable.china),
+                new Country("Franch", R.drawable.franch),
+                new Country("Span", R.drawable.span),
+                new Country("Turkey", R.drawable.turkey),
+                new Country("India", R.drawable.india),
+                 new Country("Italy", R.drawable.italy),
+                 new Country("Egypt", R.drawable.egypt),
+                 new Country("Japan", R.drawable.japan)
+                 );
+                searchAdapterCountres = new SearchAdapterCountres(country);
+                recyclerView.setAdapter(searchAdapterCountres);
+
+          }
     }
-}
+
 
 

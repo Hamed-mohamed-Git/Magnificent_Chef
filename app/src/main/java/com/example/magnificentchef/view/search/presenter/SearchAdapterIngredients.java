@@ -1,15 +1,12 @@
 package com.example.magnificentchef.view.search.presenter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,8 +15,8 @@ import com.example.magnificentchef.view.search.model.Ingredients;
 
 import java.util.List;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
-    public SearchAdapter(List<Ingredients> ingredients) {
+public class SearchAdapterIngredients extends RecyclerView.Adapter<SearchAdapterIngredients.ViewHolder> {
+    public SearchAdapterIngredients(List<Ingredients> ingredients) {
         this.ingredients = ingredients;
     }
 
