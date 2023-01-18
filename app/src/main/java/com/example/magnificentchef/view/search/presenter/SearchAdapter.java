@@ -24,7 +24,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     private List<Ingredients>ingredients;
-
+    Ingredients ingredient;
 
     @NonNull
     @Override
@@ -35,11 +35,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.image.setImageResource(ingredients.get(position).getImage());
-        holder.label.setText(ingredients.get(position).getLabel());
-
-
-        //Glide.with(holder.image.getContext()).load(ingredient.getImage()).into(holder.image);
+        ingredient=ingredients.get(position);
+                //holder.image.setImageResource(ingredients.get(position).());
+        holder.label.setText(ingredients.get(position).getStrIngredient());
+        Glide.with(holder.image.getContext()).load(ingredient.getIngredientImage()).into(holder.image);
 
     }
 

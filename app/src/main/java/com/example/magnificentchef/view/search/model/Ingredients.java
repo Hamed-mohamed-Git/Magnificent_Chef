@@ -1,30 +1,67 @@
 package com.example.magnificentchef.view.search.model;
 
-public class Ingredients {
-    private String label;
-    private int image;
+import com.google.gson.annotations.SerializedName;
 
-    public Ingredients(String label, int image) {
-        this.label = label;
-        this.image = image;
+public class Ingredients {
+    @SerializedName("strDescription")
+    private String strDescription;
+
+    @SerializedName("strIngredient")
+    private String strIngredient;
+
+    @SerializedName("strType")
+    private String strType;
+
+    @SerializedName("idIngredient")
+    private String idIngredient;
+
+
+    public final static String urlBase="https://www.themealdb.com/images/ingredients/";
+    public final static String urlTail="-Small.png";
+
+
+    public Ingredients(String strDescription, String strIngredient, String strType, String idIngredient) {
+        this.strDescription = strDescription;
+        this.strIngredient = strIngredient;
+        this.strType = strType;
+        this.idIngredient = idIngredient;
     }
 
     public Ingredients() {
     }
 
-    public String getLabel() {
-        return label;
+    public String getStrDescription() {
+        return strDescription;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setStrDescription(String strDescription) {
+        this.strDescription = strDescription;
     }
 
-    public int getImage() {
-        return image;
+    public String getStrIngredient() {
+        return strIngredient;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setStrIngredient(String strIngredient) {
+        this.strIngredient = strIngredient;
+    }
+
+    public String getStrType() {
+        return strType;
+    }
+
+    public void setStrType(String strType) {
+        this.strType = strType;
+    }
+
+    public String getIdIngredient() {
+        return idIngredient;
+    }
+
+    public void setIdIngredient(String idIngredient) {
+        this.idIngredient = idIngredient;
+    }
+    public String getIngredientImage(){
+        return urlBase+strIngredient+urlTail;
     }
 }

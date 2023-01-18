@@ -12,31 +12,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.view.search.model.Ingredients;
+import com.example.magnificentchef.view.search.model.RootMeal;
+import com.example.magnificentchef.view.search.network.ApiSearch;
+import com.example.magnificentchef.view.search.network.ApiSearchInterface;
 import com.example.magnificentchef.view.search.presenter.SearchAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 
 public class SearchFragment extends Fragment {
-    RecyclerView recyclerView,recyclerView2;
+    RecyclerView recyclerView, recyclerView2;
     SearchAdapter searchAdapter;
-    List<Ingredients> data;
+    List<Ingredients> data = new ArrayList<>();
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  country_images = new int[]
-      //  ingredint_name=new String[]{"fish-Small.png","chicken-Small.png","tomato-Small.png","Lime-Small.png","egg-Small.png","beef-Small.png","Cucumber-Small.png"};
-        //country_name=new String[]{"American","Spanish","Indian","Japanese","British","French","Chinese","Egyptian","Italian","Turkish"};
-        //country_images=new int[]{R.drawable.usa,R.drawable.span,R.drawable.india,R.drawable.japan,R.drawable.uk,R.drawable.franch,R.drawable.china,R.drawable.egypt,R.drawable.italy,R.drawable.turkey};
+
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_search, container, false);
 
 
@@ -45,48 +50,34 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView=view.findViewById(R.id.country_recycle_view);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(requireContext());
-        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
 
-        recyclerView.setLayoutManager(linearLayoutManager);
-        data= Arrays.asList(
-                new Ingredients("chicken",R.drawable.china),
-                new Ingredients("Meat",R.drawable.china),
-                new Ingredients("Pasta",R.drawable.china),
-                new Ingredients("chicken",R.drawable.china),
-                new Ingredients("Meat",R.drawable.china),
-                new Ingredients("Pasta",R.drawable.china),
-                new Ingredients("chicken",R.drawable.china),
-                new Ingredients("Meat",R.drawable.china),
-                new Ingredients("Pasta",R.drawable.china)
+        Retrofit apiClient = ApiSearch.getClient();
+        ApiSearchInterface apiInterface = apiClient.create(ApiSearchInterface.class);
+        Call<RootMeal> call = apiInterface.getProducts();
+        call.enqueue(new Callback<RootMeal>() {
+            @Override
+            public void onResponse(Call<RootMeal> call, Response<RootMeal> response) {
+                if (response.isSuccessful()) {
+                    data = response.body().getMeals();
 
+                    recyclerView2 = view.findViewById(R.id.recyclerView2);
+                    recyclerView2.setHasFixedSize(true);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
+                    recyclerView2.setLayoutManager(linearLayoutManager);
+                    linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+                    searchAdapter = new SearchAdapter(data);
+                    recyclerView2.setAdapter(searchAdapter);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<RootMeal> call, Throwable t) {
 
-        );
-        recyclerView2=view.findViewById(R.id.recyclerView2);
-        recyclerView2.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager2=new LinearLayoutManager(requireContext());
-        linearLayoutManager2.setOrientation(RecyclerView.HORIZONTAL);
-
-        recyclerView2.setLayoutManager(linearLayoutManager2);
-        data= Arrays.asList(
-                new Ingredients("USA",R.drawable.usa),
-                new Ingredients("Uk",R.drawable.uk),
-                new Ingredients("China",R.drawable.china),
-        new Ingredients("franch",R.drawable.franch),
-        new Ingredients("span",R.drawable.span),
-        new Ingredients("turkey",R.drawable.turkey),
-                new Ingredients("india",R.drawable.india)
+            }
+        });
 
 
-
-
-        );
-        searchAdapter=new SearchAdapter(data);
-        recyclerView2.setAdapter(searchAdapter);
-        recyclerView.setAdapter(searchAdapter);
     }
 }
+
 
