@@ -63,7 +63,7 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
             if (result == null) return;
              registerPresenter =new RegisterPresenter(FirebaseAuth.getInstance(),this);
              registerPresenter.googleLogin(result.getResult().getIdToken());
-            Toast.makeText(requireContext(),"true",Toast.LENGTH_LONG).show();
+
         });
     }
 
@@ -99,7 +99,7 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
 
         signUpButton.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_registerFragment_to_signUpFragment);
-        });
+            });
     }
 
     @Override
@@ -108,8 +108,8 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
     }
 
     @Override
-    public void onLoginFailure() {
-        Toast.makeText(requireContext(),"fail",Toast.LENGTH_LONG).show();
+    public void onLoginFailure(int error) {
+        //Toast.makeText(requireContext(),"fail",Toast.LENGTH_LONG).show();
     }
 
 }

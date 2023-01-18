@@ -24,7 +24,6 @@ public class RegisterPresenter {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     onAuthLoginComplete.onLoginSuccess();
-                    task.getException().printStackTrace();
 
                 }else {
                     task.getException().printStackTrace();

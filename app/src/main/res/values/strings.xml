@@ -26,8 +26,15 @@
     <string name="daily">Daily Inspiration</string>
     <string name="reciepes">Search Recipes</string>
     <string name="ingredients">Search by Ingredients</string>
-    <string name="meal">Search By Meal</string>
+    <string name="meal_">Search By Meal</string>
     <string name="country">Search by Country</string>
     <string name="logout">LogOut</string>
     <string name="callus">Call us</string>
+    <string name="Daily_Inspiration">Daily Inspiration</string>
+    <string name="meal">Meal</string>
+    <string name="more_you_might_like">More you might like</string>
+    <string name="check">Check</string>
+    <string name="invalid_email_and_password_message">Your email and password is invalid!</string>
+    <string name="email_password_incorrect">\"Incorrect information entered, Email or password \"</string>
+
 </resources>

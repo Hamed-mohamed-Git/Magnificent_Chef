@@ -38,7 +38,8 @@
         android:layout_width="118dp"
         android:layout_height="32dp"
         android:text="@string/emailAccount"
-        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
@@ -48,7 +49,8 @@
         android:layout_width="118dp"
         android:layout_height="32dp"
         android:text="@string/password"
-        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline8" />
@@ -58,7 +60,8 @@
         android:layout_width="118dp"
         android:layout_height="32dp"
         android:text="@string/first"
-        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline6" />
@@ -68,7 +71,8 @@
         android:layout_width="118dp"
         android:layout_height="32dp"
         android:text="@string/last"
-        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
         app:layout_constraintTop_toTopOf="@+id/guideline6" />
@@ -77,13 +81,13 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="45dp"
         android:text="@string/Magnifient"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toEndOf="@id/imageView4"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -92,7 +96,8 @@
         android:layout_height="24dp"
         android:layout_marginStart="4dp"
         android:text="@string/userName"
-        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline4" />
@@ -206,16 +211,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.88" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="30dp"
         android:layout_height="27dp"
+        android:layout_marginStart="5dp"
         android:layout_marginEnd="7dp"
         android:src="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="@+id/textView6"
         app:layout_constraintEnd_toStartOf="@+id/textView6"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView6"
         app:tint="@color/black" />
 
@@ -231,9 +239,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:gravity="center"
         android:text="@string/term"
         android:textSize="16sp"
-        android:gravity="center"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/signUp_Button" />
@@ -243,6 +251,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" Terms of Service &amp; Privacy Policy "
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/textView5"

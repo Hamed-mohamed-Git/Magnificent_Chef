@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +16,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.view.common.RegistrationError;
 import com.example.magnificentchef.view.login.presenter.LoginPresenter;
 import com.example.magnificentchef.view.login.presenter.LoginPresenterInterface;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 
 public class loginFragment extends Fragment implements LoginPresenterInterface {
     private LoginPresenter loginPresenter;
     private Button login;
-    private EditText emailEditText, passwordEditText;
+    private TextInputEditText emailEditText, passwordEditText;
+    private TextInputLayout email,password;
     private TextView incorrectTexView;
 
 
@@ -43,11 +48,16 @@ public class loginFragment extends Fragment implements LoginPresenterInterface {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         login = view.findViewById(R.id.loginButton);
-        emailEditText = view.findViewById(R.id.emailEditText);
-        passwordEditText = view.findViewById(R.id.passwordEditText);
-        incorrectTexView = view.findViewById(R.id.incorrectMessage);
+        emailEditText = view.findViewById(R.id.emailLoginTextInputEditText);
+        passwordEditText = view.findViewById(R.id.passwordLogInTextInputEditText);
+        email = view.findViewById(R.id.user_nametv2);
+        password = view.findViewById(R.id.user_nametv3);
+        incorrectTexView = view.findViewById(R.id.registerErrorTextView);
 
         login.setOnClickListener((view1 -> {
+            email.setErrorEnabled(false);
+            password.setErrorEnabled(false);
+            incorrectTexView.setVisibility(View.INVISIBLE);
             loginPresenter = new LoginPresenter(requireActivity(),this,FirebaseAuth.getInstance());
             loginPresenter.logIn(emailEditText.getText().toString(),
                     passwordEditText.getText().toString());
@@ -62,7 +72,30 @@ public class loginFragment extends Fragment implements LoginPresenterInterface {
     }
 
     @Override
-    public void onLoginFailure() {
-        incorrectTexView.setVisibility(View.VISIBLE);
+    public void onLoginFailure(int errorCode) {
+
+        switch (errorCode){
+            case RegistrationError.EMPTY_USER_EMAIL :
+                email.setErrorEnabled(true);
+                email.setError("please enter your email");
+                break;
+            case RegistrationError.EMPTY_USER_PASSWORD:
+                password.setErrorEnabled(true);
+                password.setError("please enter your password");
+                break;
+            case RegistrationError.USER_EMAIL_PASSWORD_INVALID:
+                incorrectTexView.setVisibility(View.VISIBLE);
+                incorrectTexView.setText(R.string.invalid_email_and_password_message);
+                break;
+            case RegistrationError.USER_EMAIL_PASSWORD_DATA_INVALID:
+                incorrectTexView.setVisibility(View.VISIBLE);
+                incorrectTexView.setText(R.string.email_password_incorrect);
+                break;
+            default:
+                password.setErrorEnabled(true);
+                password.setError("please enter your password");
+                email.setErrorEnabled(true);
+                email.setError("please enter your email");
+        }
     }
 }
