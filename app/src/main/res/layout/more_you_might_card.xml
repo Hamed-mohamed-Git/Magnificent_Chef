@@ -17,7 +17,7 @@
 
         <!-- Media -->
         <ImageView
-            android:id="@+id/cardMealImageView"
+            android:id="@+id/card_Image"
             android:layout_width="0dp"
             android:layout_height="140dp"
             android:adjustViewBounds="true"
@@ -43,7 +43,7 @@
             android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardMealImageView"
+            app:layout_constraintTop_toBottomOf="@+id/card_Image"
             tools:text="French Onion Chicken with Roasted Carrots" />
 
         <View
@@ -89,7 +89,7 @@
             app:layout_constraintTop_toTopOf="@+id/view3" />
 
         <TextView
-            android:id="@+id/mealCardCategoryTextView"
+            android:id="@+id/Category_TV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"

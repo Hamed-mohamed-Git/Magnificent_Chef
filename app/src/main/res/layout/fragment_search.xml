@@ -28,15 +28,19 @@
             android:text="@string/meal"
             android:textColor="@color/btnColorDark"
             android:textSize="25sp"
+            android:fontFamily="@font/nunito_bold"
+
             app:layout_constraintStart_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
 
         <TextView
             android:id="@+id/textView17"
+            android:fontFamily="@font/nunito_bold"
+
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="16dp"
             android:text="@string/search"
             android:textColor="@color/btnColorDark"
             android:textSize="30sp"
@@ -46,14 +50,14 @@
 
         <EditText
             android:id="@+id/editTextTextPersonName"
-            android:layout_width="500dp"
+            android:layout_width="370dp"
             android:layout_height="50dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/register_edit_text_background"
             android:drawableStart="@drawable/search"
             android:drawablePadding="10dp"
-            android:ems="10"
             android:drawableTint="@color/strokeForEDT"
+            android:ems="10"
             android:hint="@string/reciepes"
             android:inputType="textPersonName"
             android:paddingStart="10dp"
@@ -71,13 +75,15 @@
             android:text="@string/ingredients"
             android:textColor="@color/btnColorDark"
             android:textSize="25sp"
+            android:fontFamily="@font/nunito_bold"
+
             app:layout_constraintStart_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView2"
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -92,14 +98,15 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:layout_width="500dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintEnd_toStartOf="@+id/guideline13"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toBottomOf="@+id/textView20"
-            app:layout_constraintVertical_bias="0.037" />
+            app:spanCount="2" />
 
         <TextView
             android:id="@+id/textView22"
@@ -109,19 +116,23 @@
             android:text="@string/country"
             android:textColor="@color/btnColorDark"
             android:textSize="25sp"
+            android:fontFamily="@font/nunito_bold"
+
             app:layout_constraintStart_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/country_recycle_view"
-            android:layout_width="500dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:orientation="horizontal"
+            android:layout_marginBottom="12dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline13"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toBottomOf="@+id/textView22"
+            app:layout_constraintVertical_bias="1.0"
             tools:itemCount="10"
             tools:listitem="@layout/row_search" />
 
@@ -137,7 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.9508197" />
+            app:layout_constraintGuide_percent="0.95486933" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

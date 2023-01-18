@@ -1,15 +1,15 @@
 package com.example.magnificentchef.view.search.model;
 
-public class Country {
+public class Custom {
     String label;
     int image;
 
-    public Country(String label, int image) {
+    public Custom(String label, int image) {
         this.label = label;
         this.image = image;
     }
 
-    public Country() {
+    public Custom() {
     }
 
     public String getLabel() {

@@ -70,11 +70,11 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
         }
 
         void initView(View view){
-            mealCardCategoryTextView = view.findViewById(R.id.mealCardCategoryTextView);
+            mealCardCategoryTextView = view.findViewById(R.id.Category_TV);
             cardMealNameTextView = view.findViewById(R.id.cardMealTextView);
             cardMealCheckButton = view.findViewById(R.id.cardMealCheckButton);
             saveButtonImageView = view.findViewById(R.id.saveButtonImageView);
-            cardMealImageView = view.findViewById(R.id.cardMealImageView);
+            cardMealImageView = view.findViewById(R.id.card_Image);
         }
     }
 }

@@ -9,19 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.magnificentchef.R;
-import com.example.magnificentchef.view.search.model.Country;
+import com.example.magnificentchef.view.search.model.Custom;
 
 import java.util.List;
 
 public class SearchAdapterCountres extends RecyclerView.Adapter<SearchAdapterCountres.ViewHolder> {
-    public SearchAdapterCountres(List<Country> countries) {
+    public SearchAdapterCountres(List<Custom> countries) {
         this.countries = countries;
     }
 
-    private List<Country>countries;
-    Country country;
+    private List<Custom>countries;
+    Custom country;
 
     @NonNull
     @Override
