@@ -28,4 +28,6 @@
     <string name="ingredients">Search by Ingredients</string>
     <string name="meal">Search By Meal</string>
     <string name="country">Search by Country</string>
+    <string name="logout">LogOut</string>
+    <string name="callus">Call us</string>
 </resources>

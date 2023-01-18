@@ -4,6 +4,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -11,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,6 +29,8 @@ public class BaseFragment extends Fragment {
     NavController navcontroller;
     NavigationView navigationView;
     AppBarConfiguration appBarConfiguration;
+    DrawerLayout drawerLayout;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,5 +54,33 @@ public class BaseFragment extends Fragment {
 
         appBarConfiguration=new AppBarConfiguration.Builder(navcontroller.getGraph()).build();
 
+
+        //navigation view
+        drawerLayout=view.findViewById(R.id.drawer_layout);
+        navigationView=view.findViewById(R.id.navigation_view);
+        ActionBar actionBar=((AppCompatActivity )getActivity()).getSupportActionBar();
+
+        actionBar.setHomeAsUpIndicator(R.drawable.menu);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        setHasOptionsMenu(true);
+
+        NavController navcontroller= Navigation.findNavController(getActivity(),R.id.nav_host_fragment);
+        NavigationUI.setupWithNavController(navigationView,navcontroller);
+    }
+
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==android.R.id.home){
+            if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }else{
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

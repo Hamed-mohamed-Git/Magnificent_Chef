@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <group>
+            <item android:title="@string/search"
+                android:id="@+id/search_screen"
+                android:icon="@drawable/search"/>
+
+            <item android:title="@string/Save"
+                android:id="@+id/save_screen"
+                android:icon="@drawable/save"/>
+
+            <item android:title="@string/PlanMeal"
+                android:id="@+id/plan_meal_screen"
+                android:icon="@drawable/calender"/>
+
+            <item android:title="@string/callus"
+                android:id="@+id/callus"
+                android:icon="@drawable/call"/>
+
+            <item android:title="@string/logout"
+                android:id="@+id/logout"
+                android:icon="@drawable/logout"/>
+
+        </group>
+</menu>
