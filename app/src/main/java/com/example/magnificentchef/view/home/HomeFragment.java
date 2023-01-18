@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
         super.onViewCreated(view, savedInstanceState);
         initView(view);
         homePresenter = new HomePresenter(new Repository(this, Remote.getRetrofitInstance()));
-        homePresenter.getRandomMeal(30);
+        homePresenter.getRandomMeal(31);
     }
 
     private void initView(View view){
@@ -63,20 +63,32 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
 
     @Override
     public void onSuccessResult(List<MealsItem> itemList) {
-        dailyInspirationRecyclerView.setAdapter(new MealsAdapter(R.layout.daily_inspiration_card,itemList));
+        setAdapterMealItems(itemList);
     }
+
 
     @Override
     public void onFailureResult(String message) {
 
     }
 
-    //        mealList = new ArrayList<>();
-//        mealList.add(new Meal("https://www.themealdb.com/images/media/meals/qqwypw1504642429.jpg","Pork","Vietnamese Grilled Pork (bun-thit-nuong)"));
-//        mealList.add(new Meal("https://www.themealdb.com/images/media/meals/1520083578.jpg","Beef","Oxtail with broad beans"));
-//        mealList.add(new Meal("https://www.themealdb.com/images/media/meals/45xxr21593348847.jpg","Side","Pierogi (Polish Dumplings)"));
-//        mealList.add(new Meal("https://www.themealdb.com/images/media/meals/usywpp1511189717.jpg","Pasta","Chilli prawn linguine"));
 
+    private void setAdapterMealItems(List<MealsItem> itemList) {
+        List<MealsItem> inspirationMealList = new ArrayList<>();
+        List<MealsItem> mealItemList = new ArrayList<>();
+        List<MealsItem> moreYouLikeMealList = new ArrayList<>();
+        for (int itemLoop = 0; itemLoop < itemList.size();itemLoop++){
+            if (itemLoop < 7)
+                inspirationMealList.add(itemList.get(itemLoop));
+            else if (itemLoop < 17)
+                mealItemList.add(itemList.get(itemLoop));
+            else
+                moreYouLikeMealList.add(itemList.get(itemLoop));
+        }
+        dailyInspirationRecyclerView.setAdapter(new MealsAdapter(R.layout.daily_inspiration_card,inspirationMealList));
+        mealRecyclerView.setAdapter(new MealsAdapter(R.layout.meal_home_card,mealItemList));
+        moreYouLikeRecyclerView.setAdapter(new MealsAdapter(R.layout.more_you_might_card,moreYouLikeMealList));
+    }
 
     //mealRecyclerView.setAdapter(new MealsAdapter(R.layout.meal_home_card,mealList));
     //moreYouLikeRecyclerView.setAdapter(new MealsAdapter(R.layout.more_you_might_card,mealList));

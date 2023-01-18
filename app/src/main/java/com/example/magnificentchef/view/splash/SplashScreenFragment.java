@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -67,6 +68,7 @@ public class SplashScreenFragment extends Fragment {
         // Hide the status bar.
         uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
     private void showStatusBar(){

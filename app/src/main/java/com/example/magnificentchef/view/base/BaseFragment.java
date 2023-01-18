@@ -48,22 +48,24 @@ public class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
-        navcontroller = Navigation.findNavController(getActivity(), R.id.fragment);
-        NavigationUI.setupWithNavController(bottomNavigationView, navcontroller);
+        bottomNavigationView=view.findViewById(R.id.bottomNavigationView);
+        navcontroller= Navigation.findNavController(requireActivity(),R.id.fragment);
+        NavigationUI.setupWithNavController(bottomNavigationView,navcontroller);
 
-        appBarConfiguration = new AppBarConfiguration.Builder(navcontroller.getGraph()).build();
+        appBarConfiguration=new AppBarConfiguration.Builder(navcontroller.getGraph()).build();
 
 
-        //navigation view
-       /* drawerLayout=view.findViewById(R.id.drawer_layout);
+       // navigation view
+        drawerLayout=view.findViewById(R.id.drawer_layout);
         navigationView=view.findViewById(R.id.navigation_view);
         ActionBar actionBar=((AppCompatActivity )getActivity()).getSupportActionBar();
 
         actionBar.setHomeAsUpIndicator(R.drawable.menu);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.show();
         setHasOptionsMenu(true);
+
 
         NavController navcontroller= Navigation.findNavController(getActivity(),R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navigationView,navcontroller);
@@ -82,6 +84,5 @@ public class BaseFragment extends Fragment {
             }
         }
         return super.onOptionsItemSelected(item);
-    }*/
     }
 }
