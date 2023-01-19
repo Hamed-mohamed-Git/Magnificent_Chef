@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -33,7 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
     Button btn_google;
-    private Button signUpButton;
+    private Button signUpButton, skipButton;
     private TextView login;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private RegisterPresenter registerPresenter;
@@ -81,12 +82,13 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
         btn_google = view.findViewById(R.id.btn_google);
         signUpButton = view.findViewById(R.id.signUpButton);
         login = view.findViewById(R.id.textView4);
+        skipButton = view.findViewById(R.id.skipped_button);
         login.setOnClickListener((view1) -> {
             Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_loginFragment);
         });
-
-
-
+        skipButton.setOnClickListener((view1) -> {
+            Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_baseFragment);
+        });
         btn_google.setOnClickListener(view1 -> {
             activityResultLauncher.launch(GoogleSignIn
                     .getClient(requireContext(),
@@ -96,10 +98,9 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
                                     .build())
                     .getSignInIntent());
         });
-
         signUpButton.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_registerFragment_to_signUpFragment);
-            });
+        });
     }
 
     @Override
@@ -112,4 +113,9 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
         //Toast.makeText(requireContext(),"fail",Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+    }
 }

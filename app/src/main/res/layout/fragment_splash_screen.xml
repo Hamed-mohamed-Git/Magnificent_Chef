@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
-        app:lottie_rawRes="@raw/splash_screen_animation" />
+        app:lottie_rawRes="@raw/splash_screen_ani" />
 
     <ImageView
         android:id="@+id/imageView"

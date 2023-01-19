@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.magnificentchef.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SplashScreenFragment extends Fragment {
@@ -50,12 +51,20 @@ public class SplashScreenFragment extends Fragment {
         lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                Navigation
-                        .findNavController(view)
-                        .navigate(R.id.action_splashScreenFragment_to_baseFragment);
-                super.onAnimationEnd(animation);
+                if (FirebaseAuth.getInstance().getCurrentUser() != null){
+                    Navigation
+                            .findNavController(view)
+                            .navigate(R.id.action_splashScreenFragment_to_baseFragment);
+                }else{
+                    Navigation
+                            .findNavController(view)
+                            .navigate(R.id.action_splashScreenFragment_to_registerFragment);
+                    super.onAnimationEnd(animation);
+                }
+
             }
         });
+
     }
 
     @Override

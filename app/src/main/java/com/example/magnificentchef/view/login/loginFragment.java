@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.magnificentchef.R;
@@ -30,7 +31,7 @@ public class loginFragment extends Fragment implements LoginPresenterInterface {
     private TextInputEditText emailEditText, passwordEditText;
     private TextInputLayout email,password;
     private TextView incorrectTexView;
-
+    private ImageButton backImageButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class loginFragment extends Fragment implements LoginPresenterInterface {
         email = view.findViewById(R.id.user_nametv2);
         password = view.findViewById(R.id.user_nametv3);
         incorrectTexView = view.findViewById(R.id.registerErrorTextView);
+        backImageButton = view.findViewById(R.id.back_button);
 
         login.setOnClickListener((view1 -> {
             email.setErrorEnabled(false);
@@ -62,6 +64,10 @@ public class loginFragment extends Fragment implements LoginPresenterInterface {
             loginPresenter.logIn(emailEditText.getText().toString(),
                     passwordEditText.getText().toString());
         }));
+
+        backImageButton.setOnClickListener((view1) ->{
+            Navigation.findNavController(getView()).popBackStack();
+        });
 
     }
 
@@ -73,7 +79,6 @@ public class loginFragment extends Fragment implements LoginPresenterInterface {
 
     @Override
     public void onLoginFailure(int errorCode) {
-
         switch (errorCode){
             case RegistrationError.EMPTY_USER_EMAIL :
                 email.setErrorEnabled(true);

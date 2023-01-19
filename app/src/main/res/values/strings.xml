@@ -36,5 +36,6 @@
     <string name="check">Check</string>
     <string name="invalid_email_and_password_message">Your email and password is invalid!</string>
     <string name="email_password_incorrect">\"Incorrect information entered, Email or password \"</string>
+    <string name="skip_button">Skip</string>
 
 </resources>
