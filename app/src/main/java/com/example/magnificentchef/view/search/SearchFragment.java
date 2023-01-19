@@ -121,12 +121,12 @@ public class SearchFragment extends Fragment {
         recyclerView3.setLayoutManager(linearLayoutManager3);
 */
         category = Arrays.asList(
-                new Custom("Breakfast", R.drawable.usa),
-                new Custom("Lunch", R.drawable.uk),
-                new Custom("Dinner", R.drawable.china),
-                new Custom("Dessert", R.drawable.franch),
-                new Custom("Drinks", R.drawable.span),
-                new Custom("Appetizers", R.drawable.turkey)
+                new Custom("Breakfast", R.drawable.breakfast),
+                new Custom("Lunch", R.drawable.lunch),
+                new Custom("Dinner", R.drawable.dinner),
+                new Custom("Dessert", R.drawable.dessert),
+                new Custom("Drinks", R.drawable.drinks),
+                new Custom("Appetizers", R.drawable.appetizer)
         );
         SearchAdapterCategories = new SearchAdapterCategories(category);
         recyclerView3.setAdapter(SearchAdapterCategories);
