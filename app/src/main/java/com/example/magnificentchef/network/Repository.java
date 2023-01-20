@@ -14,6 +14,7 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Repository {
@@ -73,5 +74,28 @@ public class Repository {
         for (RandomMealResponse randomMealResponse : RandomMealResponses){
             mealList.add(randomMealResponse.getMeals().get(0));
         }
+    }
+
+    public void getMealsByKey(String letter){
+        mealApiService.getSearchLetter(letter)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers .mainThread())
+                .subscribe(new SingleObserver<RandomMealResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull RandomMealResponse randomMealResponse) {
+                        networkDelegate.onSuccessResult(randomMealResponse.getMeals());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        networkDelegate.onFailureResult(e.getMessage());
+
+                    }
+                });
     }
 }

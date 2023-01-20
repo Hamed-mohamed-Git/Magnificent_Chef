@@ -50,7 +50,7 @@
 
         <EditText
             android:id="@+id/editTextTextPersonName"
-            android:layout_width="370dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/register_edit_text_background"

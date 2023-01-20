@@ -56,5 +56,18 @@
         android:id="@+id/baseFragment"
         android:name="com.example.magnificentchef.view.base.BaseFragment"
         android:label="fragment_base"
-        tools:layout="@layout/fragment_base" />
+        tools:layout="@layout/fragment_base" >
+        <action
+            android:id="@+id/action_baseFragment_to_recentSearchFragment"
+            app:destination="@id/recentSearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentSearchFragment"
+        android:name="com.example.magnificentchef.view.resentSearch.RecentSearchFragment"
+        android:label="fragment_recent_search"
+        tools:layout="@layout/fragment_recent_search" >
+        <argument
+            android:name="letters"
+            app:argType="string" />
+    </fragment>
 </navigation>
