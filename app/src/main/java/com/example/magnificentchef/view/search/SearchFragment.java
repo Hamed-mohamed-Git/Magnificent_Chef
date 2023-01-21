@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.view.base.BaseFragment;
@@ -34,6 +36,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -83,7 +90,38 @@ public class SearchFragment extends Fragment implements TextWatcher {
         this.view=view;
         search=view.findViewById(R.id.editTextTextPersonName);
         search.addTextChangedListener(this);
-        Retrofit apiClient = ApiSearch.getClient();
+
+        Single<RootMeal>call=ApiSearch.getClient()
+                .rootMealSingle()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        call.subscribe(new SingleObserver<RootMeal>() {
+            @Override
+            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull RootMeal rootMeal) {
+                ingredientsList = rootMeal.getMeals();
+                recyclerView2 = view.findViewById(R.id.recyclerView2);
+                recyclerView2.setHasFixedSize(true);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
+                recyclerView2.setLayoutManager(linearLayoutManager);
+                linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+                searchAdapterIngredients = new SearchAdapterIngredients(ingredientsList);
+                recyclerView2.setAdapter(searchAdapterIngredients);
+
+            }
+
+            @Override
+            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                Toast.makeText(requireContext(),"fail"+ e.getMessage(),Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+        /*Retrofit apiClient = ApiSearch.getClient();
         ApiSearchInterface apiInterface = apiClient.create(ApiSearchInterface.class);
         Call<RootMeal> call = apiInterface.getProducts();
         call.enqueue(new Callback<RootMeal>() {
@@ -106,7 +144,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
             public void onFailure(Call<RootMeal> call, Throwable t) {
 
             }
-        });
+        });*/
 
 
         recyclerView = view.findViewById(R.id.country_recycle_view);
