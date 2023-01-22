@@ -21,6 +21,7 @@ import com.example.magnificentchef.network.NetworkDelegate;
 import com.example.magnificentchef.network.Remote;
 import com.example.magnificentchef.network.Repository;
 import com.example.magnificentchef.network.model.MealsItem;
+import com.example.magnificentchef.view.common.MealsAdapter;
 import com.example.magnificentchef.view.home.presenter.HomePresenter;
 
 import java.util.ArrayList;
@@ -29,7 +30,8 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Observable;
 
 public class RecentSearchFragment extends Fragment implements NetworkDelegate<MealsItem>, TextWatcher {
-    private RecentSearchAdapter recentSearchAdapter;
+//    private RecentSearchAdapter recentSearchAdapter;
+    private MealsAdapter mealsAdapter;
     private RecentSearchPresenter recentSearchPresenter;
     private List<MealsItem> mealsItems;
     private RecyclerView recyclerView;
@@ -40,7 +42,8 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mealsItems = new ArrayList<>();
-        recentSearchAdapter=new RecentSearchAdapter(mealsItems);
+       // recentSearchAdapter=new RecentSearchAdapter(mealsItems);
+        mealsAdapter=new MealsAdapter(R.layout.more_you_might_card,mealsItems);
         recentSearchPresenter = new RecentSearchPresenter(new Repository(this, Remote.getRetrofitInstance()));
 
 
@@ -56,21 +59,21 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
         recyclerView =view.findViewById(R.id.result_search);
-        recyclerView.setAdapter(recentSearchAdapter);
+        recyclerView.setAdapter(mealsAdapter);
         search = view.findViewById(R.id.search_edt);
         search.addTextChangedListener(this);
         search.setText( RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
 
+        recentSearchPresenter.getMealsByIngredient(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
     }
 
     @Override
     public void onSuccessResult(List<MealsItem> itemList) {
-        recentSearchAdapter.setMealItemList(itemList);
-        mealsItems=itemList;
-
-
+       mealsAdapter.setMealItemList(itemList);
+       mealsItems=itemList;
     }
 
     @Override
@@ -91,9 +94,9 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
         else{
             Observable<MealsItem> mealsItemObservable=Observable.fromIterable(mealsItems);
             mealsItemObservable.filter(mealsItem -> mealsItem.getStrMeal()
-                    .startsWith(charSequence.toString()))
+                            .startsWith(charSequence.toString()))
                     .toList()
-                    .doOnSuccess(recentSearchAdapter::setMealItemList)
+                    .doOnSuccess(mealsAdapter::setMealItemList)
                     .subscribe();
         }
     }

@@ -6,14 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +25,7 @@ import com.example.magnificentchef.view.search.model.Ingredients;
 import com.example.magnificentchef.view.search.model.RootMeal;
 import com.example.magnificentchef.view.search.model.Custom;
 import com.example.magnificentchef.view.search.network.ApiSearch;
-import com.example.magnificentchef.view.search.network.ApiSearchInterface;
+import com.example.magnificentchef.view.search.presenter.OnSearchItemListener;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterCategories;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterCountres;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterIngredients;
@@ -41,13 +39,9 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 
-public class SearchFragment extends Fragment implements TextWatcher {
+public class SearchFragment extends Fragment implements TextWatcher, OnSearchItemListener {
     private RecyclerView recyclerView, recyclerView2,recyclerView3;
     private SearchAdapterIngredients searchAdapterIngredients;
     private SearchAdapterCategories SearchAdapterCategories;
@@ -109,8 +103,9 @@ public class SearchFragment extends Fragment implements TextWatcher {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
                 recyclerView2.setLayoutManager(linearLayoutManager);
                 linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-                searchAdapterIngredients = new SearchAdapterIngredients(ingredientsList);
+                searchAdapterIngredients = new SearchAdapterIngredients(ingredientsList,SearchFragment.this::onSuccessClickItemListener);
                 recyclerView2.setAdapter(searchAdapterIngredients);
+
 
             }
 
@@ -121,31 +116,6 @@ public class SearchFragment extends Fragment implements TextWatcher {
 
             }
         });
-        /*Retrofit apiClient = ApiSearch.getClient();
-        ApiSearchInterface apiInterface = apiClient.create(ApiSearchInterface.class);
-        Call<RootMeal> call = apiInterface.getProducts();
-        call.enqueue(new Callback<RootMeal>() {
-            @Override
-            public void onResponse(Call<RootMeal> call, Response<RootMeal> response) {
-                if (response.isSuccessful()) {
-                    ingredientsList = response.body().getMeals();
-
-                    recyclerView2 = view.findViewById(R.id.recyclerView2);
-                    recyclerView2.setHasFixedSize(true);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
-                    recyclerView2.setLayoutManager(linearLayoutManager);
-                    linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-                    searchAdapterIngredients = new SearchAdapterIngredients(ingredientsList);
-                    recyclerView2.setAdapter(searchAdapterIngredients);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RootMeal> call, Throwable t) {
-
-            }
-        });*/
-
 
         recyclerView = view.findViewById(R.id.country_recycle_view);
         recyclerView.setHasFixedSize(true);
@@ -172,11 +142,8 @@ public class SearchFragment extends Fragment implements TextWatcher {
 
         recyclerView3 = view.findViewById(R.id.recyclerView);
         recyclerView3.setHasFixedSize(true);
-        /*LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(requireContext());
-        linearLayoutManager3.setOrientation(RecyclerView.VERTICAL);
-        recyclerView3.setLayoutManager(linearLayoutManager3);
-*/
-        categoryList = Arrays.asList(
+
+    categoryList = Arrays.asList(
                 new Custom("Breakfast", R.drawable.breakfast),
                 new Custom("Lunch", R.drawable.lunch),
                 new Custom("Dinner", R.drawable.dinner),
@@ -207,6 +174,14 @@ public class SearchFragment extends Fragment implements TextWatcher {
     @Override
     public void afterTextChanged(Editable editable) {
 
+    }
+
+
+    @Override
+    public void onSuccessClickItemListener(String itemData) {
+        navController.navigate(BaseFragmentDirections.
+                actionBaseFragmentToRecentSearchFragment("a")
+                .setLetters(itemData));
     }
 }
 

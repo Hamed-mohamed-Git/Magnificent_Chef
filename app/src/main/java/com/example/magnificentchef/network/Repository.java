@@ -98,4 +98,27 @@ public class Repository {
                     }
                 });
     }
+    public void getMealsByIngredient(String name){
+        mealApiService.getSearchIngredients(name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<RandomMealResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull RandomMealResponse randomMealResponse) {
+                           networkDelegate.onSuccessResult(randomMealResponse.getMeals());
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        networkDelegate.onFailureResult(e.getMessage());
+
+                    }
+                });
+    }
 }

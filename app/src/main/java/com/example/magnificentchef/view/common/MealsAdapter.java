@@ -1,5 +1,6 @@
 package com.example.magnificentchef.view.common;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,5 +77,12 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
             saveButtonImageView = view.findViewById(R.id.saveButtonImageView);
             cardMealImageView = view.findViewById(R.id.card_Image);
         }
+
     }
+    @SuppressLint("NotifyDataSetChanged")
+    public void setMealItemList(List<MealsItem> mealItemList){
+        mealList=mealItemList;
+        notifyDataSetChanged();
+    }
+
 }
