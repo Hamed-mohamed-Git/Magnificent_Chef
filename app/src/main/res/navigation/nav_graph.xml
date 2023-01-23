@@ -56,5 +56,20 @@
         android:id="@+id/baseFragment"
         android:name="com.example.magnificentchef.view.base.BaseFragment"
         android:label="fragment_base"
-        tools:layout="@layout/fragment_base" />
+        tools:layout="@layout/fragment_base" >
+        <action
+            android:id="@+id/action_baseFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealDetailsFragment"
+        android:name="com.example.magnificentchef.view.meal_details.MealDetailsFragment"
+        android:label="fragment_meal_details"
+        tools:layout="@layout/fragment_meal_details" >
+        <argument
+            android:name="MealItem"
+            app:argType="com.example.magnificentchef.network.model.MealsItem"
+            app:nullable="true" />
+    </fragment>
 </navigation>

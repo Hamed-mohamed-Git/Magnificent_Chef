@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.DisplayMetrics;
@@ -31,13 +33,15 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
     private HomePresenter homePresenter;
     private RecyclerView mealRecyclerView;
     private RecyclerView moreYouLikeRecyclerView;
-
     private List<Meal> mealList;
+    private NavController navController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        navController =
+                ((NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment)).getNavController();
+        homePresenter = new HomePresenter(new Repository(this, Remote.getRetrofitInstance()));
     }
 
     @Override
@@ -51,8 +55,7 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        homePresenter = new HomePresenter(new Repository(this, Remote.getRetrofitInstance()));
-        homePresenter.getRandomMeal(31);
+        homePresenter.getRandomMeal(24);
     }
 
     private void initView(View view){
@@ -72,6 +75,10 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     private void setAdapterMealItems(List<MealsItem> itemList) {
         List<MealsItem> inspirationMealList = new ArrayList<>();
@@ -85,9 +92,9 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
             else
                 moreYouLikeMealList.add(itemList.get(itemLoop));
         }
-        dailyInspirationRecyclerView.setAdapter(new MealsAdapter(R.layout.daily_inspiration_card,inspirationMealList));
-        mealRecyclerView.setAdapter(new MealsAdapter(R.layout.meal_home_card,mealItemList));
-        moreYouLikeRecyclerView.setAdapter(new MealsAdapter(R.layout.more_you_might_card,moreYouLikeMealList));
+        dailyInspirationRecyclerView.setAdapter(new MealsAdapter(R.layout.daily_inspiration_card,inspirationMealList,navController));
+        mealRecyclerView.setAdapter(new MealsAdapter(R.layout.meal_home_card,mealItemList,navController));
+        moreYouLikeRecyclerView.setAdapter(new MealsAdapter(R.layout.more_you_might_card,moreYouLikeMealList,navController));
     }
 
     //mealRecyclerView.setAdapter(new MealsAdapter(R.layout.meal_home_card,mealList));

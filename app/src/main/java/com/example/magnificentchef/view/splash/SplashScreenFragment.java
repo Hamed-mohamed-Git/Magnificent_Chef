@@ -3,6 +3,8 @@ package com.example.magnificentchef.view.splash;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.ActionBar;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,15 +26,21 @@ import com.example.magnificentchef.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class SplashScreenFragment extends Fragment {
+public class SplashScreenFragment extends Fragment implements RegisterListener {
 
     private View decorView;
     private int uiOptions;
     private LottieAnimationView lottieAnimationView;
+    private SharedPreferences sharedPref;
+    private View requireView;
+    private SplashScreenPresenter splashScreenPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         decorView = requireActivity().getWindow().getDecorView();
+        sharedPref  =  requireContext().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        splashScreenPresenter = new SplashScreenPresenter(this);
         hideStatusBar();
         super.onCreate(savedInstanceState);
     }
@@ -48,20 +56,11 @@ public class SplashScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         lottieAnimationView = view.findViewById(R.id.animationView);
+        requireView = view;
         lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (FirebaseAuth.getInstance().getCurrentUser() != null){
-                    Navigation
-                            .findNavController(view)
-                            .navigate(R.id.action_splashScreenFragment_to_baseFragment);
-                }else{
-                    Navigation
-                            .findNavController(view)
-                            .navigate(R.id.action_splashScreenFragment_to_registerFragment);
-                    super.onAnimationEnd(animation);
-                }
-
+                splashScreenPresenter.checkRegistered(sharedPref.getString("registered","false"));
             }
         });
 
@@ -77,7 +76,7 @@ public class SplashScreenFragment extends Fragment {
         // Hide the status bar.
         uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
     private void showStatusBar(){
@@ -87,4 +86,17 @@ public class SplashScreenFragment extends Fragment {
     }
 
 
+    @Override
+    public void onRegistered() {
+        Navigation
+                .findNavController(requireView)
+                .navigate(R.id.action_splashScreenFragment_to_baseFragment);
+    }
+
+    @Override
+    public void onLoggedOut() {
+        Navigation
+                .findNavController(requireView)
+                .navigate(R.id.action_splashScreenFragment_to_registerFragment);
+    }
 }

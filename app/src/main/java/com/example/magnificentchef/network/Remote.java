@@ -24,7 +24,7 @@ public class Remote {
         return remote;
     }
 
-    public MealApiService getRandomMealsApiService(){
+    public MealApiService getMealsApiService(){
         return retrofit.create(MealApiService.class);
     }
 

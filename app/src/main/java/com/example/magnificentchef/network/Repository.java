@@ -26,7 +26,7 @@ public class Repository {
     public Repository(NetworkDelegate<MealsItem> networkDelegate, Remote remote) {
         this.networkDelegate = networkDelegate;
         this.remote = remote;
-        mealApiService = remote.getRandomMealsApiService();
+        mealApiService = remote.getMealsApiService();
         randomMealResponseSingleList = new ArrayList<>();
         mealList = new ArrayList<>();
     }

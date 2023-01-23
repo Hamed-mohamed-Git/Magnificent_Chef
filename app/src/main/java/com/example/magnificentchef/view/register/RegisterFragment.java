@@ -3,6 +3,7 @@ package com.example.magnificentchef.view.register;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
@@ -38,10 +39,13 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
     private TextView login;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private RegisterPresenter registerPresenter;
+    private SharedPreferences.Editor sharedPrefEditor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPrefEditor  =  requireContext().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE).edit();
     }
 
     @Override
@@ -87,6 +91,8 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
             Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_loginFragment);
         });
         skipButton.setOnClickListener((view1) -> {
+            sharedPrefEditor.putString("registered","true");
+            sharedPrefEditor.apply();
             Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_baseFragment);
         });
         btn_google.setOnClickListener(view1 -> {
@@ -105,7 +111,9 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
 
     @Override
     public void onLoginSuccess() {
-        Navigation.findNavController(requireView()).navigate(R.id.action_signUpFragment_to_baseFragment);
+        sharedPrefEditor.putString("registered","true");
+        sharedPrefEditor.apply();
+        Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_baseFragment);
     }
 
     @Override
@@ -116,6 +124,6 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 }

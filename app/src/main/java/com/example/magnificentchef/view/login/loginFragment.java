@@ -1,5 +1,7 @@
 package com.example.magnificentchef.view.login;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,10 +34,15 @@ public class loginFragment extends Fragment implements LoginPresenterInterface {
     private TextInputLayout email,password;
     private TextView incorrectTexView;
     private ImageButton backImageButton;
+    private SharedPreferences.Editor sharedPrefEditor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPrefEditor  =  requireContext()
+                .getSharedPreferences(
+                getString(R.string.preference_file_key),
+                        Context.MODE_PRIVATE).edit();
     }
 
     @Override
@@ -73,6 +80,8 @@ public class loginFragment extends Fragment implements LoginPresenterInterface {
 
     @Override
     public void onLoginSuccess() {
+        sharedPrefEditor.putString("registered","true");
+        sharedPrefEditor.apply();
         incorrectTexView.setVisibility(View.INVISIBLE);
         Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_baseFragment);
     }

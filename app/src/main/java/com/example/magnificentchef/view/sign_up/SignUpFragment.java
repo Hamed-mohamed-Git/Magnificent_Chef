@@ -1,5 +1,7 @@
 package com.example.magnificentchef.view.sign_up;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,11 +31,15 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
     private TextInputLayout user_name_layout, first_name_layout, last_name_layout, email_layout, password_layout;
     private Button signUp;
     private TextView SIgnUpError;
+    private SharedPreferences.Editor sharedPrefEditor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        sharedPrefEditor  =  requireContext()
+                .getSharedPreferences(
+                        getString(R.string.preference_file_key),
+                        Context.MODE_PRIVATE).edit();
     }
 
     @Override
@@ -83,6 +89,8 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
 
     @Override
     public void onSignSuccess() {
+        sharedPrefEditor.putString("registered","true");
+        sharedPrefEditor.apply();
         NavHostFragment.findNavController(this).navigate(R.id.action_signUpFragment_to_baseFragment);
 
     }
