@@ -5,17 +5,27 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.view.base.BaseFragment;
+import com.example.magnificentchef.view.base.BaseFragmentDirections;
 import com.example.magnificentchef.view.search.model.Ingredients;
 import com.example.magnificentchef.view.search.model.RootMeal;
 import com.example.magnificentchef.view.search.model.Custom;
 import com.example.magnificentchef.view.search.network.ApiSearch;
-import com.example.magnificentchef.view.search.network.ApiSearchInterface;
+import com.example.magnificentchef.view.search.presenter.OnSearchItemListener;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterCategories;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterCountres;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterIngredients;
@@ -24,33 +34,40 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
-public class SearchFragment extends Fragment {
-    RecyclerView recyclerView, recyclerView2,recyclerView3;
-    SearchAdapterIngredients searchAdapterIngredients;
-    SearchAdapterCategories SearchAdapterCategories;
-    SearchAdapterCountres searchAdapterCountres;
-    List<Ingredients> data = new ArrayList<>();
-    List<Custom> country = new ArrayList<>();
-    List<Custom> category = new ArrayList<>();
-
-    String[]country_name;
-    int[]country_images;
+public class SearchFragment extends Fragment implements TextWatcher, OnSearchItemListener {
+    private RecyclerView recyclerView, recyclerView2,recyclerView3;
+    private SearchAdapterIngredients searchAdapterIngredients;
+    private SearchAdapterCategories SearchAdapterCategories;
+    private SearchAdapterCountres searchAdapterCountres;
+    private List<Ingredients> ingredientsList;
+    private List<Custom> countryList;
+    private List<Custom> categoryList;
+    private String[]country_name;
+    private int[]country_images;
+    private View view;
+    private EditText search;
+    private NavHostFragment navHostFragment;
+    private NavController navController;
 
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ingredientsList = new ArrayList<>();
+        countryList = new ArrayList<>();
+        categoryList = new ArrayList<>();
         country_name=new String[]{"American","Spanish","Indian","Japanese","British","French","Chinese","Egyptian","Italian","Turkish"};
         country_images=new int[]{R.drawable.usa,R.drawable.span,R.drawable.india,R.drawable.japan,R.drawable.uk,R.drawable.franch,R.drawable.china,R.drawable.egypt,R.drawable.italy,R.drawable.turkey};
-
-
+        navHostFragment =(NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        navController= navHostFragment.getNavController();
     }
 
 
@@ -64,32 +81,41 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.view=view;
+        search=view.findViewById(R.id.editTextTextPersonName);
+        search.addTextChangedListener(this);
 
-        Retrofit apiClient = ApiSearch.getClient();
-        ApiSearchInterface apiInterface = apiClient.create(ApiSearchInterface.class);
-        Call<RootMeal> call = apiInterface.getProducts();
-        call.enqueue(new Callback<RootMeal>() {
+        Single<RootMeal>call=ApiSearch.getClient()
+                .rootMealSingle()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        call.subscribe(new SingleObserver<RootMeal>() {
             @Override
-            public void onResponse(Call<RootMeal> call, Response<RootMeal> response) {
-                if (response.isSuccessful()) {
-                    data = response.body().getMeals();
+            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
 
-                    recyclerView2 = view.findViewById(R.id.recyclerView2);
-                    recyclerView2.setHasFixedSize(true);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
-                    recyclerView2.setLayoutManager(linearLayoutManager);
-                    linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-                    searchAdapterIngredients = new SearchAdapterIngredients(data);
-                    recyclerView2.setAdapter(searchAdapterIngredients);
-                }
             }
 
             @Override
-            public void onFailure(Call<RootMeal> call, Throwable t) {
+            public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull RootMeal rootMeal) {
+                ingredientsList = rootMeal.getMeals();
+                recyclerView2 = view.findViewById(R.id.recyclerView2);
+                recyclerView2.setHasFixedSize(true);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
+                recyclerView2.setLayoutManager(linearLayoutManager);
+                linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+                searchAdapterIngredients = new SearchAdapterIngredients(ingredientsList,SearchFragment.this::onSuccessClickItemListener);
+                recyclerView2.setAdapter(searchAdapterIngredients);
+
+
+            }
+
+            @Override
+            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                Toast.makeText(requireContext(),"fail"+ e.getMessage(),Toast.LENGTH_SHORT).show();
+
 
             }
         });
-
 
         recyclerView = view.findViewById(R.id.country_recycle_view);
         recyclerView.setHasFixedSize(true);
@@ -97,7 +123,7 @@ public class SearchFragment extends Fragment {
         linearLayoutManager2.setOrientation(RecyclerView.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager2);
 
-         country = Arrays.asList(
+         countryList = Arrays.asList(
                 new Custom("USA", R.drawable.usa),
                 new Custom("Uk", R.drawable.uk),
                 new Custom("China", R.drawable.china),
@@ -109,18 +135,15 @@ public class SearchFragment extends Fragment {
                  new Custom("Egypt", R.drawable.egypt),
                  new Custom("Japan", R.drawable.japan)
                  );
-                searchAdapterCountres = new SearchAdapterCountres(country);
+                searchAdapterCountres = new SearchAdapterCountres(countryList);
                 recyclerView.setAdapter(searchAdapterCountres);
 
 
 
         recyclerView3 = view.findViewById(R.id.recyclerView);
         recyclerView3.setHasFixedSize(true);
-        /*LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(requireContext());
-        linearLayoutManager3.setOrientation(RecyclerView.VERTICAL);
-        recyclerView3.setLayoutManager(linearLayoutManager3);
-*/
-        category = Arrays.asList(
+
+    categoryList = Arrays.asList(
                 new Custom("Breakfast", R.drawable.breakfast),
                 new Custom("Lunch", R.drawable.lunch),
                 new Custom("Dinner", R.drawable.dinner),
@@ -128,13 +151,39 @@ public class SearchFragment extends Fragment {
                 new Custom("Drinks", R.drawable.drinks),
                 new Custom("Appetizers", R.drawable.appetizer)
         );
-        SearchAdapterCategories = new SearchAdapterCategories(category);
+        SearchAdapterCategories = new SearchAdapterCategories(categoryList);
         recyclerView3.setAdapter(SearchAdapterCategories);
 
 
 
     }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
     }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+         navController.navigate(BaseFragmentDirections
+                     .actionBaseFragmentToRecentSearchFragment("a")
+                     .setLetters(charSequence.toString()));
+    }
+
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+    }
+
+
+    @Override
+    public void onSuccessClickItemListener(String itemData) {
+        navController.navigate(BaseFragmentDirections.
+                actionBaseFragmentToRecentSearchFragment("a")
+                .setLetters(itemData));
+    }
+}
 
 
 
