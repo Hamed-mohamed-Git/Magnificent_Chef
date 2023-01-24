@@ -72,7 +72,7 @@
         tools:layout="@layout/fragment_meal_details" >
         <argument
             android:name="MealItem"
-            app:argType="com.example.magnificentchef.network.model.MealsItem"
+            app:argType="com.example.magnificentchef.model.remote.model.MealsItem"
             app:nullable="true" />
     </fragment>
     <fragment
