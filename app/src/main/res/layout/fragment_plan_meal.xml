@@ -318,7 +318,6 @@
             android:id="@+id/btn_wednesday_add"
             android:layout_width="76dp"
             android:layout_height="35dp"
-            android:layout_marginEnd="12dp"
             android:background="@drawable/check_button_card_background"
             android:text="@string/add"
             android:textAllCaps="false"
@@ -344,18 +343,6 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline13"
             app:layout_constraintTop_toTopOf="@+id/textView20"
             tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
-
-        <View
-            android:id="@+id/view5"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/strokeForEDT"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_saturday_add"
-            app:layout_constraintEnd_toStartOf="@+id/guideline13"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/textView18"
-            app:layout_constraintVertical_bias="0.0" />
 
         <View
             android:id="@+id/view7"
