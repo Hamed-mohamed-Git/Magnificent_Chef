@@ -1,7 +1,7 @@
-package com.example.magnificentchef.network;
+package com.example.magnificentchef.model.remote;
 
-import com.example.magnificentchef.network.model.MealsItem;
-import com.example.magnificentchef.network.model.RandomMealResponse;
+import com.example.magnificentchef.model.remote.model.MealsItem;
+import com.example.magnificentchef.model.remote.model.RandomMealResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,6 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Function;
-import io.reactivex.rxjava3.functions.Predicate;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Repository {
@@ -27,7 +26,7 @@ public class Repository {
     public Repository(NetworkDelegate<MealsItem> networkDelegate, Remote remote) {
         this.networkDelegate = networkDelegate;
         this.remote = remote;
-        mealApiService = remote.getRandomMealsApiService();
+        mealApiService = remote.getMealsApiService();
         randomMealResponseSingleList = new ArrayList<>();
         mealList = new ArrayList<>();
     }

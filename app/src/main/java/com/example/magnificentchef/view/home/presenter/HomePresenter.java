@@ -1,6 +1,6 @@
 package com.example.magnificentchef.view.home.presenter;
 
-import com.example.magnificentchef.network.Repository;
+import com.example.magnificentchef.model.remote.Repository;
 
 public class HomePresenter {
     private Repository repository;

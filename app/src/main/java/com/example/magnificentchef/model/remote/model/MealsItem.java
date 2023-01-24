@@ -1,8 +1,10 @@
-package com.example.magnificentchef.network.model;
+package com.example.magnificentchef.model.remote.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MealsItem{
+import java.io.Serializable;
+
+public class MealsItem implements Serializable {
 
 	@SerializedName("strImageSource")
 	private Object strImageSource;

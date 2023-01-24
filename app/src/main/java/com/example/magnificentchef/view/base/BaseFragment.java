@@ -52,23 +52,6 @@ public class BaseFragment extends Fragment {
         navcontroller= Navigation.findNavController(requireActivity(),R.id.fragment);
         NavigationUI.setupWithNavController(bottomNavigationView,navcontroller);
 
-        appBarConfiguration=new AppBarConfiguration.Builder(navcontroller.getGraph()).build();
-
-
-       // navigation view
-        drawerLayout=view.findViewById(R.id.drawer_layout);
-        navigationView=view.findViewById(R.id.navigation_view);
-        ActionBar actionBar=((AppCompatActivity )getActivity()).getSupportActionBar();
-
-        actionBar.setHomeAsUpIndicator(R.drawable.menu);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.show();
-        setHasOptionsMenu(true);
-
-
-        NavController navcontroller= Navigation.findNavController(getActivity(),R.id.nav_host_fragment);
-        NavigationUI.setupWithNavController(navigationView,navcontroller);
     }
 
 
@@ -76,13 +59,33 @@ public class BaseFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==android.R.id.home){
-            if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (item.getItemId() == android.R.id.home) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
-            }else{
+            } else {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         }
         return super.onOptionsItemSelected(item);
     }
 }
+
+
+//
+//        appBarConfiguration=new AppBarConfiguration.Builder(navcontroller.getGraph()).build();
+//
+//
+//       // navigation view
+//        drawerLayout=view.findViewById(R.id.drawer_layout);
+//        navigationView=view.findViewById(R.id.navigation_view);
+//        ActionBar actionBar=((AppCompatActivity )getActivity()).getSupportActionBar();
+//
+//        actionBar.setHomeAsUpIndicator(R.drawable.menu);
+//        actionBar.setDisplayShowHomeEnabled(true);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.show();
+//        setHasOptionsMenu(true);
+
+
+//        NavController navcontroller= Navigation.findNavController(getActivity(),R.id.nav_host_fragment);
+//        NavigationUI.setupWithNavController(navigationView,navcontroller);

@@ -28,31 +28,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.084745765" />
+            app:layout_constraintGuide_percent="0.034745765" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="20dp" />
+            app:layout_constraintGuide_begin="10dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="539dp" />
+            app:layout_constraintGuide_percent="0.22543582" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dailyInspirationRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/guideline14"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView18"
@@ -69,24 +67,25 @@
             android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/nunito_bold"
             android:text="@string/meal"
             android:textColor="@color/black"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toTopOf="@+id/guideline14" />
+            app:layout_constraintTop_toBottomOf="@+id/dailyInspirationRecyclerView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mealRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="2dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/meal_home_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView20">
+            app:layout_constraintTop_toBottomOf="@+id/textView20"
+            tools:listitem="@layout/meal_home_card">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -94,7 +93,6 @@
             android:id="@+id/textView21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:fontFamily="@font/nunito_bold"
             android:text="@string/more_you_might_like"
             android:textColor="@color/black"
@@ -107,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="5dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

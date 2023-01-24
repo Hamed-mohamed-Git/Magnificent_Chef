@@ -3,6 +3,7 @@ package com.example.magnificentchef.view.register;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
@@ -10,6 +11,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -33,14 +35,17 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
     Button btn_google;
-    private Button signUpButton;
+    private Button signUpButton, skipButton;
     private TextView login;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private RegisterPresenter registerPresenter;
+    private SharedPreferences.Editor sharedPrefEditor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPrefEditor  =  requireContext().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE).edit();
     }
 
     @Override
@@ -81,12 +86,15 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
         btn_google = view.findViewById(R.id.btn_google);
         signUpButton = view.findViewById(R.id.signUpButton);
         login = view.findViewById(R.id.textView4);
+        skipButton = view.findViewById(R.id.skipped_button);
         login.setOnClickListener((view1) -> {
             Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_loginFragment);
         });
-
-
-
+        skipButton.setOnClickListener((view1) -> {
+            sharedPrefEditor.putString("registered","true");
+            sharedPrefEditor.apply();
+            Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_baseFragment);
+        });
         btn_google.setOnClickListener(view1 -> {
             activityResultLauncher.launch(GoogleSignIn
                     .getClient(requireContext(),
@@ -96,15 +104,16 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
                                     .build())
                     .getSignInIntent());
         });
-
         signUpButton.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_registerFragment_to_signUpFragment);
-            });
+        });
     }
 
     @Override
     public void onLoginSuccess() {
-        Navigation.findNavController(requireView()).navigate(R.id.action_signUpFragment_to_baseFragment);
+        sharedPrefEditor.putString("registered","true");
+        sharedPrefEditor.apply();
+        Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_baseFragment);
     }
 
     @Override
@@ -112,4 +121,9 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
         //Toast.makeText(requireContext(),"fail",Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+    }
 }

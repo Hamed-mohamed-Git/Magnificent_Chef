@@ -7,22 +7,21 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
-    android:layout_marginStart="55dp"
-    android:layout_marginEnd="55dp"
+    android:layout_marginStart="26dp"
+    android:layout_marginEnd="26dp"
     android:layout_gravity="center_horizontal"
     app:cardCornerRadius="20dp"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content">
 
         <!-- Media -->
         <ImageView
             android:id="@+id/card_Image"
             android:layout_width="0dp"
-            android:layout_height="270dp"
+            android:layout_height="340dp"
             android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
@@ -74,7 +73,7 @@
             android:id="@+id/view3"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="204dp"
+            android:layout_marginTop="272dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/logo_space_background"
             app:layout_constraintEnd_toEndOf="parent"

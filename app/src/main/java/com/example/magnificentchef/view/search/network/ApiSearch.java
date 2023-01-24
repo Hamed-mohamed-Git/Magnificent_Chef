@@ -1,6 +1,5 @@
 package com.example.magnificentchef.view.search.network;
 
-import com.example.magnificentchef.model.local.Ingredients;
 import com.example.magnificentchef.view.search.model.RootMeal;
 
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
