@@ -1,4 +1,4 @@
-package com.example.magnificentchef.network.model;
+package com.example.magnificentchef.model.remote.model;
 
 import com.google.gson.annotations.SerializedName;
 

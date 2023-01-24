@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +18,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.magnificentchef.R;
-import com.example.magnificentchef.network.model.MealsItem;
+import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.view.common.Ingredient;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 
 public class MealDetailsFragment extends Fragment {

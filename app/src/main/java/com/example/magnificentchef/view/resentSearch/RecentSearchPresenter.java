@@ -1,6 +1,6 @@
 package com.example.magnificentchef.view.resentSearch;
 
-import com.example.magnificentchef.network.Repository;
+import com.example.magnificentchef.model.remote.Repository;
 
 public class RecentSearchPresenter {
     private Repository repository;

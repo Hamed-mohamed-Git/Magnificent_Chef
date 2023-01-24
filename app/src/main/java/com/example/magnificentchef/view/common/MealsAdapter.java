@@ -12,14 +12,14 @@ import android.widget.TextView;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.magnificentchef.R;
-import com.example.magnificentchef.network.model.MealsItem;
+import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.view.base.BaseFragmentDirections;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> {
@@ -30,7 +30,8 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     private Context context;
     private NavController navController;
 
-    public MealsAdapter(@LayoutRes int layoutResource, List<MealsItem> mealList, NavController navController) {
+    public MealsAdapter(@LayoutRes int layoutResource, @NonNull List<MealsItem> mealList, NavController navController) {
+        this.mealList = new ArrayList<>();
         this.layoutResource = layoutResource;
         this.mealList = mealList;
         this.navController = navController;

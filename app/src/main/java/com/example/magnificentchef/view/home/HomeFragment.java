@@ -9,16 +9,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.magnificentchef.R;
-import com.example.magnificentchef.network.NetworkDelegate;
-import com.example.magnificentchef.network.Remote;
-import com.example.magnificentchef.network.Repository;
-import com.example.magnificentchef.network.model.MealsItem;
+import com.example.magnificentchef.model.remote.NetworkDelegate;
+import com.example.magnificentchef.model.remote.Remote;
+import com.example.magnificentchef.model.remote.Repository;
+import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.view.common.Meal;
 import com.example.magnificentchef.view.common.MealsAdapter;
 import com.example.magnificentchef.view.home.presenter.HomePresenter;

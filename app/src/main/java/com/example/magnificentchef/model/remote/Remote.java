@@ -1,4 +1,4 @@
-package com.example.magnificentchef.network;
+package com.example.magnificentchef.model.remote;
 
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import retrofit2.Retrofit;

@@ -1,11 +1,13 @@
 package com.example.magnificentchef.view.resentSearch;
 
-import android.content.ClipData;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
@@ -14,20 +16,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.magnificentchef.R;
-import com.example.magnificentchef.network.NetworkDelegate;
-import com.example.magnificentchef.network.Remote;
-import com.example.magnificentchef.network.Repository;
-import com.example.magnificentchef.network.model.MealsItem;
+import com.example.magnificentchef.model.remote.NetworkDelegate;
+import com.example.magnificentchef.model.remote.Remote;
+import com.example.magnificentchef.model.remote.Repository;
+import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.view.common.MealsAdapter;
-import com.example.magnificentchef.view.home.presenter.HomePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.rxjava3.core.Observable;
 
 public class RecentSearchFragment extends Fragment implements NetworkDelegate<MealsItem>, TextWatcher {
 //    private RecentSearchAdapter recentSearchAdapter;
@@ -36,15 +34,21 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
     private List<MealsItem> mealsItems;
     private RecyclerView recyclerView;
     private EditText search;
+    private NavController navController;
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mealsItems = new ArrayList<>();
+        mealsAdapter=new MealsAdapter(R.layout.more_you_might_card,mealsItems,navController);
+        recentSearchPresenter = new RecentSearchPresenter(new Repository(this, Remote.getRetrofitInstance()));
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mealsItems = new ArrayList<>();
-       // recentSearchAdapter=new RecentSearchAdapter(mealsItems);
-        mealsAdapter=new MealsAdapter(R.layout.more_you_might_card,mealsItems);
-        recentSearchPresenter = new RecentSearchPresenter(new Repository(this, Remote.getRetrofitInstance()));
+        navController =
+                ((NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment)).getNavController();
 
 
     }
@@ -59,15 +63,14 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         super.onViewCreated(view, savedInstanceState);
         recyclerView =view.findViewById(R.id.result_search);
-        recyclerView.setAdapter(mealsAdapter);
         search = view.findViewById(R.id.search_edt);
         search.addTextChangedListener(this);
         search.setText( RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
-
-        recentSearchPresenter.getMealsByIngredient(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
+        recentSearchPresenter.getMealsByKey(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
+        //recentSearchPresenter.getMealsByKey(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
+        recyclerView.setAdapter(mealsAdapter);
     }
 
     @Override
@@ -92,12 +95,12 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
             recentSearchPresenter.getMealsByKey(charSequence.toString());
         }
         else{
-            Observable<MealsItem> mealsItemObservable=Observable.fromIterable(mealsItems);
-            mealsItemObservable.filter(mealsItem -> mealsItem.getStrMeal()
-                            .startsWith(charSequence.toString()))
-                    .toList()
-                    .doOnSuccess(mealsAdapter::setMealItemList)
-                    .subscribe();
+//            Observable<MealsItem> mealsItemObservable=Observable.fromIterable(mealsItems);
+//            mealsItemObservable.filter(mealsItem -> mealsItem.getStrMeal()
+//                            .startsWith(charSequence.toString()))
+//                    .toList()
+//                    .doOnSuccess(mealsAdapter::setMealItemList)
+//                    .subscribe();
         }
     }
 

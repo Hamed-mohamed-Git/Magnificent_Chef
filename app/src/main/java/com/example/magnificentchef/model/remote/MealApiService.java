@@ -1,10 +1,11 @@
-package com.example.magnificentchef.network;
+package com.example.magnificentchef.model.remote;
 
 
-import com.example.magnificentchef.network.model.RandomMealResponse;
+import com.example.magnificentchef.model.remote.model.RandomMealResponse;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface MealApiService {
     @GET("random.php")
@@ -15,7 +16,5 @@ public interface MealApiService {
 
     @GET("filter.php")
     Single<RandomMealResponse> getSearchIngredients(@Query("i") String ingredient);
-
-
 
 }

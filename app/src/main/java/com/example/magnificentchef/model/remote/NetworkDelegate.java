@@ -1,4 +1,4 @@
-package com.example.magnificentchef.network;
+package com.example.magnificentchef.model.remote;
 
 import java.util.List;
 
