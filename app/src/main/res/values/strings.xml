@@ -47,5 +47,6 @@
     <string name="add">Add</string>
     <string name="skip_button">Skip</string>
     <string name="preference_file_key">registered</string>
+    <string name="save">My Saved Reciepe</string>
 
 </resources>

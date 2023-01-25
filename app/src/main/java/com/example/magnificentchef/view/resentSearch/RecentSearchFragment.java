@@ -23,11 +23,12 @@ import com.example.magnificentchef.model.remote.Remote;
 import com.example.magnificentchef.model.remote.Repository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.view.common.MealsAdapter;
+import com.example.magnificentchef.view.common.OnMealClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecentSearchFragment extends Fragment implements NetworkDelegate<MealsItem>, TextWatcher {
+public class RecentSearchFragment extends Fragment implements NetworkDelegate<MealsItem>, TextWatcher ,OnMealClickListener{
 //    private RecentSearchAdapter recentSearchAdapter;
     private MealsAdapter mealsAdapter;
     private RecentSearchPresenter recentSearchPresenter;
@@ -36,11 +37,12 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
     private EditText search;
     private NavController navController;
 
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mealsItems = new ArrayList<>();
-        mealsAdapter=new MealsAdapter(R.layout.more_you_might_card,mealsItems,navController);
+        mealsAdapter=new MealsAdapter(R.layout.more_you_might_card,mealsItems,navController,this);
         recentSearchPresenter = new RecentSearchPresenter(new Repository(this, Remote.getRetrofitInstance()));
     }
 
@@ -107,6 +109,16 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
 
     @Override
     public void afterTextChanged(Editable editable) {
+
+    }
+
+    @Override
+    public void onMealClickListener(MealsItem meal) {
+
+    }
+
+    @Override
+    public void onMealFavouriteClickListener(MealsItem favouriteMeal) {
 
     }
 }
