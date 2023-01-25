@@ -51,10 +51,9 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
         holder.cardMealNameTextView.setText(meal.getStrMeal());
         holder.mealCardCategoryTextView.setText(meal.getStrCategory());
         holder.cardMealCheckButton.setOnClickListener(buttonView -> {
-            navController.navigate(BaseFragmentDirections.actionBaseFragmentToMealDetailsFragment(meal).setMealItem(meal));
+            onMealClickListener.onMealClickListener(meal);
         });
         holder.saveButtonImageView.setOnClickListener(buttonView -> {
-
             onMealClickListener.onMealFavouriteClickListener(meal);
         });
     }

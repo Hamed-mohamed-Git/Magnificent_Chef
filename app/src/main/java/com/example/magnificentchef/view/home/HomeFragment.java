@@ -23,6 +23,7 @@ import com.example.magnificentchef.model.remote.NetworkDelegate;
 import com.example.magnificentchef.model.remote.Remote;
 import com.example.magnificentchef.model.remote.Repository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
+import com.example.magnificentchef.view.base.BaseFragmentDirections;
 import com.example.magnificentchef.view.common.Meal;
 import com.example.magnificentchef.view.common.MealsAdapter;
 import com.example.magnificentchef.view.common.OnMealClickListener;
@@ -38,9 +39,7 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
     private HomePresenter homePresenter;
     private RecyclerView mealRecyclerView;
     private RecyclerView moreYouLikeRecyclerView;
-    private List<Meal> mealList;
     private NavController navController;
-    private FavouriteRepository favouriteRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,16 +94,16 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
         for (int itemLoop = 0; itemLoop < 7;itemLoop++){
             inspirationMealList.add(itemList.get(itemLoop));
         }
-        dailyInspirationRecyclerView.setAdapter(new MealsAdapter(R.layout.daily_inspiration_card,inspirationMealList,navController));
+        dailyInspirationRecyclerView.setAdapter(new MealsAdapter(R.layout.daily_inspiration_card,inspirationMealList,navController,this));
         for (int itemLoop = 7; itemLoop < 17;itemLoop++){
             mealItemList.add(itemList.get(itemLoop));
         }
-        mealRecyclerView.setAdapter(new MealsAdapter(R.layout.meal_home_card,mealItemList,navController));
+        mealRecyclerView.setAdapter(new MealsAdapter(R.layout.meal_home_card,mealItemList,navController,this));
         for (int itemLoop = 17; itemLoop < itemList.size();itemLoop++){
 
             moreYouLikeMealList.add(itemList.get(itemLoop));
         }
-        moreYouLikeRecyclerView.setAdapter(new MealsAdapter(R.layout.more_you_might_card,moreYouLikeMealList,navController));
+        moreYouLikeRecyclerView.setAdapter(new MealsAdapter(R.layout.more_you_might_card,moreYouLikeMealList,navController,this));
     }
 
 
@@ -112,8 +111,7 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
 
     @Override
     public void onMealClickListener(MealsItem meal) {
-
-
+        navController.navigate(BaseFragmentDirections.actionBaseFragmentToMealDetailsFragment(meal).setMealItem(meal));
     }
 
     @Override

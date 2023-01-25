@@ -16,6 +16,7 @@ public class HomePresenter {
 
     public HomePresenter(Repository repository,FavouriteRepository favouriteRepository) {
         this.repository = repository;
+        this.favouriteRepository = favouriteRepository;
     }
     public void getRandomMeal(int mealCount){
         repository.getRandomMeal(mealCount);
@@ -54,4 +55,4 @@ public class HomePresenter {
         favouriteMeal.setCategory(mealsItem.getStrCategory());
         return favouriteMeal;
     }
-    }
+}

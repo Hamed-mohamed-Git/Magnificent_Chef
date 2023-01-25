@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface MealPlanDAO {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert
     Completable insert(PlanMeal...PlanMeals);
 
     @Delete

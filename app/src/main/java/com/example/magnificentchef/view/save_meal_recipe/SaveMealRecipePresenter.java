@@ -22,8 +22,8 @@ import java.lang.reflect.Field;
 public class SaveMealRecipePresenter {
     private Repository repository;
     private PlanSaveRepository planSaveRepository;
-    private String ingredientList;
-    private String measures;
+    private String ingredientList = "";
+    private String measures = "";
     private Context context;
     private String imageURI;
 
@@ -39,22 +39,33 @@ public class SaveMealRecipePresenter {
 
     public void savePlaneMeal(MealsItem mealsItem,String day){
 
-        try {
-            getFields(mealsItem);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
 
         Glide.with(context).asBitmap().load(mealsItem.getStrMealThumb()).into(new CustomTarget<Bitmap>() {
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                PlanMeal planMeal = new PlanMeal();
                 try {
-                    imageURI = SaveFiles.saveImage(context,resource,mealsItem.getStrMeal());
+                    getFields(mealsItem);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    planMeal.setImage(SaveFiles.saveImage(context,resource,mealsItem.getStrMeal()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                planMeal.setMeal_id(mealsItem.getIdMeal() + day);
+                planMeal.setName(mealsItem.getStrMeal());
+                planMeal.setArea(mealsItem.getStrArea());
+                planMeal.setVideoUrl(mealsItem.getStrYoutube());
+                planMeal.setCategory(mealsItem.getStrCategory());
+                planMeal.setDate(day);
+                planMeal.setRecipe(ingredientList);
+                planMeal.setMeasure(measures);
+                planMeal.setDirections(mealsItem.getStrInstructions());
+                planSaveRepository.insertPlanMeal(planMeal);
             }
 
             @Override
@@ -63,20 +74,7 @@ public class SaveMealRecipePresenter {
             }
         });
 
-        PlanMeal planMeal = new PlanMeal();
-        planMeal.setMeal_id(mealsItem.getIdMeal());
-        planMeal.setName(mealsItem.getStrMeal());
-        planMeal.setImage(imageURI);
-        planMeal.setArea(mealsItem.getStrArea());
-        planMeal.setVideoUrl(mealsItem.getStrYoutube());
-        planMeal.setCategory(mealsItem.getStrCategory());
-        planMeal.setDate(day);
-        planMeal.setRecipe(ingredientList);
-        planMeal.setMeasure(measures);
-        planMeal.setDirections(mealsItem.getStrInstructions());
 
-
-        planSaveRepository.insertPlanMeal(planMeal);
     }
 
     private void getFields(MealsItem mealsItem) throws IllegalAccessException, NoSuchFieldException {
