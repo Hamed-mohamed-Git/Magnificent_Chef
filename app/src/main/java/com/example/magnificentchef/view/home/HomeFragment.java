@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
                 ((NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment)).getNavController();
         homePresenter = new HomePresenter(new Repository(this,
                 Remote.getRetrofitInstance()),
-                new FavouriteRepository(Local.getLocal(requireContext()),this));
+                new FavouriteRepository(Local.getLocal(requireContext()),this),getActivity().getApplicationContext());
     }
 
     @Override

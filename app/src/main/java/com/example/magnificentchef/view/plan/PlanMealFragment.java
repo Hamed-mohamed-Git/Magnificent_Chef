@@ -30,7 +30,7 @@ import com.example.magnificentchef.view.save_meal_recipe.OnAddMealPlan;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlanMealFragment extends Fragment implements ClickAddPlanListener, SavePlanMealDelegate{
+public class PlanMealFragment extends Fragment implements ClickAddPlanListener<PlanMeal>, SavePlanMealDelegate{
 
     private Button sunday;
     private Button monday;

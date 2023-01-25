@@ -1,5 +1,6 @@
 package com.example.magnificentchef.utils;
 
+import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
 import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
 import com.example.magnificentchef.model.remote.model.MealsItem;
 
@@ -7,6 +8,7 @@ import java.lang.reflect.Field;
 
 public class Mapper {
     private static MealsItem mealsItem;
+
 
     public static MealsItem convert(PlanMeal planMeal){
         mealsItem = new MealsItem();
@@ -44,5 +46,23 @@ public class Mapper {
             }
         }
 
+    }
+    public static MealsItem convert(FavouriteMeal favouriteMeal){
+        mealsItem = new MealsItem();
+        mealsItem.setIdMeal(favouriteMeal.getMeal_id());
+        mealsItem.setStrMeal(favouriteMeal.getName());
+        mealsItem.setStrArea(favouriteMeal.getArea());
+        mealsItem.setStrCategory(favouriteMeal.getCategory());
+        mealsItem.setStrMealThumb(favouriteMeal.getImage());
+        mealsItem.setStrYoutube(favouriteMeal.getVideoUrl());
+        mealsItem.setStrInstructions(favouriteMeal.getDirections());
+        try {
+            getFields(favouriteMeal.getIngredients().split("-"),favouriteMeal.getMeasure().split("-"));
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        return mealsItem;
     }
 }

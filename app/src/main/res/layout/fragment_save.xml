@@ -20,18 +20,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="655dp"
-        android:layout_height="1759dp"
+        android:id="@+id/saveMeaslsRecyclerView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView24"
         app:layout_constraintVertical_bias="0.0"
         app:spanCount="2"
-        tools:listitem="@layout/meal_home_card"
-        android:layout_marginTop="20dp"
-        />
+        tools:listitem="@layout/planned_meal_card" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
