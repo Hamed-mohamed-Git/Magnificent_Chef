@@ -29,12 +29,13 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     private List<MealsItem> mealList;
     private Context context;
     private NavController navController;
-
-    public MealsAdapter(@LayoutRes int layoutResource, @NonNull List<MealsItem> mealList, NavController navController) {
+    private OnMealClickListener onMealClickListener;
+    public MealsAdapter(@LayoutRes int layoutResource, @NonNull List<MealsItem> mealList, NavController navController,OnMealClickListener onMealClickListener) {
         this.mealList = new ArrayList<>();
         this.layoutResource = layoutResource;
         this.mealList = mealList;
         this.navController = navController;
+        this.onMealClickListener=onMealClickListener;
     }
 
     @NonNull
@@ -55,7 +56,8 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
             navController.navigate(BaseFragmentDirections.actionBaseFragmentToMealDetailsFragment(meal).setMealItem(meal));
         });
         holder.saveButtonImageView.setOnClickListener(buttonView -> {
-            //listener
+
+            onMealClickListener.onMealFavouriteClickListener(meal);
         });
     }
 
