@@ -66,7 +66,8 @@
             app:layout_constraintEnd_toEndOf="@+id/vivew"
             app:layout_constraintStart_toStartOf="@+id/vivew"
             app:layout_constraintTop_toTopOf="@+id/vivew"
-            app:srcCompat="@drawable/save_tag" />
+            android:backgroundTint="@color/white"
+            android:background="@drawable/save_background"  />
 
         <View
             android:id="@+id/view3"
@@ -115,7 +116,7 @@
             android:background="@drawable/check_button_card_background"
             android:text="Check"
             android:textAllCaps="false"
-            android:textColor="@color/backgroundTheme"
+            android:textColor="@drawable/check_button_text_background"
             android:textSize="10sp"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"

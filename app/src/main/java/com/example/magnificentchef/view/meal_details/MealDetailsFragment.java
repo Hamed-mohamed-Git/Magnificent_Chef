@@ -94,15 +94,14 @@ public class MealDetailsFragment extends Fragment {
 
     private void getFields() throws IllegalAccessException, NoSuchFieldException {
         Field[] fieldList =  mealsItem.getClass().getDeclaredFields();
-        for (int loop = 0; loop < fieldList.length; loop++){
-            Field field = fieldList[loop];
-            if (field.getName().startsWith("strIngredient")){
+        for (Field field : fieldList) {
+            if (field.getName().startsWith("strIngredient")) {
                 field.setAccessible(true);
-                if (field.get(mealsItem) != null && !field.get(mealsItem).toString().isEmpty()){
-                    Field measureField = mealsItem.getClass().getDeclaredField("strMeasure" + field.getName().substring(13,field.getName().length()));
+                if (field.get(mealsItem) != null && !field.get(mealsItem).toString().isEmpty()) {
+                    Field measureField = mealsItem.getClass().getDeclaredField("strMeasure" + field.getName().substring(13, field.getName().length()));
                     measureField.setAccessible(true);
                     ingredientsList.add(new Ingredient((String) field.get(mealsItem),
-                        (String) measureField.get(mealsItem)));
+                            (String) measureField.get(mealsItem)));
                 }
             }
 

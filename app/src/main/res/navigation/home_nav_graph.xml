@@ -13,7 +13,11 @@
         android:id="@+id/plan_meal_screen"
         android:name="com.example.magnificentchef.view.plan.PlanMealFragment"
         android:label="@string/PlanMeal"
-        tools:layout="@layout/fragment_plan_meal" />
+        tools:layout="@layout/fragment_plan_meal" >
+        <action
+            android:id="@+id/action_plan_meal_screen_to_saveMealRecipeFragment"
+            app:destination="@id/saveMealRecipeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/save_screen"
         android:name="com.example.magnificentchef.view.save.saveFragment"
@@ -24,4 +28,13 @@
         android:name="com.example.magnificentchef.view.search.SearchFragment"
         android:label="@string/search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/saveMealRecipeFragment"
+        android:name="com.example.magnificentchef.view.save_meal_recipe.SaveMealRecipeFragment"
+        android:label="fragment_save_meal_recipe"
+        tools:layout="@layout/fragment_save_meal_recipe" >
+        <argument
+            android:name="day"
+            app:argType="string" />
+    </fragment>
 </navigation>

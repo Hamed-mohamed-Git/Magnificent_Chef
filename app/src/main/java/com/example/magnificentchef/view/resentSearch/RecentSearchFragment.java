@@ -68,7 +68,8 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
         search = view.findViewById(R.id.search_edt);
         search.addTextChangedListener(this);
         search.setText( RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
-        recentSearchPresenter.getMealsByKey(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
+        //recentSearchPresenter.getMealsByKey(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
+        //recentSearchPresenter.getMealsByIngredient();
         //recentSearchPresenter.getMealsByKey(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
         recyclerView.setAdapter(mealsAdapter);
     }

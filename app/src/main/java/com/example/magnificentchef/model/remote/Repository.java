@@ -23,6 +23,7 @@ public class Repository {
     private final List<Single<RandomMealResponse>> randomMealResponseSingleList;
     private final List<MealsItem> mealList;
 
+
     public Repository(NetworkDelegate<MealsItem> networkDelegate, Remote remote) {
         this.networkDelegate = networkDelegate;
         this.remote = remote;
@@ -32,17 +33,14 @@ public class Repository {
     }
 
     public void getRandomMeal(int mealCount){
+        final int[] count = {0};
+
         setSingleObservableToList(mealCount);
-        Observable
-                .fromIterable(randomMealResponseSingleList)
+        mealApiService.getMeal()
                 .subscribeOn(Schedulers.io())
-                .flatMap(new Function<Single<RandomMealResponse>, ObservableSource<RandomMealResponse>>() {
-                    @Override
-                    public ObservableSource<RandomMealResponse> apply(Single<RandomMealResponse> responseSingle) throws Throwable {
-                        return responseSingle.toObservable();
-                    }
-                })
+                .repeatUntil(()-> count[0] == mealCount)
                 .distinct()
+                .doOnNext(t -> count[0]++)
                 .toList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<List<RandomMealResponse>>() {

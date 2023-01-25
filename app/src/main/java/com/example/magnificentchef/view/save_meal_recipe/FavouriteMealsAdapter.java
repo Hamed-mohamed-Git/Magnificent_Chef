@@ -1,4 +1,4 @@
-package com.example.magnificentchef.view.common;
+package com.example.magnificentchef.view.save_meal_recipe;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,38 +22,37 @@ import com.example.magnificentchef.view.base.BaseFragmentDirections;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> {
+public class FavouriteMealsAdapter extends RecyclerView.Adapter<FavouriteMealsAdapter.ViewHolder> {
 
     @LayoutRes
     private final int layoutResource;
     private List<MealsItem> mealList;
-    private NavController navController;
+    private Context context;
+    private OnAddMealPlan onAddMealPlan;
 
-    public MealsAdapter(@LayoutRes int layoutResource, @NonNull List<MealsItem> mealList, NavController navController) {
+    public FavouriteMealsAdapter(@LayoutRes int layoutResource, @NonNull List<MealsItem> mealList,OnAddMealPlan onAddMealPlan) {
         this.mealList = new ArrayList<>();
         this.layoutResource = layoutResource;
         this.mealList = mealList;
-        this.navController = navController;
+        this.onAddMealPlan = onAddMealPlan;
     }
 
     @NonNull
     @Override
-    public MealsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(layoutResource,parent,false);
+    public FavouriteMealsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
+        View view = LayoutInflater.from(context).inflate(layoutResource,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MealsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FavouriteMealsAdapter.ViewHolder holder, int position) {
         MealsItem meal = mealList.get(position);
-        Glide.with(holder.itemView).load(meal.getStrMealThumb()).into(holder.cardMealImageView);
+        Glide.with(context).load(meal.getStrMealThumb()).into(holder.cardMealImageView);
         holder.cardMealNameTextView.setText(meal.getStrMeal());
         holder.mealCardCategoryTextView.setText(meal.getStrCategory());
-        holder.cardMealCheckButton.setOnClickListener(buttonView -> {
-            navController.navigate(BaseFragmentDirections.actionBaseFragmentToMealDetailsFragment(meal).setMealItem(meal));
-        });
-        holder.saveButtonImageView.setOnClickListener(buttonView -> {
-            //listener
+        holder.cardMealAddButton.setOnClickListener(buttonView -> {
+            onAddMealPlan.onAddClickMealListener(meal);
         });
     }
 
@@ -65,8 +64,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
      static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mealCardCategoryTextView;
         private TextView cardMealNameTextView;
-        private Button cardMealCheckButton;
-        private ImageView saveButtonImageView;
+        private Button cardMealAddButton;
         private ImageView cardMealImageView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -77,8 +75,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
         void initView(View view){
             mealCardCategoryTextView = view.findViewById(R.id.Category_TV);
             cardMealNameTextView = view.findViewById(R.id.cardMealTextView);
-            cardMealCheckButton = view.findViewById(R.id.cardMealCheckButton);
-            saveButtonImageView = view.findViewById(R.id.saveButtonImageView);
+            cardMealAddButton = view.findViewById(R.id.cardMealAddButton);
             cardMealImageView = view.findViewById(R.id.card_Image);
         }
 

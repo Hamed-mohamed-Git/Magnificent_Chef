@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    android:layout_marginStart="26dp"
-    android:layout_marginEnd="26dp"
-    android:layout_gravity="center_horizontal"
+    android:id="@+id/an"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
     app:cardCornerRadius="20dp"
-    >
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="5dp"
         android:layout_height="wrap_content">
 
         <!-- Media -->
         <ImageView
             android:id="@+id/card_Image"
             android:layout_width="0dp"
-            android:layout_height="340dp"
+            android:layout_height="130dp"
             android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
+
             android:foreground="#30000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,23 +38,25 @@
             android:id="@+id/cardMealTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="22dp"
+            app:layout_constraintBottom_toTopOf="@+id/cardMealAddButton"
             android:gravity="center"
-            android:layout_marginEnd="28dp"
             android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/cardMealCheckButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_Image"
             tools:text="French Onion Chicken with Roasted Carrots" />
 
         <View
-            android:id="@+id/view"
+            android:id="@+id/vivew"
             android:layout_width="30dp"
+            android:visibility="gone"
             android:layout_height="30dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/save_tag_background"
             android:backgroundTint="#30000000"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,30 +64,31 @@
 
         <ImageView
             android:id="@+id/saveButtonImageView"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/vivew"
+            app:layout_constraintEnd_toEndOf="@+id/vivew"
+            app:layout_constraintStart_toStartOf="@+id/vivew"
+            app:layout_constraintTop_toTopOf="@+id/vivew"
             android:backgroundTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintStart_toStartOf="@+id/view"
-            app:layout_constraintTop_toTopOf="@+id/view"
-            android:background="@drawable/save_background" />
+            android:background="@drawable/save_background"  />
 
         <View
             android:id="@+id/view3"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="272dp"
-            android:layout_marginEnd="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="115dp"
             android:background="@drawable/logo_space_background"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vivew" />
 
         <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-
+            android:id="@+id/imageView5444"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:background="@drawable/logo"
             android:backgroundTint="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/view3"
@@ -96,36 +100,49 @@
             android:id="@+id/Category_TV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="15dp"
             android:fontFamily="@font/nunito_bold"
-            android:text="Chicken"
             android:textColor="@color/white"
-            android:textSize="16dp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/cardMealTextView"
             app:layout_constraintEnd_toEndOf="@+id/cardMealTextView"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/cardMealTextView" />
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Chicken" />
 
         <Button
-            android:id="@+id/cardMealCheckButton"
+            android:id="@+id/cardMealAddButton"
             android:layout_width="match_parent"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/check_button_card_background"
-            android:text="@string/check"
+            android:text="Perview"
             android:textAllCaps="false"
             android:textColor="@drawable/check_button_text_background"
+            android:textSize="8sp"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/cardMealTextView"
-            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/cardMealTextView"
-            app:layout_constraintTop_toBottomOf="@+id/cardMealTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/cardMealTextView"
+            app:layout_constraintVertical_bias="0.875" />
+
+        <ImageView
+            android:id="@+id/deleteImageView"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/exite__button_background" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</com.google.android.material.card.MaterialCardView>
+</androidx.cardview.widget.CardView>

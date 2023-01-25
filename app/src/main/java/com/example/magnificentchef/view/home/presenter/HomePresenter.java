@@ -4,7 +4,6 @@ import com.example.magnificentchef.model.remote.Repository;
 
 public class HomePresenter {
     private Repository repository;
-
     public HomePresenter(Repository repository) {
         this.repository = repository;
     }

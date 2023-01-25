@@ -17,7 +17,8 @@
             app:exitAnim="@anim/first_welcome_transfer" />
         <action
             android:id="@+id/action_splashScreenFragment_to_baseFragment"
-            app:destination="@id/baseFragment" />
+            app:destination="@id/baseFragment"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -32,7 +33,8 @@
             app:destination="@id/signUpFragment" />
         <action
             android:id="@+id/action_registerFragment_to_baseFragment"
-            app:destination="@id/baseFragment" />
+            app:destination="@id/baseFragment"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -63,7 +65,8 @@
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_baseFragment_to_recentSearchFragment"
-            app:destination="@id/recentSearchFragment" />
+            app:destination="@id/recentSearchFragment"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/mealDetailsFragment"
@@ -72,7 +75,7 @@
         tools:layout="@layout/fragment_meal_details" >
         <argument
             android:name="MealItem"
-            app:argType="com.example.magnificentchef.network.model.MealsItem"
+            app:argType="com.example.magnificentchef.model.remote.model.MealsItem"
             app:nullable="true" />
     </fragment>
     <fragment

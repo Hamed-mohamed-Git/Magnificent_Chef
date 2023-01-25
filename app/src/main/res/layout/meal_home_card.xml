@@ -70,7 +70,8 @@
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:srcCompat="@drawable/save_tag" />
+            android:backgroundTint="@color/white"
+            android:background="@drawable/save_background" />
 
         <View
             android:id="@+id/view3"
@@ -119,7 +120,7 @@
             android:background="@drawable/check_button_card_background"
             android:text="Check"
             android:textAllCaps="false"
-            android:textColor="@color/backgroundTheme"
+            android:textColor="@drawable/check_button_text_background"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/cardMealTextView"

@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        homePresenter.getRandomMeal(24);
+        homePresenter.getRandomMeal(25);
     }
 
     private void initView(View view){
@@ -83,16 +83,18 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
         List<MealsItem> inspirationMealList = new ArrayList<>();
         List<MealsItem> mealItemList = new ArrayList<>();
         List<MealsItem> moreYouLikeMealList = new ArrayList<>();
-        for (int itemLoop = 0; itemLoop < itemList.size();itemLoop++){
-            if (itemLoop < 7)
+        for (int itemLoop = 0; itemLoop < 7;itemLoop++){
                 inspirationMealList.add(itemList.get(itemLoop));
-            else if (itemLoop < 17)
-                mealItemList.add(itemList.get(itemLoop));
-            else
-                moreYouLikeMealList.add(itemList.get(itemLoop));
         }
         dailyInspirationRecyclerView.setAdapter(new MealsAdapter(R.layout.daily_inspiration_card,inspirationMealList,navController));
+        for (int itemLoop = 7; itemLoop < 17;itemLoop++){
+                mealItemList.add(itemList.get(itemLoop));
+        }
         mealRecyclerView.setAdapter(new MealsAdapter(R.layout.meal_home_card,mealItemList,navController));
+        for (int itemLoop = 17; itemLoop < itemList.size();itemLoop++){
+
+                moreYouLikeMealList.add(itemList.get(itemLoop));
+        }
         moreYouLikeRecyclerView.setAdapter(new MealsAdapter(R.layout.more_you_might_card,moreYouLikeMealList,navController));
     }
 

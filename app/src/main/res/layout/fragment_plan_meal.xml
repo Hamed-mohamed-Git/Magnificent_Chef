@@ -30,7 +30,7 @@
             android:textSize="25sp"
 
             app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+            app:layout_constraintTop_toBottomOf="@+id/saturdayRecyclerView" />
 
         <TextView
             android:id="@+id/textView17"
@@ -61,7 +61,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView2"
+            android:id="@+id/saturdayRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -77,7 +77,7 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/sundayRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -100,10 +100,10 @@
             android:textSize="25sp"
 
             app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+            app:layout_constraintTop_toBottomOf="@+id/sundayRecyclerView" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/country_recycle_view"
+            android:id="@+id/mondayRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -127,10 +127,10 @@
 
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/country_recycle_view" />
+            app:layout_constraintTop_toBottomOf="@+id/mondayRecyclerView" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tuesday_recycle_view"
+            android:id="@+id/tuesdayRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -152,11 +152,11 @@
             android:textColor="@color/btnColorDark"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/tuesday_recycle_view" />
+            app:layout_constraintTop_toBottomOf="@+id/tuesdayRecyclerView" />
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/wednesday_recycle_view"
+            android:id="@+id/wednesdayRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -179,11 +179,11 @@
             android:textColor="@color/btnColorDark"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/wednesday_recycle_view" />
+            app:layout_constraintTop_toBottomOf="@+id/wednesdayRecyclerView" />
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/thursday_recycle_view"
+            android:id="@+id/thursdayRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -206,11 +206,11 @@
             android:textColor="@color/btnColorDark"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/thursday_recycle_view" />
+            app:layout_constraintTop_toBottomOf="@+id/thursdayRecyclerView" />
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/friday_recycle_view"
+            android:id="@+id/fridayRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -245,7 +245,7 @@
             android:background="@drawable/check_button_card_background"
             android:text="@string/add"
             android:textAllCaps="false"
-            android:textColor="@color/backgroundTheme"
+            android:textColor="@drawable/check_button_text_background"
             android:textSize="12sp"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="@+id/textView18"
@@ -260,7 +260,7 @@
             android:background="@drawable/check_button_card_background"
             android:text="@string/add"
             android:textAllCaps="false"
-            android:textColor="@color/backgroundTheme"
+            android:textColor="@drawable/check_button_text_background"
             android:textSize="12sp"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="@+id/textView22"
@@ -275,7 +275,7 @@
             android:background="@drawable/check_button_card_background"
             android:text="@string/add"
             android:textAllCaps="false"
-            android:textColor="@color/backgroundTheme"
+            android:textColor="@drawable/check_button_text_background"
             android:textSize="12sp"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="@+id/tuseday"
@@ -291,7 +291,7 @@
             android:background="@drawable/check_button_card_background"
             android:text="@string/add"
             android:textAllCaps="false"
-            android:textColor="@color/backgroundTheme"
+            android:textColor="@drawable/check_button_text_background"
             android:textSize="12sp"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="@+id/Thursday"
@@ -306,7 +306,7 @@
             android:background="@drawable/check_button_card_background"
             android:text="@string/add"
             android:textAllCaps="false"
-            android:textColor="@color/backgroundTheme"
+            android:textColor="@drawable/check_button_text_background"
             android:textSize="12sp"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="@+id/friday"
@@ -322,7 +322,7 @@
             android:background="@drawable/check_button_card_background"
             android:text="@string/add"
             android:textAllCaps="false"
-            android:textColor="@color/backgroundTheme"
+            android:textColor="@drawable/check_button_text_background"
             android:textSize="12sp"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="@+id/wednesday"
@@ -337,7 +337,7 @@
             android:background="@drawable/check_button_card_background"
             android:text="@string/add"
             android:textAllCaps="false"
-            android:textColor="@color/backgroundTheme"
+            android:textColor="@drawable/check_button_text_background"
             android:textSize="12sp"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="@+id/textView20"
