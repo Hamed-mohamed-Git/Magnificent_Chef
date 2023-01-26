@@ -118,4 +118,52 @@ public class Repository {
                     }
                 });
     }
+
+    public void getMealsByArea(String area){
+        mealApiService.getSearchArea(area)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<RandomMealResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull RandomMealResponse randomMealResponse) {
+                        networkDelegate.onSuccessResult(randomMealResponse.getMeals());
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        networkDelegate.onFailureResult(e.getMessage());
+
+                    }
+                });
+    }
+    public void getMealById (String id,String key,MealNetworkDelegate mealNetworkDelegate){
+
+        mealApiService.getMealById(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<RandomMealResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull RandomMealResponse randomMealResponse) {
+                        mealNetworkDelegate.onSuccessMealResult(randomMealResponse.getMeals(),key);
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mealNetworkDelegate.onFailureResult(e.getMessage());
+
+                    }
+                });
+    }
 }

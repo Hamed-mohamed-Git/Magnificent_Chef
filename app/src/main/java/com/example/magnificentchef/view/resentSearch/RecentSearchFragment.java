@@ -18,17 +18,23 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.model.local.Local;
+import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
+import com.example.magnificentchef.model.local.favourite_meal.FavouriteMealDelegate;
+import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepository;
+import com.example.magnificentchef.model.remote.MealNetworkDelegate;
 import com.example.magnificentchef.model.remote.NetworkDelegate;
 import com.example.magnificentchef.model.remote.Remote;
 import com.example.magnificentchef.model.remote.Repository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
+import com.example.magnificentchef.view.base.BaseFragmentDirections;
 import com.example.magnificentchef.view.common.MealsAdapter;
 import com.example.magnificentchef.view.common.OnMealClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecentSearchFragment extends Fragment implements NetworkDelegate<MealsItem>, TextWatcher ,OnMealClickListener{
+public class RecentSearchFragment extends Fragment implements NetworkDelegate<MealsItem>, TextWatcher ,OnMealClickListener, FavouriteMealDelegate,MealNetworkDelegate{
 //    private RecentSearchAdapter recentSearchAdapter;
     private MealsAdapter mealsAdapter;
     private RecentSearchPresenter recentSearchPresenter;
@@ -36,6 +42,7 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
     private RecyclerView recyclerView;
     private EditText search;
     private NavController navController;
+    private FavouriteRepository favouriteRepository;
 
 
     @Override
@@ -43,14 +50,17 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
         super.onAttach(context);
         mealsItems = new ArrayList<>();
         mealsAdapter=new MealsAdapter(R.layout.more_you_might_card,mealsItems,navController,this);
-        recentSearchPresenter = new RecentSearchPresenter(new Repository(this, Remote.getRetrofitInstance()));
+        recentSearchPresenter = new RecentSearchPresenter(new Repository(this, Remote.getRetrofitInstance()),new FavouriteRepository(Local.getLocal(requireContext()),this),getActivity().getApplicationContext());
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         navController =
-                ((NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment)).getNavController();
+                ((NavHostFragment) requireActivity().
+                        getSupportFragmentManager().
+                        findFragmentById(R.id.nav_host_fragment)).
+                        getNavController();
 
 
     }
@@ -69,10 +79,11 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
         recyclerView =view.findViewById(R.id.result_search);
         search = view.findViewById(R.id.search_edt);
         search.addTextChangedListener(this);
-        search.setText( RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
+       // search.setText(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
         //recentSearchPresenter.getMealsByKey(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
         //recentSearchPresenter.getMealsByIngredient();
         //recentSearchPresenter.getMealsByKey(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
+        recentSearchPresenter.getMealsByArea(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
         recyclerView.setAdapter(mealsAdapter);
     }
 
@@ -114,11 +125,58 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
 
     @Override
     public void onMealClickListener(MealsItem meal) {
+        recentSearchPresenter.getMealsById(meal.getIdMeal(),"check",this);
+
 
     }
 
     @Override
     public void onMealFavouriteClickListener(MealsItem favouriteMeal) {
+        recentSearchPresenter.getMealsById(favouriteMeal.getIdMeal(),"favourite",this);
+
+
+
+    }
+
+    @Override
+    public void onSuccessMealResult(List<MealsItem> mealResponseList,String key) {
+        if (key.equals("check")) {
+            navController.navigate(RecentSearchFragmentDirections
+                    .actionRecentSearchFragmentToMealDetailsFragment(mealResponseList.get(0))
+                    .setMealItem(mealResponseList.get(0)));
+        }
+        else{
+            try {
+                recentSearchPresenter.RecentSearchfavouriteMeal(mealResponseList.get(0));
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
+
+        }
+
+    }
+
+
+    @Override
+    public void onComplete() {
+
+    }
+
+    @Override
+    public void onSuccess(List<FavouriteMeal> favouriteMeals) {
+
+    }
+
+    @Override
+    public void onSubscribe() {
+
+    }
+
+    @Override
+    public void onError(String errorMessage) {
 
     }
 }

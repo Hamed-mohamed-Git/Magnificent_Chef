@@ -25,6 +25,7 @@ import com.example.magnificentchef.view.search.model.Ingredients;
 import com.example.magnificentchef.view.search.model.RootMeal;
 import com.example.magnificentchef.view.search.model.Custom;
 import com.example.magnificentchef.view.search.network.ApiSearch;
+import com.example.magnificentchef.view.search.presenter.OnAreaItemClickListener;
 import com.example.magnificentchef.view.search.presenter.OnSearchItemListener;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterCategories;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterCountres;
@@ -41,7 +42,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
-public class SearchFragment extends Fragment implements TextWatcher, OnSearchItemListener {
+public class SearchFragment extends Fragment implements TextWatcher, OnSearchItemListener, OnAreaItemClickListener {
     private RecyclerView recyclerView, recyclerView2,recyclerView3;
     private SearchAdapterIngredients searchAdapterIngredients;
     private SearchAdapterCategories SearchAdapterCategories;
@@ -123,19 +124,20 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
         linearLayoutManager2.setOrientation(RecyclerView.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager2);
 
-         countryList = Arrays.asList(
-                new Custom("USA", R.drawable.usa),
-                new Custom("Uk", R.drawable.uk),
-                new Custom("China", R.drawable.china),
-                new Custom("Franch", R.drawable.franch),
-                new Custom("Span", R.drawable.span),
-                new Custom("Turkey", R.drawable.turkey),
-                new Custom("India", R.drawable.india),
-                 new Custom("Italy", R.drawable.italy),
-                 new Custom("Egypt", R.drawable.egypt),
-                 new Custom("Japan", R.drawable.japan)
+
+        countryList = Arrays.asList(
+                new Custom("American", R.drawable.usa),
+                new Custom("British", R.drawable.uk),
+                new Custom("Chinese", R.drawable.china),
+                new Custom("French", R.drawable.franch),
+                new Custom("Spanish", R.drawable.span),
+                new Custom("Turkish", R.drawable.turkey),
+                new Custom("Indian", R.drawable.india),
+                 new Custom("Italian", R.drawable.italy),
+                 new Custom("Egyptian", R.drawable.egypt),
+                 new Custom("Japanese", R.drawable.japan)
                  );
-                searchAdapterCountres = new SearchAdapterCountres(countryList);
+                searchAdapterCountres = new SearchAdapterCountres(countryList,this);
                 recyclerView.setAdapter(searchAdapterCountres);
 
 
@@ -166,8 +168,8 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
          navController.navigate(BaseFragmentDirections
-                     .actionBaseFragmentToRecentSearchFragment("a")
-                     .setLetters(charSequence.toString()));
+                 .actionBaseFragmentToRecentSearchFragment("a")
+                 .setLetters(charSequence.toString()));
     }
 
 
@@ -182,6 +184,14 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
         navController.navigate(BaseFragmentDirections.
                 actionBaseFragmentToRecentSearchFragment("a")
                 .setLetters(itemData));
+    }
+
+    @Override
+    public void onClickItemListener(String itemData) {
+        navController.navigate(BaseFragmentDirections.
+                actionBaseFragmentToRecentSearchFragment("Egyptian")
+                .setLetters(itemData));
+
     }
 }
 
