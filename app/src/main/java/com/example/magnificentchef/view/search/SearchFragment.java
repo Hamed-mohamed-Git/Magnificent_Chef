@@ -85,7 +85,6 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
         this.view=view;
         search=view.findViewById(R.id.editTextTextPersonName);
         search.addTextChangedListener(this);
-
         Single<RootMeal>call=ApiSearch.getClient()
                 .rootMealSingle()
                 .subscribeOn(Schedulers.io())
@@ -167,11 +166,17 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-         navController.navigate(BaseFragmentDirections
+        if (charSequence.toString().length() > 0)
+             navController.navigate(BaseFragmentDirections
                  .actionBaseFragmentToRecentSearchFragment("a")
                  .setLetters(charSequence.toString()));
     }
 
+    @Override
+    public void onPause() {
+        search.getText().clear();
+        super.onPause();
+    }
 
     @Override
     public void afterTextChanged(Editable editable) {
