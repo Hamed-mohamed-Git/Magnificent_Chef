@@ -90,5 +90,8 @@
         <action
             android:id="@+id/action_recentSearchFragment_to_mealDetailsFragment"
             app:destination="@id/mealDetailsFragment" />
+        <argument
+            android:name="key"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -34,7 +34,11 @@ import com.example.magnificentchef.view.common.OnMealClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecentSearchFragment extends Fragment implements NetworkDelegate<MealsItem>, TextWatcher ,OnMealClickListener, FavouriteMealDelegate,MealNetworkDelegate{
+import io.reactivex.rxjava3.core.Observable;
+
+public class RecentSearchFragment extends Fragment implements NetworkDelegate<MealsItem>,
+        TextWatcher ,OnMealClickListener,
+        FavouriteMealDelegate,MealNetworkDelegate,OnSearchCheckListener{
 //    private RecentSearchAdapter recentSearchAdapter;
     private MealsAdapter mealsAdapter;
     private RecentSearchPresenter recentSearchPresenter;
@@ -50,7 +54,10 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
         super.onAttach(context);
         mealsItems = new ArrayList<>();
         mealsAdapter=new MealsAdapter(R.layout.more_you_might_card,mealsItems,navController,this);
-        recentSearchPresenter = new RecentSearchPresenter(new Repository(this, Remote.getRetrofitInstance()),new FavouriteRepository(Local.getLocal(requireContext()),this),getActivity().getApplicationContext());
+        recentSearchPresenter = new RecentSearchPresenter(new Repository(this,
+                Remote.getRetrofitInstance()),
+                new FavouriteRepository(Local.getLocal(requireContext()),
+                        this),getActivity().getApplicationContext(),this);
     }
 
     @Override
@@ -79,12 +86,8 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
         recyclerView =view.findViewById(R.id.result_search);
         search = view.findViewById(R.id.search_edt);
         search.addTextChangedListener(this);
-       // search.setText(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
-        //recentSearchPresenter.getMealsByKey(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
-        //recentSearchPresenter.getMealsByIngredient();
-        //recentSearchPresenter.getMealsByKey(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
-        recentSearchPresenter.getMealsByArea(RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
-        recyclerView.setAdapter(mealsAdapter);
+        recentSearchPresenter.checkSearchType(RecentSearchFragmentArgs.fromBundle(getArguments()).getKey()
+                ,RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
     }
 
     @Override
@@ -109,12 +112,12 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
             recentSearchPresenter.getMealsByKey(charSequence.toString());
         }
         else{
-//            Observable<MealsItem> mealsItemObservable=Observable.fromIterable(mealsItems);
-//            mealsItemObservable.filter(mealsItem -> mealsItem.getStrMeal()
-//                            .startsWith(charSequence.toString()))
-//                    .toList()
-//                    .doOnSuccess(mealsAdapter::setMealItemList)
-//                    .subscribe();
+            Observable<MealsItem> mealsItemObservable=Observable.fromIterable(mealsItems);
+            mealsItemObservable.filter(mealsItem -> mealsItem.getStrMeal()
+                            .startsWith(charSequence.toString()))
+                    .toList()
+                    .doOnSuccess(mealsAdapter::setMealItemList)
+                    .subscribe();
         }
     }
 
@@ -178,5 +181,30 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
     @Override
     public void onError(String errorMessage) {
 
+    }
+
+    @Override
+    public void onSearchCategoryListener(String key) {
+        recentSearchPresenter.getMealsByCategory(key);
+        recyclerView.setAdapter(mealsAdapter);
+    }
+
+    @Override
+    public void onSearchListener(String key) {
+        search.setText(key);
+        recentSearchPresenter.getMealsByKey(key);
+        recyclerView.setAdapter(mealsAdapter);
+    }
+
+    @Override
+    public void onSearchAreaListener(String key) {
+        recentSearchPresenter.getMealsByArea(key);
+        recyclerView.setAdapter(mealsAdapter);
+    }
+
+    @Override
+    public void onSearchIngredientListener(String key) {
+        recentSearchPresenter.getMealsByIngredient(key);
+        recyclerView.setAdapter(mealsAdapter);
     }
 }

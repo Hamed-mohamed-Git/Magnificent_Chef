@@ -22,12 +22,15 @@ import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepositor
 import com.example.magnificentchef.model.remote.NetworkDelegate;
 import com.example.magnificentchef.model.remote.Remote;
 import com.example.magnificentchef.model.remote.Repository;
+import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.view.base.BaseFragmentDirections;
 import com.example.magnificentchef.view.common.Meal;
 import com.example.magnificentchef.view.common.MealsAdapter;
 import com.example.magnificentchef.view.common.OnMealClickListener;
 import com.example.magnificentchef.view.home.presenter.HomePresenter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +66,10 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
         super.onViewCreated(view, savedInstanceState);
         initView(view);
         homePresenter.getRandomMeal(24);
+        new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
+                .getSavedMeals();
+        new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
+                .getPlannedMeals();
     }
 
     private void initView(View view){

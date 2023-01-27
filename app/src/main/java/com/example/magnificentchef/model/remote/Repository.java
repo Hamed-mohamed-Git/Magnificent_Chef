@@ -166,4 +166,28 @@ public class Repository {
                     }
                 });
     }
+
+    public void getMealByCategory(String category){
+        remote.getMealsApiService()
+                .getMealsByCategory(category)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<RandomMealResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull RandomMealResponse randomMealResponse) {
+                        networkDelegate.onSuccessResult(randomMealResponse.getMeals());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        networkDelegate.onFailureResult(e.getMessage());
+                    }
+                });
+
+    }
 }

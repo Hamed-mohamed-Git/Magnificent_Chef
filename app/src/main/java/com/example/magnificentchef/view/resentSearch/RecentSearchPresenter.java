@@ -26,11 +26,13 @@ public class RecentSearchPresenter {
     private Context context;
     private String ingredients="";
     private String measure="";
+    private OnSearchCheckListener onSearchCheckListener;
 
-    public RecentSearchPresenter(Repository repository, FavouriteRepository favouriteRepository, Context context) {
+    public RecentSearchPresenter(Repository repository, FavouriteRepository favouriteRepository, Context context, OnSearchCheckListener onSearchCheckListener) {
         this.repository = repository;
         this.favouriteRepository = favouriteRepository;
         this.context = context;
+        this.onSearchCheckListener = onSearchCheckListener;
     }
 
     public void getMealsByKey(String keyLetter){
@@ -44,6 +46,27 @@ public class RecentSearchPresenter {
     }
     public void getMealsById(String id,String key,MealNetworkDelegate mealNetworkDelegate){
         repository.getMealById(id,key,mealNetworkDelegate);
+    }
+
+    public void getMealsByCategory(String category){
+        repository.getMealByCategory(category);
+    }
+    public void checkSearchType(String key, String query){
+        switch (key){
+            case "s":
+                onSearchCheckListener.onSearchListener(query);
+                break;
+            case "a":
+                onSearchCheckListener.onSearchAreaListener(query);
+                break;
+            case "c":
+                onSearchCheckListener.onSearchCategoryListener(query);
+                break;
+            case "i":
+                onSearchCheckListener.onSearchIngredientListener(query);
+                break;
+
+        }
     }
 
     public void RecentSearchfavouriteMeal(MealsItem favouriteMeal) throws NoSuchFieldException, IllegalAccessException {

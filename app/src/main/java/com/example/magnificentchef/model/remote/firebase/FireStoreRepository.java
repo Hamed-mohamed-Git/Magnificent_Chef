@@ -1,17 +1,33 @@
 package com.example.magnificentchef.model.remote.firebase;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
 import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class FireStoreRepository {
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
+    String area = "";
 
     public FireStoreRepository(FirebaseFirestore db,FirebaseAuth firebaseAuth) {
         this.firebaseFirestore = db;
@@ -77,5 +93,67 @@ public class FireStoreRepository {
                 .addOnFailureListener(e -> {
                 });
     }
+
+    public List<FavouriteMeal>  getSavedMeals(){
+        List<FavouriteMeal> favouriteMealList = new ArrayList<>();
+        firebaseFirestore.collection("Users")
+                .document(Objects.requireNonNull(firebaseAuth.getUid()))
+                .collection("Favourite Meals")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                FavouriteMeal favouriteMeal = new FavouriteMeal();
+                                favouriteMeal.setArea((String)document.getData().get("area"));
+                                favouriteMeal.setCategory((String)document.getData().get("category"));
+                                favouriteMeal.setMeal_id((String)document.getData().get("meal_id"));
+                                favouriteMeal.setMeasure((String)document.getData().get("measure"));
+                                favouriteMeal.setDirections((String)document.getData().get("directions"));
+                                favouriteMeal.setImage((String)document.getData().get("image"));
+                                favouriteMeal.setName((String)document.getData().get("name"));
+                                favouriteMeal.setIngredients((String)document.getData().get("ingredients"));
+                                favouriteMeal.setVideoUrl((String)document.getData().get("videoUrl"));
+                                favouriteMealList.add(favouriteMeal);
+                            }
+                        }
+                    }
+                });
+
+        return favouriteMealList;
+    }
+
+    public List<PlanMeal> getPlannedMeals(){
+        List<PlanMeal> planMealList = new ArrayList<>();
+        firebaseFirestore.collection("Users")
+                .document(Objects.requireNonNull(firebaseAuth.getUid()))
+                .collection("Planned Meals")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                PlanMeal planMeal = new PlanMeal();
+                                planMeal.setArea((String)document.getData().get("area"));
+                                planMeal.setCategory((String)document.getData().get("category"));
+                                planMeal.setMeal_id((String)document.getData().get("meal_id"));
+                                planMeal.setMeasure((String)document.getData().get("measure"));
+                                planMeal.setDirections((String)document.getData().get("directions"));
+                                planMeal.setImage((String)document.getData().get("image"));
+                                planMeal.setName((String)document.getData().get("name"));
+                                planMeal.setRecipe((String)document.getData().get("recipe"));
+                                planMeal.setVideoUrl((String)document.getData().get("videoUrl"));
+                                planMeal.setDate((String)document.getData().get("date"));
+                                planMealList.add(planMeal);
+                            }
+                        }
+                    }
+                });
+
+        return planMealList;
+    }
+
 }
 
