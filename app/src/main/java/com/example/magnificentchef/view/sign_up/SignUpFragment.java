@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.view.common.Constants;
 import com.example.magnificentchef.view.common.RegistrationError;
 import com.example.magnificentchef.view.login.presenter.LoginPresenter;
 import com.example.magnificentchef.view.sign_up.presenter.SignUpInterface;
@@ -89,7 +90,7 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
 
     @Override
     public void onSignSuccess() {
-        sharedPrefEditor.putString("registered","true");
+        sharedPrefEditor.putString(Constants.SHARED_PREFERENCES,Constants.REGISTERED);
         sharedPrefEditor.apply();
         NavHostFragment.findNavController(this).navigate(R.id.action_signUpFragment_to_baseFragment);
 

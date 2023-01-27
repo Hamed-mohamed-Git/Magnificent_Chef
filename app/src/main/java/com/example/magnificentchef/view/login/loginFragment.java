@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.view.common.Constants;
 import com.example.magnificentchef.view.common.RegistrationError;
 import com.example.magnificentchef.view.login.presenter.LoginPresenter;
 import com.example.magnificentchef.view.login.presenter.LoginPresenterInterface;
@@ -80,7 +81,7 @@ public class loginFragment extends Fragment implements LoginPresenterInterface {
 
     @Override
     public void onLoginSuccess() {
-        sharedPrefEditor.putString("registered","true");
+        sharedPrefEditor.putString(Constants.SHARED_PREFERENCES,Constants.REGISTERED);
         sharedPrefEditor.apply();
         incorrectTexView.setVisibility(View.INVISIBLE);
         Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_baseFragment);

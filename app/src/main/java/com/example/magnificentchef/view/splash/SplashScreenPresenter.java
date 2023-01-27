@@ -1,5 +1,7 @@
 package com.example.magnificentchef.view.splash;
 
+import com.example.magnificentchef.view.common.Constants;
+
 public class SplashScreenPresenter {
     private RegisterListener registerListener;
 
@@ -8,9 +10,12 @@ public class SplashScreenPresenter {
     }
 
     public void checkRegistered(String key){
-        if (key.equals("false"))
+        if (key.equals(Constants.UN_REGISTERED))
             registerListener.onLoggedOut();
-        else
+        else if(key.equals(Constants.REGISTERED))
             registerListener.onRegistered();
+        else{
+            registerListener.onBoarding();
+        }
     }
 }

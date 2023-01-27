@@ -48,5 +48,8 @@
     <string name="skip_button">Skip</string>
     <string name="preference_file_key">registered</string>
     <string name="save">My Saved Reciepe</string>
+    <string name="header">The key to a good meal is simplicity and the right seasoning</string>
+    <string name="skip"><u>Skip</u></string>
+    <string name="get">Get Started</string>
 
 </resources>

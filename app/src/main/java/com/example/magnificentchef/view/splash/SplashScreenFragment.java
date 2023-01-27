@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.view.common.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -60,7 +61,7 @@ public class SplashScreenFragment extends Fragment implements RegisterListener {
         lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                splashScreenPresenter.checkRegistered(sharedPref.getString("registered","false"));
+                splashScreenPresenter.checkRegistered(sharedPref.getString(Constants.REGISTERED,""));
             }
         });
 
@@ -98,5 +99,13 @@ public class SplashScreenFragment extends Fragment implements RegisterListener {
         Navigation
                 .findNavController(requireView)
                 .navigate(R.id.action_splashScreenFragment_to_registerFragment);
+    }
+
+    @Override
+    public void onBoarding() {
+        Navigation
+                .findNavController(requireView)
+                .navigate(R.id.action_splashScreenFragment_to_onBoardingFragment);
+
     }
 }
