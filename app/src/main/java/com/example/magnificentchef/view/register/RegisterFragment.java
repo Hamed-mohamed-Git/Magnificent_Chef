@@ -23,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magnificentchef.R;
-import com.example.magnificentchef.view.common.Constants;
 import com.example.magnificentchef.view.login.presenter.OnAuthLoginComplete;
 import com.example.magnificentchef.view.register.presenter.RegisterPresenter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -31,7 +30,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
@@ -41,6 +40,7 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private RegisterPresenter registerPresenter;
     private SharedPreferences.Editor sharedPrefEditor;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        firebaseAuth = FirebaseAuth.getInstance();
         activityResultLauncher = registerForActivityResult(new ActivityResultContract<Intent, Task<GoogleSignInAccount>>() {
             @Override
             public Task<GoogleSignInAccount> parseResult(int i, @Nullable Intent intent) {
@@ -67,7 +68,8 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
             }
         }, result -> {
             if (result == null) return;
-             registerPresenter =new RegisterPresenter(FirebaseAuth.getInstance(),this);
+             registerPresenter =new RegisterPresenter(firebaseAuth,this,
+                     new FireStoreRepository(FirebaseFirestore.getInstance(),firebaseAuth));
              registerPresenter.googleLogin(result.getResult().getIdToken());
 
         });

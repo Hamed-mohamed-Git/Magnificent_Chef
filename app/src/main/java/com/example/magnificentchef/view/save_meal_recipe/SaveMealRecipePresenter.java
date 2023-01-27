@@ -13,8 +13,11 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
 import com.example.magnificentchef.model.local.plan_meal.PlanSaveRepository;
 import com.example.magnificentchef.model.remote.Repository;
+import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.utils.SaveFiles;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -66,6 +69,8 @@ public class SaveMealRecipePresenter {
                 planMeal.setMeasure(measures);
                 planMeal.setDirections(mealsItem.getStrInstructions());
                 planSaveRepository.insertPlanMeal(planMeal);
+                new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
+                        .createPlannedMeals(planMeal);
             }
 
             @Override

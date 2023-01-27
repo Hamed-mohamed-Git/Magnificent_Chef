@@ -21,4 +21,7 @@ public interface MealPlanDAO {
 
     @Query("SELECT * FROM PlanMeal")
     Single<List<PlanMeal>> getMeals();
+
+    @Query("DELETE FROM PlanMeal")
+    void delete();
 }

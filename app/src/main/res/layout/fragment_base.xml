@@ -21,6 +21,9 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:paddingVertical="2dp"
+        android:background="@drawable/bottom_navigation_background"
+        app:itemIconSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -66,12 +69,16 @@
         android:visibility="invisible"
         />
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/apps"
+
+    <View
+        android:id="@+id/logoutButton"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/check_button_card_background"
+
+        android:textColor="@drawable/check_button_text_background"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="@+id/email_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/name_tv" />
@@ -96,5 +103,18 @@
         app:layout_constraintStart_toEndOf="@+id/circleImageView"
         app:layout_constraintTop_toTopOf="@+id/circleImageView"
         app:layout_constraintVertical_bias="0.50" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/log_out"
+        android:textColor="@drawable/check_button_text_background"
+        android:textSize="12sp"
+        android:fontFamily="@font/nunito_bold"
+        app:layout_constraintBottom_toBottomOf="@+id/logoutButton"
+        app:layout_constraintEnd_toEndOf="@+id/logoutButton"
+        app:layout_constraintStart_toStartOf="@+id/logoutButton"
+        app:layout_constraintTop_toTopOf="@+id/logoutButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

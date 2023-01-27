@@ -24,6 +24,7 @@ public interface FavouriteDAO {
    @Query("SELECT * FROM FavouriteMeal")
     Single<List<FavouriteMeal>> getFavouriteMeals();
 
-
+    @Query("DELETE FROM FavouriteMeal")
+    void delete();
 
 }

@@ -26,6 +26,7 @@ import com.example.magnificentchef.view.search.model.RootMeal;
 import com.example.magnificentchef.view.search.model.Custom;
 import com.example.magnificentchef.view.search.network.ApiSearch;
 import com.example.magnificentchef.view.search.presenter.OnAreaItemClickListener;
+import com.example.magnificentchef.view.search.presenter.OnCategoryClickListener;
 import com.example.magnificentchef.view.search.presenter.OnSearchItemListener;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterCategories;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterCountres;
@@ -42,7 +43,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
-public class SearchFragment extends Fragment implements TextWatcher, OnSearchItemListener, OnAreaItemClickListener {
+public class SearchFragment extends Fragment implements TextWatcher, OnSearchItemListener, OnAreaItemClickListener, OnCategoryClickListener {
     private RecyclerView recyclerView, recyclerView2,recyclerView3;
     private SearchAdapterIngredients searchAdapterIngredients;
     private SearchAdapterCategories SearchAdapterCategories;
@@ -85,7 +86,6 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
         this.view=view;
         search=view.findViewById(R.id.editTextTextPersonName);
         search.addTextChangedListener(this);
-
         Single<RootMeal>call=ApiSearch.getClient()
                 .rootMealSingle()
                 .subscribeOn(Schedulers.io())
@@ -147,13 +147,13 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
 
     categoryList = Arrays.asList(
                 new Custom("Breakfast", R.drawable.breakfast),
-                new Custom("Lunch", R.drawable.lunch),
-                new Custom("Dinner", R.drawable.dinner),
+                new Custom("Beef", R.drawable.lunch),
+                new Custom("Chicken", R.drawable.dinner),
                 new Custom("Dessert", R.drawable.dessert),
-                new Custom("Drinks", R.drawable.drinks),
-                new Custom("Appetizers", R.drawable.appetizer)
+                new Custom("Pasta", R.drawable.pasta_img),
+                new Custom("Starter", R.drawable.appetizer)
         );
-        SearchAdapterCategories = new SearchAdapterCategories(categoryList);
+        SearchAdapterCategories = new SearchAdapterCategories(categoryList,this);
         recyclerView3.setAdapter(SearchAdapterCategories);
 
 
@@ -167,11 +167,18 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-         navController.navigate(BaseFragmentDirections
-                 .actionBaseFragmentToRecentSearchFragment("a")
+        if (charSequence.toString().length() > 0)
+             navController.navigate(BaseFragmentDirections
+                 .actionBaseFragmentToRecentSearchFragment("a","a")
+                             .setKey("s")
                  .setLetters(charSequence.toString()));
     }
 
+    @Override
+    public void onPause() {
+        search.getText().clear();
+        super.onPause();
+    }
 
     @Override
     public void afterTextChanged(Editable editable) {
@@ -182,16 +189,26 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
     @Override
     public void onSuccessClickItemListener(String itemData) {
         navController.navigate(BaseFragmentDirections.
-                actionBaseFragmentToRecentSearchFragment("a")
+                actionBaseFragmentToRecentSearchFragment("a","i")
+                        .setKey("i")
                 .setLetters(itemData));
     }
 
     @Override
     public void onClickItemListener(String itemData) {
         navController.navigate(BaseFragmentDirections.
-                actionBaseFragmentToRecentSearchFragment("Egyptian")
-                .setLetters(itemData));
+                actionBaseFragmentToRecentSearchFragment("Egyptian","a")
+                        .setKey("a")
+                        .setLetters(itemData));
 
+    }
+
+    @Override
+    public void onCategoryClickItemListener(String itemData) {
+        navController.navigate(BaseFragmentDirections.
+                actionBaseFragmentToRecentSearchFragment("breakfast","c")
+                .setKey("c")
+                .setLetters(itemData));
     }
 }
 

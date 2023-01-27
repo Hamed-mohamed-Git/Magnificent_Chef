@@ -75,9 +75,6 @@ public class saveFragment extends Fragment implements ClickAddPlanListener<Favou
                 .navigate(BaseFragmentDirections
                         .actionBaseFragmentToMealDetailsFragment(new MealsItem())
                         .setMealItem(Mapper.convert(favouriteMeal)));
-
-
-
     }
 
     @Override

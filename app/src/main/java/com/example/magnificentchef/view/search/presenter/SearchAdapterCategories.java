@@ -15,14 +15,14 @@ import com.example.magnificentchef.view.search.model.Custom;
 import java.util.List;
 
 public class SearchAdapterCategories extends RecyclerView.Adapter<SearchAdapterCategories.ViewHolder>{
+    private List<Custom> categories;
+    private Custom category;
+    private OnCategoryClickListener categoryClickListener;
 
-
-    public SearchAdapterCategories(List <Custom> categories) {
+    public SearchAdapterCategories(List<Custom> categories, OnCategoryClickListener categoryClickListener) {
         this.categories = categories;
+        this.categoryClickListener = categoryClickListener;
     }
-
-        private List<Custom> categories;
-        Custom category;
 
     @NonNull
     @Override
@@ -35,6 +35,9 @@ public class SearchAdapterCategories extends RecyclerView.Adapter<SearchAdapterC
         category =categories.get(position);
         holder.image.setImageResource(categories.get(position).getImage());
         holder.label.setText(categories.get(position).getLabel());
+        holder.image.setOnClickListener(view -> {
+                categoryClickListener.onCategoryClickItemListener(categories.get(position).getLabel());
+        });
 
     }
 

@@ -14,9 +14,12 @@ import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepository;
 import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
 import com.example.magnificentchef.model.remote.Repository;
+import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.utils.SaveFiles;
 import com.example.magnificentchef.view.common.Ingredient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -44,8 +47,11 @@ public class HomePresenter {
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                 try {
-                    favouriteRepository.insertFavouriteMeal(convertToFavouriteMeal(favouriteMeal,
-                            SaveFiles.saveImage(context,resource,favouriteMeal.getStrMeal())));
+                    FavouriteMeal favouriteMealConverted = convertToFavouriteMeal(favouriteMeal,
+                            SaveFiles.saveImage(context,resource,favouriteMeal.getStrMeal()));
+                    favouriteRepository.insertFavouriteMeal(favouriteMealConverted);
+                    new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
+                            .createSavedMeals(favouriteMealConverted);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

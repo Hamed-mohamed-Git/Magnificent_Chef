@@ -35,20 +35,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BaseFragment extends Fragment implements BaseInterfce {
     private BottomNavigationView bottomNavigationView;
-   private NavController navcontroller;
+    private NavController navcontroller;
     private AppBarConfiguration appBarConfiguration;
     private DrawerLayout drawerLayout;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-     private CircleImageView user_image;
-     private TextView user_name;
+    private CircleImageView user_image;
+    private TextView user_name;
     private TextView user_email;
     private TextView application_name;
-
     private BasePresenter basePresenter;
     private Context context;
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,7 +89,8 @@ public class BaseFragment extends Fragment implements BaseInterfce {
             user_image.setImageResource(R.drawable.person_black);
         }
         else{
-            Glide.with(context).load(firebaseUser.getPhotoUrl());
+            Glide.with(requireContext()).load(firebaseUser.getPhotoUrl())
+                    .into(user_image);
         }
 
 
@@ -100,12 +98,6 @@ public class BaseFragment extends Fragment implements BaseInterfce {
 
     @Override
     public void onGuestUser() {
-        /*user_email.setVisibility(View.INVISIBLE);
-        user_name.setVisibility(View.INVISIBLE);
-        */
-
-
-
     }
 }
 
