@@ -203,13 +203,13 @@
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:background="@drawable/round_btn"
-        android:backgroundTint="@color/black"
         android:text="@string/sign"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline9"
-        app:layout_constraintWidth_percent="0.5" />
+        app:layout_constraintWidth_percent="0.5"
+        android:enabled="false"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

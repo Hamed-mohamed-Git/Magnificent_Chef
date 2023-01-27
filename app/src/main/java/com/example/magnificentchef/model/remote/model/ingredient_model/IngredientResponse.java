@@ -1,10 +1,9 @@
-package com.example.magnificentchef.model.remote.model;
+package com.example.magnificentchef.model.remote.model.ingredient_model;
 
 import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 
-public class RandomMealResponse{
+public class IngredientResponse{
 
 	@SerializedName("meals")
 	private List<MealsItem> meals;
@@ -12,6 +11,4 @@ public class RandomMealResponse{
 	public List<MealsItem> getMeals(){
 		return meals;
 	}
-
-
 }

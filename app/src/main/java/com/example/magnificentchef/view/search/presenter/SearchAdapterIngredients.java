@@ -12,17 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.magnificentchef.R;
-import com.example.magnificentchef.view.search.model.Ingredients;
+import com.example.magnificentchef.model.remote.model.ingredient_model.MealsItem;
 
 import java.util.List;
 
 public class SearchAdapterIngredients extends RecyclerView.Adapter<SearchAdapterIngredients.ViewHolder> {
 
-    private List<Ingredients>ingredients;
-    Ingredients ingredient;
+    private List<MealsItem>ingredients;
+    MealsItem ingredient;
     OnSearchItemListener onSearchItemListener;
 
-    public SearchAdapterIngredients(List<Ingredients> ingredients,OnSearchItemListener onSearchItemListener) {
+    public SearchAdapterIngredients(List<MealsItem> ingredients,OnSearchItemListener onSearchItemListener) {
         this.ingredients = ingredients;
         this.onSearchItemListener=onSearchItemListener;
     }

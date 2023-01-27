@@ -2,6 +2,7 @@ package com.example.magnificentchef.model.remote;
 
 
 import com.example.magnificentchef.model.remote.model.RandomMealResponse;
+import com.example.magnificentchef.model.remote.model.ingredient_model.IngredientResponse;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.GET;
@@ -25,6 +26,9 @@ public interface MealApiService {
 
     @GET("filter.php")
     Single<RandomMealResponse> getMealsByCategory(@Query("c") String id);
+
+    @GET("list.php?i=list")
+    Single<IngredientResponse> getIngredients();
 
 
 }

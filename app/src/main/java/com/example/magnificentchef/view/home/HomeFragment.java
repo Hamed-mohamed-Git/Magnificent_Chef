@@ -66,10 +66,10 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
         super.onViewCreated(view, savedInstanceState);
         initView(view);
         homePresenter.getRandomMeal(24);
-        new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
-                .getSavedMeals();
-        new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
-                .getPlannedMeals();
+       // new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
+        //        .getSavedMeals();
+       // new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
+          //      .getPlannedMeals();
     }
 
     private void initView(View view){

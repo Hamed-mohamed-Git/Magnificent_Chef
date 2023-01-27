@@ -10,6 +10,7 @@ public class RegistrationError {
     public static final int EMPTY_Last_NAME = 1007;
     public static final int EMPTY_DATA = 1008;
     public static final int EMPTY_User_Name = 1009;
+    public static final int DUBLICATION_EMAIL  = 1010;
 
 
 
