@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
+import com.example.magnificentchef.view.common.Constants;
 import com.example.magnificentchef.view.login.presenter.OnAuthLoginComplete;
 import com.example.magnificentchef.view.register.presenter.RegisterPresenter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
