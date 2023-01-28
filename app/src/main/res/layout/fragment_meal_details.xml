@@ -46,6 +46,8 @@
             android:text="Bigos (Hunters Stew)"
             android:textColor="@color/black"
             android:textSize="17sp"
+            android:lines="1"
+            android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="@+id/view5"
             app:layout_constraintEnd_toEndOf="@+id/view5"
             app:layout_constraintHorizontal_bias="0.497"
@@ -59,7 +61,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:elevation="3dp"
-
             android:text="Polish"
             android:textAllCaps="true"
             android:textSize="15sp"
@@ -106,6 +107,8 @@
                 android:textColor="@color/black"
                 android:textSize="22sp" />
 
+
+
             <Button
                 android:id="@+id/watchButton"
                 android:layout_width="match_parent"
@@ -138,7 +141,37 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view5" />
 
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="Video"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/youtubeVideo"
+            android:layout_width="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintWidth_percent="0.91"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="40dp"
+            tools:layout_editor_absoluteY="765dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline22"

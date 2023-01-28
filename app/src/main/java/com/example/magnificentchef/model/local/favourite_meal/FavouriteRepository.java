@@ -87,4 +87,25 @@ public class FavouriteRepository {
                     }
                 });
     }
+
+    public void clearFavouriteMealsTableData(){
+        local.favouriteDAO().delete()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        favouriteMealDelegate.onComplete();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        favouriteMealDelegate.onError(e.getMessage());
+                    }
+                });
+    }
 }

@@ -118,7 +118,7 @@ public class SaveMealRecipeFragment extends Fragment implements NetworkDelegate<
     }
 
     @Override
-    public void onSuccess(List<PlanMeal> planMeals) {
+    public void onSuccessSavePlannedMeal(List<PlanMeal> planMeals) {
 
     }
 

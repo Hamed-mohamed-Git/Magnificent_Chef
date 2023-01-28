@@ -23,9 +23,13 @@ import com.example.magnificentchef.view.common.RegistrationError;
 import com.example.magnificentchef.view.login.presenter.LoginPresenter;
 import com.example.magnificentchef.view.sign_up.presenter.SignUpInterface;
 import com.example.magnificentchef.view.sign_up.presenter.SignUpPresenter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignUpFragment extends Fragment implements SignUpInterface {
@@ -35,7 +39,6 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
     private Button signUp;
     private TextView SIgnUpError;
     private SharedPreferences.Editor sharedPrefEditor;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,8 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
                         getString(R.string.preference_file_key),
                         Context.MODE_PRIVATE).edit();
         signUpPresenter = new SignUpPresenter(requireActivity(), this, FirebaseAuth.getInstance(),
-                new FireStoreRepository(FirebaseFirestore.getInstance(),FirebaseAuth.getInstance()));
+                new FireStoreRepository(FirebaseFirestore.getInstance(),
+                        FirebaseAuth.getInstance()),new UserProfileChangeRequest.Builder());
     }
 
     @Override
@@ -73,7 +77,6 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
         signUp = view.findViewById(R.id.signUp_Button);
 
         signUp.setOnClickListener(( view1 -> {
-
             email_layout.setErrorEnabled(false);
             user_name_layout.setErrorEnabled(false);
             password_layout.setErrorEnabled(false);
@@ -95,57 +98,21 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
 
     @Override
     public void onSignSuccess() {
-        sharedPrefEditor.putString(Constants.SHARED_PREFERENCES,Constants.REGISTERED);
-        sharedPrefEditor.apply();
-        NavHostFragment.findNavController(this).navigate(R.id.action_signUpFragment_to_baseFragment);
-
+        signUpPresenter.updateUserInformation(user_name.getText().toString());
     }
 
     @Override
     public void onSignFailure(int error) {
-//        switch (error) {
-//            case RegistrationError.EMPTY_USER_EMAIL:
-//                email_layout.setErrorEnabled(true);
-//                email.setError("please enter your email");
-//                break;
-//            case RegistrationError.EMPTY_USER_PASSWORD:
-//                password_layout.setErrorEnabled(true);
-//                password.setError("please enter your password");
-//                break;
-//            case RegistrationError.EMPTY_FIRST_NAME:
-//                first_name_layout.setErrorEnabled(true);
-//                first_name_layout.setError("please enter your first_name");
-//                break;
-//            case RegistrationError.EMPTY_Last_NAME:
-//                last_name_layout.setErrorEnabled(true);
-//                last_name_layout.setError("please enter your last_name");
-//                break;
-//
-//            case RegistrationError.EMPTY_User_Name:
-//                user_name_layout.setErrorEnabled(true);
-//                user_name_layout.setError("please enter your user_name");
-//                break;
-//
-//            case RegistrationError.USER_EMAIL_PASSWORD_INVALID:
-//                SIgnUpError.setVisibility(View.VISIBLE);
-//                SIgnUpError.setText(R.string.invalid_email_and_password_message);
-//                break;
-//            case RegistrationError.USER_EMAIL_PASSWORD_DATA_INVALID:
-//                SIgnUpError.setVisibility(View.VISIBLE);
-//                SIgnUpError.setText(R.string.email_password_incorrect);
-//                break;
-//
-//            default:
-//                password_layout.setErrorEnabled(true);
-//                password_layout.setError("please enter your password");
-//                email_layout.setErrorEnabled(true);
-//                email_layout.setError("please enter your Email");
-//                first_name_layout.setErrorEnabled(true);
-//                first_name_layout.setError("please enter your First Name");
-//                last_name_layout.setErrorEnabled(true);
-//                last_name_layout.setError("please enter your Last Name");
-//                user_name_layout.setErrorEnabled(true);
-//                user_name_layout.setError("please enter your User Name");
-        }
     }
+
+    @Override
+    public void onUpdateUserInfoSuccess() {
+        sharedPrefEditor.putString(getString(R.string.preference_file_key)
+                , Constants.REGISTERED);
+        sharedPrefEditor.apply();
+        NavHostFragment
+                .findNavController(requireParentFragment())
+                .navigate(R.id.action_signUpFragment_to_baseFragment);
+    }
+}
 

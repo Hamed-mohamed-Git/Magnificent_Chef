@@ -27,4 +27,6 @@ public interface MealApiService {
     Single<RandomMealResponse> getMealsByCategory(@Query("c") String id);
 
 
+
+
 }

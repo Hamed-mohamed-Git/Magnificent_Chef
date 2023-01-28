@@ -61,7 +61,7 @@ public class SplashScreenFragment extends Fragment implements RegisterListener {
         lottieAnimationView.addAnimatorListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                splashScreenPresenter.checkRegistered(sharedPref.getString(Constants.REGISTERED,""));
+                splashScreenPresenter.checkRegistered(sharedPref.getString(getString(R.string.preference_file_key),""));
             }
         });
 

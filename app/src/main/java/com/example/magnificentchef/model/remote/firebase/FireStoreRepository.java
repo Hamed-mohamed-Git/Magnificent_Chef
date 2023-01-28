@@ -94,7 +94,7 @@ public class FireStoreRepository {
                 });
     }
 
-    public List<FavouriteMeal>  getSavedMeals(){
+    public List<FavouriteMeal> getSavedMeals(){
         List<FavouriteMeal> favouriteMealList = new ArrayList<>();
         firebaseFirestore.collection("Users")
                 .document(Objects.requireNonNull(firebaseAuth.getUid()))

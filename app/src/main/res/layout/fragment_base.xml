@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#ededed"
     tools:context=".view.base.BaseFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -12,7 +12,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="55dp"
         android:src="@drawable/blacklogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,6 +22,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingVertical="2dp"
+        app:backgroundTint = "#ededed"
+        android:backgroundTint="#ededed"
         android:background="@drawable/bottom_navigation_background"
         app:itemIconSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +37,6 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="2dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,8 +77,6 @@
         android:layout_height="30dp"
         android:layout_marginEnd="15dp"
         android:background="@drawable/check_button_card_background"
-
-        android:textColor="@drawable/check_button_text_background"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="@+id/email_tv"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.16099863" />
+        app:layout_constraintGuide_percent="0.157" />
 
     <TextView
         android:id="@+id/application_name"

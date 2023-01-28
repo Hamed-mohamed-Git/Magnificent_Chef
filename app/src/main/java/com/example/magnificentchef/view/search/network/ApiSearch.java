@@ -10,6 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiSearch {
     public static String BASE_URL ="https://www.themealdb.com/api/json/v1/1/";
     public static ApiSearchInterface apiSearchInterface;
+
     private ApiSearch() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

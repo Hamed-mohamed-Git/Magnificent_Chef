@@ -81,7 +81,7 @@ public class loginFragment extends Fragment implements LoginPresenterInterface {
 
     @Override
     public void onLoginSuccess() {
-        sharedPrefEditor.putString(Constants.SHARED_PREFERENCES,Constants.REGISTERED);
+        sharedPrefEditor.putString(getString(R.string.preference_file_key),Constants.REGISTERED);
         sharedPrefEditor.apply();
         incorrectTexView.setVisibility(View.INVISIBLE);
         Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_baseFragment);

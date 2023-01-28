@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.magnificentchef.R;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
+import com.example.magnificentchef.view.common.Constants;
 import com.example.magnificentchef.view.common.RegistrationError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class SignUpPresenter {
     private static final String TAG = "SignUp Screen";
@@ -18,12 +22,16 @@ public class SignUpPresenter {
     private Activity activity;
     private SignUpInterface signUpInterface;
     private final FireStoreRepository fireStoreRepository;
+    private final UserProfileChangeRequest.Builder profileUpdates;
 
-    public SignUpPresenter (FragmentActivity context, SignUpInterface signUpInterface, FirebaseAuth auth, FireStoreRepository fireStoreRepository) {
+    public SignUpPresenter (FragmentActivity context, SignUpInterface signUpInterface,
+                            FirebaseAuth auth,
+                            FireStoreRepository fireStoreRepository,UserProfileChangeRequest.Builder profileUpdates) {
         this.activity = context;
         this.signUpInterface = signUpInterface;
         this.auth = auth;
         this.fireStoreRepository = fireStoreRepository;
+        this.profileUpdates = profileUpdates;
     }
 
     public void signUp(String userName, String password,String firstName,String lastName,String email) {
@@ -40,6 +48,16 @@ public class SignUpPresenter {
                 }
             });
         }
+    }
+
+    public void updateUserInformation(String name){
+        auth.getInstance().getCurrentUser()
+                .updateProfile(profileUpdates.setDisplayName(name)
+                        .build()).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                       signUpInterface.onUpdateUserInfoSuccess();
+                    }
+                });
     }
 
 }

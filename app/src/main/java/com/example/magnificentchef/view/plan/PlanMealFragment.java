@@ -139,7 +139,7 @@ public class PlanMealFragment extends Fragment implements ClickAddPlanListener<P
     }
 
     @Override
-    public void onSuccess(List<PlanMeal> planMeals) {
+    public void onSuccessSavePlannedMeal(List<PlanMeal> planMeals) {
         setPlannedMealToAdapters(planMeals);
     }
 

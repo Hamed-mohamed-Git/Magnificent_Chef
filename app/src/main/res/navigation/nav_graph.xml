@@ -37,8 +37,7 @@
         <action
             android:id="@+id/action_registerFragment_to_baseFragment"
             app:destination="@id/baseFragment"
-            app:popUpToInclusive="false"
-           />
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -47,7 +46,8 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_baseFragment"
-            app:destination="@id/baseFragment" />
+            app:destination="@id/baseFragment"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -56,7 +56,8 @@
         tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_signUpFragment_to_baseFragment"
-            app:destination="@id/baseFragment" />
+            app:destination="@id/baseFragment"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/baseFragment"
@@ -71,6 +72,10 @@
             android:id="@+id/action_baseFragment_to_recentSearchFragment"
             app:destination="@id/recentSearchFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_baseFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:popUpToInclusive="false"/>
     </fragment>
     <fragment
         android:id="@+id/mealDetailsFragment"

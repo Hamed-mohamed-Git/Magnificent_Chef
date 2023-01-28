@@ -5,7 +5,8 @@ import com.example.magnificentchef.model.local.common.SingleSaveMealPlanListener
 
 import java.util.List;
 
-public interface SavePlanMealDelegate extends CompletableSaveMealPlanListener, SingleSaveMealPlanListener<List<PlanMeal>> {
+public interface SavePlanMealDelegate extends CompletableSaveMealPlanListener{
     void onSubscribe();
     void onError(String errorMessage);
+    void onSuccessSavePlannedMeal(List<PlanMeal> planMealList);
 }

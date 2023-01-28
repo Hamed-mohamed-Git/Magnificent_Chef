@@ -55,7 +55,7 @@ public class OnBoardingAdapter extends PagerAdapter {
 
         switch (position) {
             case 0:
-                photo.setImageResource(R.drawable.breakfast);
+                photo.setImageResource(R.drawable.onboard);
                 circle1.setImageResource(R.drawable.selected);
                 circle2.setImageResource(R.drawable.unselected);
                 circle3.setImageResource(R.drawable.unselected);
@@ -65,7 +65,7 @@ public class OnBoardingAdapter extends PagerAdapter {
 
                 break;
             case 1:
-                photo.setImageResource(R.drawable.lunch);
+                photo.setImageResource(R.drawable.story_bording);
                 circle1.setImageResource(R.drawable.unselected);
                 circle2.setImageResource(R.drawable.selected);
                 circle3.setImageResource(R.drawable.unselected);
@@ -74,7 +74,7 @@ public class OnBoardingAdapter extends PagerAdapter {
                 started.setVisibility(View.GONE);
                 break;
             case 2:
-                photo.setImageResource(R.drawable.dinner);
+                photo.setImageResource(R.drawable.meet);
                 circle1.setImageResource(R.drawable.unselected);
                 circle2.setImageResource(R.drawable.unselected);
                 circle3.setImageResource(R.drawable.selected);

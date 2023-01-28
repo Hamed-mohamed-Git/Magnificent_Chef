@@ -34,7 +34,7 @@ public class OnBoardingFragment extends Fragment implements OnBoardingInterface 
         super.onCreate(savedInstanceState);
         onBoardingAdapter=new OnBoardingAdapter(requireContext(),this);
         sharedPrefEditor  =  requireContext().getSharedPreferences(
-                Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE).edit();
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE).edit();
 
 
 
@@ -68,7 +68,7 @@ public class OnBoardingFragment extends Fragment implements OnBoardingInterface 
 
     @Override
     public void skip() {
-        sharedPrefEditor.putString(Constants.SHARED_PREFERENCES,Constants.UN_REGISTERED);
+        sharedPrefEditor.putString(getString(R.string.preference_file_key),Constants.UN_REGISTERED);
 
         sharedPrefEditor.apply();
         Navigation
@@ -79,7 +79,7 @@ public class OnBoardingFragment extends Fragment implements OnBoardingInterface 
 
     @Override
     public void started() {
-        sharedPrefEditor.putString(Constants.SHARED_PREFERENCES,Constants.UN_REGISTERED);
+        sharedPrefEditor.putString(getString(R.string.preference_file_key),Constants.UN_REGISTERED);
         sharedPrefEditor.apply();
         Navigation
                 .findNavController(view)

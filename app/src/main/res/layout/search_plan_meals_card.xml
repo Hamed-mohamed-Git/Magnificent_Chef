@@ -39,6 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:layout_marginTop="20dp"
+            android:lines="1"
+            android:ellipsize="end"
             android:layout_marginEnd="28dp"
             app:layout_constraintBottom_toTopOf="@+id/cardMealAddButton"
             android:gravity="center"

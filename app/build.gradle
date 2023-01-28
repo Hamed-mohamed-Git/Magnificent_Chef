@@ -87,8 +87,6 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$glide"
 
 
-
-
     //retrofit
     def retrofit = '2.9.0'
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
@@ -99,6 +97,10 @@ dependencies {
     //javaRX
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
     implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
+
+    //youtube video
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.26'
 
 
 }

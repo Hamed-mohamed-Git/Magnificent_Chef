@@ -20,6 +20,9 @@ import com.bumptech.glide.Glide;
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.view.common.Ingredient;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -35,6 +38,7 @@ public class MealDetailsFragment extends Fragment {
     private RecyclerView ingredientsRecyclerView;
     private Intent intent;
     private List<Ingredient> ingredientsList;
+    private YouTubePlayerView youTubePlayerView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +80,8 @@ public class MealDetailsFragment extends Fragment {
         watchButton =  view.findViewById(R.id.watchButton);
         mealImageView =  view.findViewById(R.id.mealImage);
         ingredientsRecyclerView =  view.findViewById(R.id.ingredientsRecyclerView);
+        youTubePlayerView = view.findViewById(R.id.youtubeVideo);
+        getLifecycle().addObserver(youTubePlayerView);
     }
 
     private void setMealItemIntoViews(MealsItem mealsItem){
@@ -88,6 +94,23 @@ public class MealDetailsFragment extends Fragment {
             intent.setData(Uri.parse(mealsItem.getStrYoutube()));
             intent.setPackage("com.google.android.youtube");
             startActivity(intent);
+        });
+        char[] chars =   mealsItem.getStrYoutube().toCharArray();
+        int code = 0;
+        for (int loop = 0; loop < chars.length; loop++){
+            if (chars[loop] == '='){
+                code = loop + 1;
+            }
+
+        }
+        int finalCode = code;
+        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                super.onReady(youTubePlayer);
+                youTubePlayer.loadVideo(mealsItem.getStrYoutube().substring(finalCode),0f);
+                youTubePlayer.pause();
+            }
         });
     }
 

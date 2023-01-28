@@ -23,5 +23,5 @@ public interface MealPlanDAO {
     Single<List<PlanMeal>> getMeals();
 
     @Query("DELETE FROM PlanMeal")
-    void delete();
+    Completable delete();
 }

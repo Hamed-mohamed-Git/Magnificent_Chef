@@ -25,6 +25,6 @@ public interface FavouriteDAO {
     Single<List<FavouriteMeal>> getFavouriteMeals();
 
     @Query("DELETE FROM FavouriteMeal")
-    void delete();
+    Completable delete();
 
 }

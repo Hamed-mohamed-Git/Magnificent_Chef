@@ -96,7 +96,7 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
             Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_loginFragment);
         });
         skipButton.setOnClickListener((view1) -> {
-            sharedPrefEditor.putString(Constants.SHARED_PREFERENCES,Constants.REGISTERED);
+            sharedPrefEditor.putString(getString(R.string.preference_file_key),Constants.REGISTERED);
             sharedPrefEditor.apply();
             Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_baseFragment);
         });
@@ -116,7 +116,7 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
 
     @Override
     public void onLoginSuccess() {
-        sharedPrefEditor.putString(Constants.SHARED_PREFERENCES,Constants.REGISTERED);
+        sharedPrefEditor.putString(getString(R.string.preference_file_key),Constants.REGISTERED);
         sharedPrefEditor.apply();
         Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_baseFragment);
     }

@@ -75,7 +75,7 @@ public class PlanSaveRepository {
 
                     @Override
                     public void onSuccess(@NonNull List<PlanMeal> planMeals) {
-                        savePlanMealDelegate.onSuccess(planMeals);
+                        savePlanMealDelegate.onSuccessSavePlannedMeal(planMeals);
                     }
 
                     @Override
@@ -83,5 +83,29 @@ public class PlanSaveRepository {
                         savePlanMealDelegate.onError(e.getMessage());
                     }
                 });
+    }
+
+    public void clearPlannedMealsTableData(){
+        local.mealPlanDAO()
+                .delete()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        savePlanMealDelegate.onComplete();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        savePlanMealDelegate.onError(e.getMessage());
+                    }
+                });
+
     }
 }
