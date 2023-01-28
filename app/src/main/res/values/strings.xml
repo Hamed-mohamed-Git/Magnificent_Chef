@@ -56,5 +56,6 @@
     <string name="header">The key to a good meal is simplicity and the right seasoning</string>
     <string name="skip"><u>Skip</u></string>
     <string name="get">Get Started</string>
+    <string name="slow_or_no_internet_connections_please_check_your_internet_settings">Slow or no internet connections. Please check your internet settings</string>
 
 </resources>

@@ -2,12 +2,18 @@ package com.example.magnificentchef.view.base;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -17,6 +23,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +41,7 @@ import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepositor
 import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
 import com.example.magnificentchef.model.local.plan_meal.PlanSaveRepository;
 import com.example.magnificentchef.model.local.plan_meal.SavePlanMealDelegate;
+import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.view.base.presenter.BaseInterfce;
 import com.example.magnificentchef.view.base.presenter.BasePresenter;
 import com.example.magnificentchef.view.common.Constants;
@@ -39,6 +49,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -59,6 +70,10 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
     private BasePresenter basePresenter;
     private SharedPreferences.Editor sharedPrefEditor;
     private View logout;
+    private ConnectivityManager connectivityManager;
+    private ConnectivityManager.NetworkCallback networkCallback;
+    private Group group;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +87,35 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
                 this,
                 new FavouriteRepository(Local.getLocal(requireContext()),this),
                 new PlanSaveRepository(Local.getLocal(requireContext()),this));
+
+        connectivityManager =
+                requireContext().getSystemService(ConnectivityManager.class);
+        networkCallback = new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(@NonNull Network network) {
+                super.onAvailable(network);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    group.setVisibility(View.GONE);
+                });
+
+            }
+
+            @Override
+            public void onLost(@NonNull Network network) {
+                super.onLost(network);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    group.setVisibility(View.VISIBLE);
+                });
+
+            }
+            @Override
+            public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
+                super.onCapabilitiesChanged(network, networkCapabilities);
+                //final boolean unmetered = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
+
+            }
+        };
+        new FireStoreRepository(FirebaseFirestore.getInstance(),FirebaseAuth.getInstance()).checkFavouriteMeals();
     }
 
     @Override
@@ -91,10 +135,13 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
         user_email=view.findViewById(R.id.email_tv);
         user_image=view.findViewById(R.id.circleImageView);
         application_name=view.findViewById(R.id.application_name);
+        group = view.findViewById(R.id.base_view_group);
         logout = view.findViewById(R.id.logoutButton);
+        connectivityManager.registerDefaultNetworkCallback(networkCallback);
         logout.setOnClickListener(view1 -> {
             basePresenter.clearDatabaseTables();
-            Navigation.findNavController(view1)
+            Navigation
+                    .findNavController(view1)
                     .navigate(R.id.action_baseFragment_to_registerFragment);
         });
         basePresenter.check();

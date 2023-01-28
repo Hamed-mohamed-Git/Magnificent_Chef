@@ -32,8 +32,6 @@ public class Repository {
 
     public void getRandomMeal(int mealCount){
         final int[] count = {0};
-
-        setSingleObservableToList(mealCount);
         mealApiService.getMeal()
                 .subscribeOn(Schedulers.io())
                 .repeatUntil(()-> count[0] == mealCount)
@@ -44,7 +42,6 @@ public class Repository {
                 .subscribe(new SingleObserver<List<RandomMealResponse>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-
                     }
 
                     @Override
@@ -58,12 +55,6 @@ public class Repository {
                     }
                 });
 
-    }
-
-    private void setSingleObservableToList(int mealCount){
-        for (int loop = 0;loop < mealCount;loop++){
-            randomMealResponseSingleList.add(mealApiService.getMeal());
-        }
     }
     private void setMealItemsToMealList(List<RandomMealResponse> RandomMealResponses){
         for (RandomMealResponse randomMealResponse : RandomMealResponses){

@@ -38,4 +38,6 @@ public class BasePresenter {
         favouriteRepository.clearFavouriteMealsTableData();
         planSaveRepository.clearPlannedMealsTableData();
     }
+
+
 }

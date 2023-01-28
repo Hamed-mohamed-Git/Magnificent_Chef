@@ -11,6 +11,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.AggregateQuerySnapshot;
+import com.google.firebase.firestore.AggregateSource;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,6 +30,7 @@ public class FireStoreRepository {
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
     String area = "";
+    private int favoriteMealsCount = 0;
 
     public FireStoreRepository(FirebaseFirestore db,FirebaseAuth firebaseAuth) {
         this.firebaseFirestore = db;
@@ -153,6 +156,19 @@ public class FireStoreRepository {
                 });
 
         return planMealList;
+    }
+
+    public int checkFavouriteMeals(){
+        firebaseFirestore.collection("Users")
+                .document(Objects.requireNonNull(firebaseAuth.getUid()))
+                .collection("Favourite Meals")
+                .count().get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
+                        favoriteMealsCount = (int)task.getResult().getCount();
+                    }
+                });
+        return favoriteMealsCount;
     }
 
 }
