@@ -16,39 +16,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.magnificentchef.R;
-import com.example.magnificentchef.view.base.BaseFragment;
+import com.example.magnificentchef.model.remote.IngredientNetworkDelegate;
+import com.example.magnificentchef.model.remote.NetworkDelegate;
+import com.example.magnificentchef.model.remote.Remote;
+import com.example.magnificentchef.model.remote.Repository;
+import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.view.base.BaseFragmentDirections;
-import com.example.magnificentchef.view.search.model.Ingredients;
-import com.example.magnificentchef.view.search.model.RootMeal;
 import com.example.magnificentchef.view.search.model.Custom;
-import com.example.magnificentchef.view.search.network.ApiSearch;
 import com.example.magnificentchef.view.search.presenter.OnAreaItemClickListener;
 import com.example.magnificentchef.view.search.presenter.OnCategoryClickListener;
 import com.example.magnificentchef.view.search.presenter.OnSearchItemListener;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterCategories;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterCountres;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterIngredients;
+import com.example.magnificentchef.view.search.presenter.SearchPresenter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.core.SingleObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
-
-public class SearchFragment extends Fragment implements TextWatcher, OnSearchItemListener, OnAreaItemClickListener, OnCategoryClickListener {
+public class SearchFragment extends Fragment implements TextWatcher, OnSearchItemListener, OnAreaItemClickListener, OnCategoryClickListener, NetworkDelegate<MealsItem>, IngredientNetworkDelegate {
     private RecyclerView recyclerView, recyclerView2,recyclerView3;
     private SearchAdapterIngredients searchAdapterIngredients;
     private SearchAdapterCategories SearchAdapterCategories;
     private SearchAdapterCountres searchAdapterCountres;
-    private List<Ingredients> ingredientsList;
     private List<Custom> countryList;
     private List<Custom> categoryList;
     private String[]country_name;
@@ -57,17 +51,18 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
     private EditText search;
     private NavHostFragment navHostFragment;
     private NavController navController;
+    private SearchPresenter searchPresenter;
+
+
 
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ingredientsList = new ArrayList<>();
+        searchPresenter=new SearchPresenter(new Repository(this,Remote.getRetrofitInstance()),this);
         countryList = new ArrayList<>();
         categoryList = new ArrayList<>();
-        country_name=new String[]{"American","Spanish","Indian","Japanese","British","French","Chinese","Egyptian","Italian","Turkish"};
-        country_images=new int[]{R.drawable.usa,R.drawable.span,R.drawable.india,R.drawable.japan,R.drawable.uk,R.drawable.franch,R.drawable.china,R.drawable.egypt,R.drawable.italy,R.drawable.turkey};
         navHostFragment =(NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController= navHostFragment.getNavController();
     }
@@ -76,8 +71,6 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_search, container, false);
-
-
     }
 
     @Override
@@ -86,37 +79,7 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
         this.view=view;
         search=view.findViewById(R.id.editTextTextPersonName);
         search.addTextChangedListener(this);
-        Single<RootMeal>call=ApiSearch.getClient()
-                .rootMealSingle()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        call.subscribe(new SingleObserver<RootMeal>() {
-            @Override
-            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull RootMeal rootMeal) {
-                ingredientsList = rootMeal.getMeals();
-                recyclerView2 = view.findViewById(R.id.recyclerView2);
-                recyclerView2.setHasFixedSize(true);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
-                recyclerView2.setLayoutManager(linearLayoutManager);
-                linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-                searchAdapterIngredients = new SearchAdapterIngredients(ingredientsList,SearchFragment.this::onSuccessClickItemListener);
-                recyclerView2.setAdapter(searchAdapterIngredients);
-
-
-            }
-
-            @Override
-            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-                Toast.makeText(requireContext(),"fail"+ e.getMessage(),Toast.LENGTH_SHORT).show();
-
-
-            }
-        });
+        searchPresenter.getIngredientData();
 
         recyclerView = view.findViewById(R.id.country_recycle_view);
         recyclerView.setHasFixedSize(true);
@@ -124,37 +87,11 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
         linearLayoutManager2.setOrientation(RecyclerView.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager2);
 
-
-        countryList = Arrays.asList(
-                new Custom("American", R.drawable.usa),
-                new Custom("British", R.drawable.uk),
-                new Custom("Chinese", R.drawable.china),
-                new Custom("French", R.drawable.franch),
-                new Custom("Spanish", R.drawable.span),
-                new Custom("Turkish", R.drawable.turkey),
-                new Custom("Indian", R.drawable.india),
-                 new Custom("Italian", R.drawable.italy),
-                 new Custom("Egyptian", R.drawable.egypt),
-                 new Custom("Japanese", R.drawable.japan)
-                 );
-                searchAdapterCountres = new SearchAdapterCountres(countryList,this);
-                recyclerView.setAdapter(searchAdapterCountres);
-
-
-
+        SearchCountry();
         recyclerView3 = view.findViewById(R.id.recyclerView);
         recyclerView3.setHasFixedSize(true);
+        SearchCategory();
 
-    categoryList = Arrays.asList(
-                new Custom("Breakfast", R.drawable.breakfast),
-                new Custom("Beef", R.drawable.lunch),
-                new Custom("Chicken", R.drawable.dinner),
-                new Custom("Dessert", R.drawable.dessert),
-                new Custom("Pasta", R.drawable.pasta_img),
-                new Custom("Starter", R.drawable.appetizer)
-        );
-        SearchAdapterCategories = new SearchAdapterCategories(categoryList,this);
-        recyclerView3.setAdapter(SearchAdapterCategories);
 
 
 
@@ -209,6 +146,65 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
                 actionBaseFragmentToRecentSearchFragment("breakfast","c")
                 .setKey("c")
                 .setLetters(itemData));
+    }
+
+    @Override
+    public void onSuccessResult(List itemList) {
+
+    }
+
+    @Override
+    public void onFailureResult(String message) {
+
+    }
+
+    @Override
+    public void onSuccessIngredientsResult(List<com.example.magnificentchef.model.remote.model.ingredient_model.MealsItem> ingredientsListList) {
+        recyclerView2 = view.findViewById(R.id.recyclerView2);
+        recyclerView2.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
+        recyclerView2.setLayoutManager(linearLayoutManager);
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        searchAdapterIngredients = new SearchAdapterIngredients(ingredientsListList,SearchFragment.this::onSuccessClickItemListener);
+        recyclerView2.setAdapter(searchAdapterIngredients);
+
+    }
+
+    @Override
+    public void onFailIngredientsResult(String error) {
+
+    }
+
+    public void SearchCountry (){
+
+        countryList = Arrays.asList(
+                new Custom("American", R.drawable.usa),
+                new Custom("British", R.drawable.uk),
+                new Custom("Chinese", R.drawable.china),
+                new Custom("French", R.drawable.franch),
+                new Custom("Spanish", R.drawable.span),
+                new Custom("Turkish", R.drawable.turkey),
+                new Custom("Indian", R.drawable.india),
+                new Custom("Italian", R.drawable.italy),
+                new Custom("Egyptian", R.drawable.egypt),
+                new Custom("Japanese", R.drawable.japan)
+        );
+        searchAdapterCountres = new SearchAdapterCountres(countryList,this);
+        recyclerView.setAdapter(searchAdapterCountres);
+    }
+
+    public void SearchCategory(){
+        categoryList = Arrays.asList(
+                new Custom("Breakfast", R.drawable.breakfast),
+                new Custom("Beef", R.drawable.lunch),
+                new Custom("Chicken", R.drawable.dinner),
+                new Custom("Dessert", R.drawable.dessert),
+                new Custom("Pasta", R.drawable.pasta_img),
+                new Custom("Starter", R.drawable.appetizer)
+        );
+        SearchAdapterCategories = new SearchAdapterCategories(categoryList,this);
+        recyclerView3.setAdapter(SearchAdapterCategories);
+
     }
 }
 

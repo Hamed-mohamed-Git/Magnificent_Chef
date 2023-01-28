@@ -36,6 +36,8 @@
     <string name="check">Check</string>
     <string name="invalid_email_and_password_message">Your email and password is invalid!</string>
     <string name="email_password_incorrect">\"Incorrect information entered, Email or password \"</string>
+    <string name="dublication">\"The email address is already in use by another account \"</string>
+
     <string name="week">This Week</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>

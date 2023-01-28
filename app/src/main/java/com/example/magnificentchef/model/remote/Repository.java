@@ -2,18 +2,16 @@ package com.example.magnificentchef.model.remote;
 
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.model.remote.model.RandomMealResponse;
+import com.example.magnificentchef.model.remote.model.ingredient_model.IngredientResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Repository {
@@ -166,7 +164,6 @@ public class Repository {
                     }
                 });
     }
-
     public void getMealByCategory(String category){
         remote.getMealsApiService()
                 .getMealsByCategory(category)
@@ -190,4 +187,28 @@ public class Repository {
                 });
 
     }
+
+    public void getIngredientsDetail(IngredientNetworkDelegate ingredientNetworkDelegate){
+        mealApiService.getIngredients()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<IngredientResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull IngredientResponse ingredientResponse) {
+                        ingredientNetworkDelegate.onSuccessIngredientsResult(ingredientResponse.getMeals());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        ingredientNetworkDelegate.onFailIngredientsResult(e.getMessage());
+
+                    }
+                });
+    }
+
 }

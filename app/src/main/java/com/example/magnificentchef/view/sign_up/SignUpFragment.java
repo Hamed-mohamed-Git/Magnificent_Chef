@@ -20,25 +20,22 @@ import com.example.magnificentchef.R;
 import com.example.magnificentchef.view.common.Constants;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.view.common.RegistrationError;
-import com.example.magnificentchef.view.login.presenter.LoginPresenter;
 import com.example.magnificentchef.view.sign_up.presenter.SignUpInterface;
 import com.example.magnificentchef.view.sign_up.presenter.SignUpPresenter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class SignUpFragment extends Fragment implements SignUpInterface {
+public class SignUpFragment extends Fragment implements SignUpInterface, TextWatcher {
     private SignUpPresenter signUpPresenter;
     private TextInputEditText user_name, first_name, last_name, email, password;
     private TextInputLayout user_name_layout, first_name_layout, last_name_layout, email_layout, password_layout;
     private Button signUp;
     private TextView SIgnUpError;
     private SharedPreferences.Editor sharedPrefEditor;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +64,12 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
         email = view.findViewById(R.id.emailTextInputEditText);
         password = view.findViewById(R.id.passwordTextInputEditText);
 
+        user_name.addTextChangedListener(this);
+        first_name.addTextChangedListener(this);
+        last_name.addTextChangedListener(this);
+        email.addTextChangedListener(this);
+        password.addTextChangedListener(this);
+
         //layout
         user_name_layout = view.findViewById(R.id.user_nametv);
         first_name_layout = view.findViewById(R.id.first_nametv);
@@ -77,12 +80,7 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
         signUp = view.findViewById(R.id.signUp_Button);
 
         signUp.setOnClickListener(( view1 -> {
-            email_layout.setErrorEnabled(false);
-            user_name_layout.setErrorEnabled(false);
-            password_layout.setErrorEnabled(false);
-            first_name_layout.setErrorEnabled(false);
-            last_name_layout.setErrorEnabled(false);
-            email_layout.setErrorEnabled(false);
+
             SIgnUpError.setVisibility(View.INVISIBLE);
 
             signUpPresenter.signUp(user_name.getText().toString(),
@@ -103,6 +101,29 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
 
     @Override
     public void onSignFailure(int error) {
+        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
+
+      switch (error) {
+
+          case RegistrationError.USER_EMAIL_PASSWORD_INVALID:
+              SIgnUpError.setVisibility(View.VISIBLE);
+              SIgnUpError.setText(R.string.invalid_email_and_password_message);
+              break;
+          case RegistrationError.USER_EMAIL_PASSWORD_DATA_INVALID:
+              SIgnUpError.setVisibility(View.VISIBLE);
+              SIgnUpError.setText(R.string.email_password_incorrect);
+              break;
+
+          case RegistrationError.DUBLICATION_EMAIL:
+               SIgnUpError.setVisibility(View.VISIBLE);
+              SIgnUpError.setText(R.string.dublication);
+              break;
+      }
+        }
+
+    @Override
+    public void onEditTextTInputDataValide() {
+        signUp.setEnabled(true);
     }
 
     @Override
@@ -113,6 +134,29 @@ public class SignUpFragment extends Fragment implements SignUpInterface {
         NavHostFragment
                 .findNavController(requireParentFragment())
                 .navigate(R.id.action_signUpFragment_to_baseFragment);
+    }
+
+    @Override
+    public void onEditTextTInputDataNotValide() {
+        signUp.setEnabled(false);
+
+
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            signUpPresenter.Checked(user_name.getText().toString(),password.getText().toString(),first_name.getText().toString(),last_name.getText().toString(),email.getText().toString());
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 }
 
