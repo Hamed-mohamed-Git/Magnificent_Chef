@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,8 +92,6 @@ public class SignUpFragment extends Fragment implements SignUpInterface, TextWat
                     email.getText().toString()
                     );
         } ));
-
-
     }
 
     @Override
@@ -101,10 +101,7 @@ public class SignUpFragment extends Fragment implements SignUpInterface, TextWat
 
     @Override
     public void onSignFailure(int error) {
-        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show();
-
       switch (error) {
-
           case RegistrationError.USER_EMAIL_PASSWORD_INVALID:
               SIgnUpError.setVisibility(View.VISIBLE);
               SIgnUpError.setText(R.string.invalid_email_and_password_message);
@@ -119,7 +116,7 @@ public class SignUpFragment extends Fragment implements SignUpInterface, TextWat
               SIgnUpError.setText(R.string.dublication);
               break;
       }
-        }
+    }
 
     @Override
     public void onEditTextTInputDataValide() {
@@ -139,8 +136,6 @@ public class SignUpFragment extends Fragment implements SignUpInterface, TextWat
     @Override
     public void onEditTextTInputDataNotValide() {
         signUp.setEnabled(false);
-
-
     }
 
     @Override
@@ -150,13 +145,17 @@ public class SignUpFragment extends Fragment implements SignUpInterface, TextWat
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            signUpPresenter.Checked(user_name.getText().toString(),password.getText().toString(),first_name.getText().toString(),last_name.getText().toString(),email.getText().toString());
-
+            signUpPresenter.checked(user_name.getText().toString(),
+                    password.getText().toString(),
+                    first_name.getText().toString(),
+                    last_name.getText().toString(),
+                    email.getText().toString());
     }
 
     @Override
     public void afterTextChanged(Editable editable) {
-
     }
+
+
 }
 

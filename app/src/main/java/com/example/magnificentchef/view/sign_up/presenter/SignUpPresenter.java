@@ -26,7 +26,6 @@ public class SignUpPresenter {
     private SignUpFragment signUpFragment;
     private String status;
     private Pattern regex;
-
     private final FireStoreRepository fireStoreRepository;
     private final UserProfileChangeRequest.Builder profileUpdates;
 
@@ -42,48 +41,51 @@ public class SignUpPresenter {
     }
 
     public void signUp(String userName, String password,String firstName,String lastName,String email) {
-        if (!userName.isEmpty() && !password.isEmpty() && !email.isEmpty() && !lastName.isEmpty() &&!firstName.isEmpty()) {
+        if (!userName.isEmpty() && !password.isEmpty() && !email.isEmpty() && !lastName.isEmpty() && !firstName.isEmpty()) {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(activity, task -> {
                 if (task.isSuccessful()) {
-                    fireStoreRepository.CreateUser(firstName,lastName, userName, email);
+                    fireStoreRepository.CreateUser(firstName, lastName, userName, email);
                     signUpInterface.onSignSuccess();
                 } else {
-                    Log.i("aya", "signUp: "+task.getException().getMessage());
-                    System.out.println("aya"+task.getException());
+                    Log.i("aya", "signUp: " + task.getException().getMessage());
+                    System.out.println("aya" + task.getException());
 
                     if (task.getException() instanceof FirebaseAuthInvalidUserException)
                         signUpInterface.onSignFailure(RegistrationError.USER_EMAIL_PASSWORD_DATA_INVALID);
                     else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException)
                         signUpInterface.onSignFailure(RegistrationError.USER_EMAIL_PASSWORD_INVALID);
 
-                    else if (task.getException() instanceof FirebaseAuthUserCollisionException){
+                    else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                         signUpInterface.onSignFailure(RegistrationError.DUBLICATION_EMAIL);
                     }
                 }
             });
         }
+    }
 
 
 
-    public void Checked(String userName,String password,String firstName,String lastName,String email){
-        if(!userName.isEmpty() && !password.isEmpty() && !email.isEmpty() && !lastName.isEmpty() && !firstName.isEmpty() && password.length()>=6 && regex.matcher(email).matches()){
+        public void updateUserInformation (String name){
+            auth.getInstance().getCurrentUser()
+                    .updateProfile(profileUpdates.setDisplayName(name)
+                            .build()).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            signUpInterface.onUpdateUserInfoSuccess();
+                        }
+                    });
+        }
+
+
+        public void checked (String userName, String password, String firstName, String
+        lastName, String email){
+            if (!userName.isEmpty() && !password.isEmpty() && !email.isEmpty() && !lastName.isEmpty() && !firstName.isEmpty() && password.length() >= 6 && regex.matcher(email).matches()) {
                 signUpInterface.onEditTextTInputDataValide();
+            } else {
+                signUpInterface.onEditTextTInputDataNotValide();
+            }
 
         }
-        else {
-            signUpInterface.onEditTextTInputDataNotValide();
-        }
 
-    }
 
-    public void updateUserInformation(String name){
-        auth.getInstance().getCurrentUser()
-                .updateProfile(profileUpdates.setDisplayName(name)
-                        .build()).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
-                       signUpInterface.onUpdateUserInfoSuccess();
-                    }
-                });
-    }
 
 }
