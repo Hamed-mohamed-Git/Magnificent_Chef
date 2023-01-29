@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.model.local.Local;
@@ -24,8 +26,7 @@ import com.example.magnificentchef.utils.Mapper;
 import com.example.magnificentchef.view.base.BaseFragmentDirections;
 import com.example.magnificentchef.view.plan.presenter.ClickAddPlanListener;
 import com.example.magnificentchef.view.plan.presenter.PlanPresenter;
-import com.example.magnificentchef.view.save_meal_recipe.FavouriteMealsAdapter;
-import com.example.magnificentchef.view.save_meal_recipe.OnAddMealPlan;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,8 @@ public class PlanMealFragment extends Fragment implements ClickAddPlanListener<P
             fridayRecyclerView;
     private PlanPresenter planPresenter;
     private View view;
+    private Group group;
+    private TextView notAvailable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,16 @@ public class PlanMealFragment extends Fragment implements ClickAddPlanListener<P
         thursday = view.findViewById(R.id.btn_thursday_add);
         monday = view.findViewById(R.id.btn_monday_add);
         friday = view.findViewById(R.id.btn_friday_add);
+        group = view.findViewById(R.id.planGroup);
+        notAvailable = view.findViewById(R.id.not_available);
+        if (FirebaseAuth.getInstance().getCurrentUser() == null){
+            group.setVisibility(View.GONE);
+            notAvailable.setVisibility(View.VISIBLE);
+        }else {
+            group.setVisibility(View.VISIBLE);
+            notAvailable.setVisibility(View.GONE);
+        }
+
         sundayRecyclerView = view.findViewById(R.id.sundayRecyclerView);
         mondayRecyclerView = view.findViewById(R.id.mondayRecyclerView);
         tuesdayRecyclerView = view.findViewById(R.id.tuesdayRecyclerView);

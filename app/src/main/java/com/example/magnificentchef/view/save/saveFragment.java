@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.model.local.Local;
@@ -20,11 +22,10 @@ import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepositor
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.utils.Mapper;
 import com.example.magnificentchef.view.base.BaseFragmentDirections;
-import com.example.magnificentchef.view.common.MealsAdapter;
 import com.example.magnificentchef.view.plan.PlannedMealsAdapter;
 import com.example.magnificentchef.view.plan.presenter.ClickAddPlanListener;
 import com.example.magnificentchef.view.save.prsenter.SavePresenter;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class saveFragment extends Fragment implements ClickAddPlanListener<Favou
     private List<FavouriteMeal> favouriteMeals;
     private SavePresenter savePresenter;
     private RecyclerView recyclerView;
+    private Group group;
+    private TextView notAvailable;
 
        @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,16 @@ public class saveFragment extends Fragment implements ClickAddPlanListener<Favou
         super.onViewCreated(view, savedInstanceState);
         recyclerView=view.findViewById(R.id.saveMeaslsRecyclerView);
         savePresenter.getFavouriteMeals();
+        group = view.findViewById(R.id.save_group);
+        notAvailable = view.findViewById(R.id.textView30);
 
+        if (FirebaseAuth.getInstance().getCurrentUser() == null){
+            group.setVisibility(View.GONE);
+            notAvailable.setVisibility(View.VISIBLE);
+        }else {
+            group.setVisibility(View.VISIBLE);
+            notAvailable.setVisibility(View.GONE);
+        }
 
     }
 

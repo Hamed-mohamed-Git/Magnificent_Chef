@@ -69,6 +69,7 @@ public class SaveMealRecipePresenter {
                 planMeal.setMeasure(measures);
                 planMeal.setDirections(mealsItem.getStrInstructions());
                 planSaveRepository.insertPlanMeal(planMeal);
+                planMeal.setImage(mealsItem.getStrMealThumb());
                 new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
                         .createPlannedMeals(planMeal);
             }

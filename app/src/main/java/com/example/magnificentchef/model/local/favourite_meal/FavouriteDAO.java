@@ -6,8 +6,6 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
-
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;

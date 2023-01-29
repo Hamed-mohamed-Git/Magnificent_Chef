@@ -78,7 +78,8 @@ public class loginFragment extends Fragment implements LoginPresenterInterface {
         sharedPrefEditor.putString(getString(R.string.preference_file_key),Constants.REGISTERED);
         sharedPrefEditor.apply();
         incorrectTexView.setVisibility(View.INVISIBLE);
-        Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_baseFragment);
+        Navigation.findNavController(getView()).navigate(loginFragmentDirections
+                .actionLoginFragmentToBaseFragment("none").setKey("signin"));
     }
 
     @Override

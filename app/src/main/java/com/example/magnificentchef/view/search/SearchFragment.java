@@ -18,11 +18,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.model.remote.model.ingredient_model.MealsItem;
 import com.example.magnificentchef.model.remote.IngredientNetworkDelegate;
 import com.example.magnificentchef.model.remote.NetworkDelegate;
 import com.example.magnificentchef.model.remote.Remote;
 import com.example.magnificentchef.model.remote.Repository;
-import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.view.base.BaseFragmentDirections;
 import com.example.magnificentchef.view.search.model.Custom;
 import com.example.magnificentchef.view.search.presenter.OnAreaItemClickListener;
@@ -38,7 +38,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class SearchFragment extends Fragment implements TextWatcher, OnSearchItemListener, OnAreaItemClickListener, OnCategoryClickListener, NetworkDelegate<MealsItem>, IngredientNetworkDelegate {
+public class SearchFragment extends Fragment implements TextWatcher, OnSearchItemListener, OnAreaItemClickListener, OnCategoryClickListener, NetworkDelegate<com.example.magnificentchef.model.remote.model.MealsItem>, IngredientNetworkDelegate {
     private RecyclerView recyclerView, recyclerView2,recyclerView3;
     private SearchAdapterIngredients searchAdapterIngredients;
     private SearchAdapterCategories SearchAdapterCategories;
@@ -159,7 +159,7 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
     }
 
     @Override
-    public void onSuccessIngredientsResult(List<com.example.magnificentchef.model.remote.model.ingredient_model.MealsItem> ingredientsListList) {
+    public void onSuccessIngredientsResult(List<MealsItem> ingredientsListList) {
         recyclerView2 = view.findViewById(R.id.recyclerView2);
         recyclerView2.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());

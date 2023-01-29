@@ -11,7 +11,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -20,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
@@ -118,7 +116,8 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
     public void onLoginSuccess() {
         sharedPrefEditor.putString(getString(R.string.preference_file_key),Constants.REGISTERED);
         sharedPrefEditor.apply();
-        Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_baseFragment);
+        Navigation.findNavController(requireView()).navigate(RegisterFragmentDirections
+                .actionRegisterFragmentToBaseFragment("none").setKey("google"));
     }
 
     @Override

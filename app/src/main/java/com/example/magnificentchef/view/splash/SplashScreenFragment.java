@@ -91,7 +91,7 @@ public class SplashScreenFragment extends Fragment implements RegisterListener {
     public void onRegistered() {
         Navigation
                 .findNavController(requireView)
-                .navigate(R.id.action_splashScreenFragment_to_baseFragment);
+                .navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToBaseFragment("none").setKey("none"));
     }
 
     @Override

@@ -11,13 +11,11 @@ import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.model.remote.model.MealsItem;
-import com.example.magnificentchef.view.base.BaseFragmentDirections;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +49,8 @@ public class FavouriteMealsAdapter extends RecyclerView.Adapter<FavouriteMealsAd
         Glide.with(context).load(meal.getStrMealThumb()).into(holder.cardMealImageView);
         holder.cardMealNameTextView.setText(meal.getStrMeal());
         holder.mealCardCategoryTextView.setText(meal.getStrCategory());
-        holder.cardMealAddButton.setOnClickListener(buttonView -> {
-            onAddMealPlan.onAddClickMealListener(meal);
-        });
+
+
     }
 
     @Override

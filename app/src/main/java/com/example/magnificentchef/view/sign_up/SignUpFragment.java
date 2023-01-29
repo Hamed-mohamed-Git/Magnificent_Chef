@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.view.common.Constants;
@@ -130,7 +129,8 @@ public class SignUpFragment extends Fragment implements SignUpInterface, TextWat
         sharedPrefEditor.apply();
         NavHostFragment
                 .findNavController(requireParentFragment())
-                .navigate(R.id.action_signUpFragment_to_baseFragment);
+                .navigate(SignUpFragmentDirections
+                        .actionSignUpFragmentToBaseFragment("none").setKey("none"));
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.example.magnificentchef.view.common;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.model.remote.model.MealsItem;
-import com.example.magnificentchef.view.base.BaseFragmentDirections;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +49,18 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
         Glide.with(holder.itemView).load(meal.getStrMealThumb()).into(holder.cardMealImageView);
         holder.cardMealNameTextView.setText(meal.getStrMeal());
         holder.mealCardCategoryTextView.setText(meal.getStrCategory());
+        if (FirebaseAuth.getInstance().getCurrentUser() == null){
+            holder.saveButtonImageView.setVisibility(View.INVISIBLE);
+            holder.saveButtonImageView.setEnabled(false);
+        }else {
+            holder.saveButtonImageView.setVisibility(View.VISIBLE);
+            holder.saveButtonImageView.setEnabled(true);
+            holder.saveButtonImageView.setOnClickListener(buttonView -> {
+                onMealClickListener.onMealFavouriteClickListener(meal);
+            });
+        }
         holder.cardMealCheckButton.setOnClickListener(buttonView -> {
             onMealClickListener.onMealClickListener(meal);
-        });
-        holder.saveButtonImageView.setOnClickListener(buttonView -> {
-            onMealClickListener.onMealFavouriteClickListener(meal);
         });
     }
 

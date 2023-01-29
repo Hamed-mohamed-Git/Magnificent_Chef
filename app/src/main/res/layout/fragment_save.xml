@@ -9,6 +9,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_width="wrap_content"
+            android:layout_height="700dp"
+            android:text="this service not avialable"
+            android:gravity="center"
+            android:fontFamily="@font/nunito_bold"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.71000004" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/save_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="textView24,saveMeaslsRecyclerView" />
+
         <TextView
             android:id="@+id/textView24"
             android:layout_width="wrap_content"
@@ -25,13 +48,13 @@
             android:id="@+id/saveMeaslsRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintWidth_percent="0.96"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView24"
             app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintWidth_percent="0.96"
             app:spanCount="2"
             tools:listitem="@layout/planned_meal_card" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -12,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.model.local.Local;
@@ -22,15 +24,11 @@ import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepositor
 import com.example.magnificentchef.model.remote.NetworkDelegate;
 import com.example.magnificentchef.model.remote.Remote;
 import com.example.magnificentchef.model.remote.Repository;
-import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.view.base.BaseFragmentDirections;
-import com.example.magnificentchef.view.common.Meal;
 import com.example.magnificentchef.view.common.MealsAdapter;
 import com.example.magnificentchef.view.common.OnMealClickListener;
 import com.example.magnificentchef.view.home.presenter.HomePresenter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +41,9 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
     private RecyclerView mealRecyclerView;
     private RecyclerView moreYouLikeRecyclerView;
     private NavController navController;
+    private TextView loading;
+    private ImageView lottieAnimationView;
+    private Group homeGroup;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,22 +66,24 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        homePresenter.getRandomMeal(24);
-       // new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
-        //        .getSavedMeals();
-       // new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
-          //      .getPlannedMeals();
     }
 
     private void initView(View view){
         dailyInspirationRecyclerView = view.findViewById(R.id.dailyInspirationRecyclerView);
         mealRecyclerView = view.findViewById(R.id.mealRecyclerView);
         moreYouLikeRecyclerView = view.findViewById(R.id.moreYouLikeRecyclerView);
+        lottieAnimationView = view.findViewById(R.id.animationView_loading);
+        loading = view.findViewById(R.id.textView31);
+        homeGroup = view.findViewById(R.id.home_group);
+        homePresenter.getRandomMeal(17);
     }
 
     @Override
     public void onSuccessResult(List<MealsItem> itemList) {
         setAdapterMealItems(itemList);
+        lottieAnimationView.setVisibility(View.GONE);
+        loading.setVisibility(View.GONE);
+        homeGroup.setVisibility(View.VISIBLE);
     }
 
 
@@ -98,15 +101,16 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
         List<MealsItem> inspirationMealList = new ArrayList<>();
         List<MealsItem> mealItemList = new ArrayList<>();
         List<MealsItem> moreYouLikeMealList = new ArrayList<>();
-        for (int itemLoop = 0; itemLoop < 7;itemLoop++){
+
+        for (int itemLoop = 0; itemLoop < 4;itemLoop++){
             inspirationMealList.add(itemList.get(itemLoop));
         }
         dailyInspirationRecyclerView.setAdapter(new MealsAdapter(R.layout.daily_inspiration_card,inspirationMealList,navController,this));
-        for (int itemLoop = 7; itemLoop < 17;itemLoop++){
+        for (int itemLoop = 4; itemLoop < 10;itemLoop++){
             mealItemList.add(itemList.get(itemLoop));
         }
         mealRecyclerView.setAdapter(new MealsAdapter(R.layout.meal_home_card,mealItemList,navController,this));
-        for (int itemLoop = 17; itemLoop < itemList.size();itemLoop++){
+        for (int itemLoop = 10; itemLoop < itemList.size();itemLoop++){
 
             moreYouLikeMealList.add(itemList.get(itemLoop));
         }

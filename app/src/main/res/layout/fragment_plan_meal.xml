@@ -13,53 +13,34 @@
     tools:ignore="SpeakableTextPresentCheck">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.search.SearchFragment">
 
-
         <TextView
-            android:id="@+id/textView20"
+            android:id="@+id/not_available"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_height="700dp"
+            android:text="this service not available"
+            android:gravity="center"
             android:fontFamily="@font/nunito_bold"
-            android:layout_marginStart="15dp"
-            android:text="@string/sunday"
-            android:textColor="@color/btnColorDark"
-            android:textSize="25sp"
-
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/saturdayRecyclerView" />
-
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_bold"
-            android:text="@string/week"
-            android:textColor="@color/btnColorDark"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/guideline13"
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginTop="10dp" />
+            app:layout_constraintVertical_bias="0.71000004" />
 
-        <TextView
-            android:id="@+id/textView18"
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/planGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:fontFamily="@font/nunito_bold"
-            android:text="@string/saturday"
-            android:textColor="@color/btnColorDark"
-            android:layout_marginStart="15dp"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+            android:visibility="visible"
+            app:constraint_referenced_ids="textView18,btn_saturday_add,saturdayRecyclerView,guideline13,thursdayRecyclerView,btn_monday_add,btn_wednesday_add,fridayRecyclerView,friday,tuesdayRecyclerView,btn_tuesday_add,Thursday,textView22,guideline12,textView17,btn_thursday_add,tuseday,wednesdayRecyclerView,btn_friday_add,view7,mondayRecyclerView,textView20,wednesday,sundayRecyclerView,btn_sunday_add" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/saturdayRecyclerView"
@@ -77,114 +58,18 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sundayRecyclerView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/textView20"
-            tools:listitem="@layout/meal_home_card" />
-
-        <TextView
-            android:id="@+id/textView22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="15dp"
-            android:fontFamily="@font/nunito_bold"
-            android:text="@string/monday"
-            android:textColor="@color/btnColorDark"
-            android:textSize="25sp"
-
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/sundayRecyclerView" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mondayRecyclerView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/textView22"
-            tools:itemCount="10"
-            tools:listitem="@layout/meal_home_card" />
-
-        <TextView
-            android:id="@+id/tuseday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/nunito_bold"
-            android:text="@string/tuesday"
-            android:textColor="@color/btnColorDark"
-            android:layout_marginStart="15dp"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/mondayRecyclerView" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tuesdayRecyclerView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/tuseday"
-            tools:itemCount="10"
-            tools:listitem="@layout/meal_home_card" />
-
         <TextView
             android:id="@+id/wednesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/nunito_bold"
             android:text="@string/wednesday"
             android:textColor="@color/btnColorDark"
             android:textSize="25sp"
-            android:layout_marginStart="15dp"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toBottomOf="@+id/tuesdayRecyclerView" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/wednesdayRecyclerView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/wednesday"
-            tools:itemCount="10"
-            tools:listitem="@layout/meal_home_card" />
-
-        <TextView
-            android:id="@+id/Thursday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/nunito_bold"
-            android:text="@string/thursday"
-            android:layout_marginStart="15dp"
-            android:textColor="@color/btnColorDark"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/wednesdayRecyclerView" />
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/thursdayRecyclerView"
@@ -200,22 +85,8 @@
             tools:itemCount="10"
             tools:listitem="@layout/meal_home_card" />
 
-        <TextView
-            android:id="@+id/friday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/nunito_bold"
-            android:text="@string/friday"
-            android:layout_marginStart="15dp"
-            android:textColor="@color/btnColorDark"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/thursdayRecyclerView" />
-
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fridayRecyclerView"
+            android:id="@+id/wednesdayRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -224,24 +95,50 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
-            app:layout_constraintTop_toBottomOf="@+id/friday"
+            app:layout_constraintTop_toBottomOf="@+id/wednesday"
             tools:itemCount="10"
             tools:listitem="@layout/meal_home_card" />
 
+        <Button
+            android:id="@+id/btn_wednesday_add"
+            android:layout_width="76dp"
+            android:layout_height="35dp"
+            android:background="@drawable/check_button_card_background"
+            android:text="@string/add"
+            android:textAllCaps="false"
+            android:textColor="@drawable/check_button_text_background"
+            android:textSize="12sp"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="@+id/wednesday"
+            app:layout_constraintEnd_toStartOf="@+id/guideline13"
+            app:layout_constraintTop_toTopOf="@+id/wednesday"
+            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline12"
+        <TextView
+            android:id="@+id/friday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.0" />
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/friday"
+            android:textColor="@color/btnColorDark"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toBottomOf="@+id/thursdayRecyclerView" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline13"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tuesdayRecyclerView"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.95486933" />
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toBottomOf="@+id/tuseday"
+            tools:itemCount="10"
+            tools:listitem="@layout/meal_home_card" />
 
         <Button
             android:id="@+id/btn_saturday_add"
@@ -272,6 +169,86 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline13"
             app:layout_constraintTop_toTopOf="@+id/textView22"
             tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/tuseday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/tuesday"
+            android:textColor="@color/btnColorDark"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toBottomOf="@+id/mondayRecyclerView" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/sunday"
+            android:textColor="@color/btnColorDark"
+            android:textSize="25sp"
+
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toBottomOf="@+id/saturdayRecyclerView" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/saturday"
+            android:textColor="@color/btnColorDark"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/monday"
+            android:textColor="@color/btnColorDark"
+            android:textSize="25sp"
+
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toBottomOf="@+id/sundayRecyclerView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sundayRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toBottomOf="@+id/textView20"
+            tools:listitem="@layout/meal_home_card" />
+
+        <TextView
+            android:id="@+id/Thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/thursday"
+            android:textColor="@color/btnColorDark"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toBottomOf="@+id/wednesdayRecyclerView" />
 
         <Button
             android:id="@+id/btn_tuesday_add"
@@ -304,6 +281,48 @@
             app:layout_constraintTop_toTopOf="@+id/Thursday"
             tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/week"
+            android:textColor="@color/btnColorDark"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline13"
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginTop="10dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mondayRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toBottomOf="@+id/textView22"
+            tools:itemCount="10"
+            tools:listitem="@layout/meal_home_card" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fridayRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline12"
+            app:layout_constraintTop_toBottomOf="@+id/friday"
+            tools:itemCount="10"
+            tools:listitem="@layout/meal_home_card" />
+
         <Button
             android:id="@+id/btn_friday_add"
             android:layout_width="76dp"
@@ -317,21 +336,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/friday"
             app:layout_constraintEnd_toStartOf="@+id/guideline13"
             app:layout_constraintTop_toTopOf="@+id/friday"
-            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
-
-        <Button
-            android:id="@+id/btn_wednesday_add"
-            android:layout_width="76dp"
-            android:layout_height="35dp"
-            android:background="@drawable/check_button_card_background"
-            android:text="@string/add"
-            android:textAllCaps="false"
-            android:textColor="@drawable/check_button_text_background"
-            android:textSize="12sp"
-            app:backgroundTint="@null"
-            app:layout_constraintBottom_toBottomOf="@+id/wednesday"
-            app:layout_constraintEnd_toStartOf="@+id/guideline13"
-            app:layout_constraintTop_toTopOf="@+id/wednesday"
             tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
         <Button
@@ -349,6 +353,13 @@
             app:layout_constraintTop_toTopOf="@+id/textView20"
             tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.0" />
+
         <View
             android:id="@+id/view7"
             android:layout_width="0dp"
@@ -358,6 +369,13 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95486933" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,12 +12,10 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepository;
-import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
 import com.example.magnificentchef.model.remote.Repository;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.utils.SaveFiles;
-import com.example.magnificentchef.view.common.Ingredient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 

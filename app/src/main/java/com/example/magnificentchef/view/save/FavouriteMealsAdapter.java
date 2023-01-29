@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
-import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
 import com.example.magnificentchef.view.plan.presenter.ClickAddPlanListener;
 
 import java.util.ArrayList;

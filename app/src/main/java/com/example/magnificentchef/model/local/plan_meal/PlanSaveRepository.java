@@ -108,4 +108,10 @@ public class PlanSaveRepository {
                 });
 
     }
+
+    public void addPlannedMealList(List<PlanMeal> planMealList){
+        for (PlanMeal planMeal : planMealList){
+            insertPlanMeal(planMeal);
+        }
+    }
 }

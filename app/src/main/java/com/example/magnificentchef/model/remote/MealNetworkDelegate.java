@@ -1,7 +1,6 @@
 package com.example.magnificentchef.model.remote;
 
 import com.example.magnificentchef.model.remote.model.MealsItem;
-import com.example.magnificentchef.model.remote.model.RandomMealResponse;
 
 import java.util.List;
 

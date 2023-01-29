@@ -1,15 +1,12 @@
 package com.example.magnificentchef.model.local.favourite_meal;
 
 import com.example.magnificentchef.model.local.Local;
-import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
-import com.example.magnificentchef.model.local.plan_meal.SavePlanMealDelegate;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.CompletableObserver;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -110,5 +107,8 @@ public class FavouriteRepository {
                 });
     }
     public void addFavouriteMealList(List<FavouriteMeal> favouriteMealList){
+        for (FavouriteMeal favouriteMeal : favouriteMealList){
+            insertFavouriteMeal(favouriteMeal);
+        }
     }
 }

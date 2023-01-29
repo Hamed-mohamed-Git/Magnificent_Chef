@@ -27,7 +27,6 @@ import com.example.magnificentchef.model.remote.NetworkDelegate;
 import com.example.magnificentchef.model.remote.Remote;
 import com.example.magnificentchef.model.remote.Repository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
-import com.example.magnificentchef.view.base.BaseFragmentDirections;
 import com.example.magnificentchef.view.common.Constants;
 import com.example.magnificentchef.view.common.MealsAdapter;
 import com.example.magnificentchef.view.common.OnMealClickListener;

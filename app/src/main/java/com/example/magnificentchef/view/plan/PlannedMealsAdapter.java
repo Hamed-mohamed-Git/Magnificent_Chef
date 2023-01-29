@@ -2,8 +2,6 @@ package com.example.magnificentchef.view.plan;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +11,13 @@ import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
-import com.example.magnificentchef.model.remote.model.MealsItem;
-import com.example.magnificentchef.utils.SaveFiles;
 import com.example.magnificentchef.view.plan.presenter.ClickAddPlanListener;
-import com.example.magnificentchef.view.save_meal_recipe.OnAddMealPlan;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

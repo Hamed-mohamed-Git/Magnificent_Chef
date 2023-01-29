@@ -1,5 +1,8 @@
 package com.example.magnificentchef.model.remote;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.model.remote.model.RandomMealResponse;
 import com.example.magnificentchef.model.remote.model.ingredient_model.IngredientResponse;
@@ -47,7 +50,6 @@ public class Repository {
                     @Override
                     public void onSuccess(@NonNull List<RandomMealResponse> responses) {
                         setMealItemsToMealList(responses);
-                        networkDelegate.onSuccessResult(mealList);
                     }
                     @Override
                     public void onError(@NonNull Throwable e) {
@@ -57,9 +59,15 @@ public class Repository {
 
     }
     private void setMealItemsToMealList(List<RandomMealResponse> RandomMealResponses){
-        for (RandomMealResponse randomMealResponse : RandomMealResponses){
-            mealList.add(randomMealResponse.getMeals().get(0));
-        }
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                for (RandomMealResponse randomMealResponse : RandomMealResponses){
+                    mealList.add(randomMealResponse.getMeals().get(0));
+                }
+                networkDelegate.onSuccessResult(mealList);
+            }
+        });
     }
 
     public void getMealsByKey(String letter){

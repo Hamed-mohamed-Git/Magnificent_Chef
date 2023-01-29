@@ -3,6 +3,7 @@ package com.example.magnificentchef.model.remote.firebase;
 
 import androidx.annotation.NonNull;
 
+import com.example.magnificentchef.model.local.common.MealsDelegate;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
 import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -73,7 +74,7 @@ public class FireStoreRepository {
 
     public void deleteSavedMeal(String mealID){
         firebaseFirestore.collection("Users")
-                .document(Objects.requireNonNull(firebaseAuth.getUid()))
+                .document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                 .collection("Favourite Meals")
                 .document(mealID)
                 .delete();
@@ -92,7 +93,7 @@ public class FireStoreRepository {
                 });
     }
 
-    public List<FavouriteMeal> getSavedMeals(){
+    public void getSavedMeals(FireStoreDelegate fireStoreDelegate){
         List<FavouriteMeal> favouriteMealList = new ArrayList<>();
         firebaseFirestore.collection("Users")
                 .document(Objects.requireNonNull(firebaseAuth.getUid()))
@@ -115,14 +116,13 @@ public class FireStoreRepository {
                                 favouriteMeal.setVideoUrl((String)document.getData().get("videoUrl"));
                                 favouriteMealList.add(favouriteMeal);
                             }
+                            fireStoreDelegate.onFavouriteMealList(favouriteMealList);
                         }
                     }
                 });
-
-        return favouriteMealList;
     }
 
-    public List<PlanMeal> getPlannedMeals(){
+    public void getPlannedMeals(FireStoreDelegate fireStoreDelegate){
         List<PlanMeal> planMealList = new ArrayList<>();
         firebaseFirestore.collection("Users")
                 .document(Objects.requireNonNull(firebaseAuth.getUid()))
@@ -146,39 +146,33 @@ public class FireStoreRepository {
                                 planMeal.setDate((String)document.getData().get("date"));
                                 planMealList.add(planMeal);
                             }
+                            fireStoreDelegate.onPlannedMealList(planMealList);
                         }
                     }
                 });
 
-        return planMealList;
     }
 
-    public int checkFavouriteMealsCount(){
+    public void checkFavouriteMealsCount(MealsDelegate mealsDelegate){
         firebaseFirestore.collection("Users")
-                .document(Objects.requireNonNull(firebaseAuth.getUid()))
+                .document(Objects.requireNonNull(firebaseAuth.getCurrentUser().getUid()))
                 .collection("Favourite Meals")
                 .count().get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
-                        Log.i("hamed", "onComplete: " + task.getResult().getCount());
-                        favoriteMealsCount = (int)task.getResult().getCount();
+                        mealsDelegate.onFavouriteMealCount((int)task.getResult().getCount());
                     }
                 });
-        return favoriteMealsCount;
     }
 
-    public int checkPlanMealCount(){
+    public void checkPlanMealCount(MealsDelegate mealsDelegate){
         firebaseFirestore.collection("Users")
-                .document(Objects.requireNonNull(firebaseAuth.getUid()))
+                .document(Objects.requireNonNull(firebaseAuth.getCurrentUser().getUid()))
                 .collection("Planned Meals")
                 .count().get(AggregateSource.SERVER)
-                .addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
-                        planMealsCount= (int) task.getResult().getCount();
-                    }
-                });
-        return planMealsCount;
+                .addOnCompleteListener(task ->
+                        mealsDelegate.onPlannedMealCount((int) task.getResult().getCount()));
+
     }
 
 }

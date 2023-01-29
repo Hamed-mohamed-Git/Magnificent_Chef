@@ -5,29 +5,21 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -35,18 +27,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.model.local.Local;
+import com.example.magnificentchef.model.local.common.MealsDelegate;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteMealDelegate;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepository;
 import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
 import com.example.magnificentchef.model.local.plan_meal.PlanSaveRepository;
 import com.example.magnificentchef.model.local.plan_meal.SavePlanMealDelegate;
+import com.example.magnificentchef.model.remote.firebase.FireStoreDelegate;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.view.base.presenter.BaseInterfce;
 import com.example.magnificentchef.view.base.presenter.BasePresenter;
 import com.example.magnificentchef.view.common.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -56,7 +49,8 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMealDelegate,SavePlanMealDelegate{
+public class BaseFragment extends Fragment implements BaseInterfce,
+        FavouriteMealDelegate,SavePlanMealDelegate, MealsDelegate, FireStoreDelegate {
     private BottomNavigationView bottomNavigationView;
     private NavController navcontroller;
     private AppBarConfiguration appBarConfiguration;
@@ -73,6 +67,7 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
     private ConnectivityManager connectivityManager;
     private ConnectivityManager.NetworkCallback networkCallback;
     private Group group;
+    private String key;
 
 
     @Override
@@ -88,7 +83,8 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
                 this,
                 new FavouriteRepository(Local.getLocal(requireContext()),this),
                 new PlanSaveRepository(Local.getLocal(requireContext()),this),
-                new FireStoreRepository(FirebaseFirestore.getInstance(),FirebaseAuth.getInstance()));
+                new FireStoreRepository(FirebaseFirestore.getInstance(),FirebaseAuth.getInstance()),
+                this,this);
 
         connectivityManager =
                 requireContext().getSystemService(ConnectivityManager.class);
@@ -141,6 +137,7 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
         group = view.findViewById(R.id.base_view_group);
         logout = view.findViewById(R.id.logoutButton);
         connectivityManager.registerDefaultNetworkCallback(networkCallback);
+        key = BaseFragmentArgs.fromBundle(getArguments()).getKey();
         logout.setOnClickListener(view1 -> {
             basePresenter.clearDatabaseTables();
             Navigation
@@ -167,8 +164,10 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
                     .load(firebaseUser.getPhotoUrl())
                     .into(user_image);
         }
-        basePresenter.checkSaveFavouriteMeal();
-        basePresenter.checkSavePlanMeal();
+        if (key.equals("google") || key.equals("signin")){
+            basePresenter.checkSaveFavouriteMeal();
+            basePresenter.checkSavePlanMeal();
+        }
     }
 
     @Override
@@ -204,6 +203,26 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
     @Override
     public void onSuccess(List<FavouriteMeal> favouriteMeals) {
 
+    }
+
+    @Override
+    public void onFavouriteMealCount(int count) {
+        basePresenter.getMealsFavouriteMeals(count);
+    }
+
+    @Override
+    public void onPlannedMealCount(int count) {
+        basePresenter.getMealsPlanMeals(count);
+    }
+
+    @Override
+    public void onFavouriteMealList(List<FavouriteMeal> favouriteMeals) {
+        basePresenter.setMealsFavouriteMeals(favouriteMeals);
+    }
+
+    @Override
+    public void onPlannedMealList(List<PlanMeal> planMeals) {
+        basePresenter.setMealsPlanMeals(planMeals);
     }
 }
 
