@@ -74,6 +74,7 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
     private ConnectivityManager.NetworkCallback networkCallback;
     private Group group;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +87,8 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
         basePresenter=new BasePresenter(firebaseUser,
                 this,
                 new FavouriteRepository(Local.getLocal(requireContext()),this),
-                new PlanSaveRepository(Local.getLocal(requireContext()),this));
+                new PlanSaveRepository(Local.getLocal(requireContext()),this),
+                new FireStoreRepository(FirebaseFirestore.getInstance(),FirebaseAuth.getInstance()));
 
         connectivityManager =
                 requireContext().getSystemService(ConnectivityManager.class);
@@ -115,7 +117,8 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
 
             }
         };
-        new FireStoreRepository(FirebaseFirestore.getInstance(),FirebaseAuth.getInstance()).checkFavouriteMeals();
+
+
     }
 
     @Override
@@ -150,6 +153,7 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
 
     @Override
     public void onLoggedUser() {
+
         application_name.setVisibility(View.INVISIBLE);
         user_email.setVisibility(View.VISIBLE);
         user_name.setVisibility(View.VISIBLE);
@@ -163,11 +167,15 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
                     .load(firebaseUser.getPhotoUrl())
                     .into(user_image);
         }
+        basePresenter.checkSaveFavouriteMeal();
+        basePresenter.checkSavePlanMeal();
     }
 
     @Override
     public void onGuestUser() {
     }
+
+
 
     @Override
     public void onComplete() {

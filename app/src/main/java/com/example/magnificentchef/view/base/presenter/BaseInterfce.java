@@ -7,4 +7,5 @@ public interface BaseInterfce {
     void onLoggedUser();
     void onGuestUser();
 
+
 }

@@ -1,22 +1,16 @@
 package com.example.magnificentchef.model.remote.firebase;
 
-import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
 import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.AggregateQuerySnapshot;
 import com.google.firebase.firestore.AggregateSource;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -31,6 +25,7 @@ public class FireStoreRepository {
     FirebaseAuth firebaseAuth;
     String area = "";
     private int favoriteMealsCount = 0;
+    private int planMealsCount = 0;
 
     public FireStoreRepository(FirebaseFirestore db,FirebaseAuth firebaseAuth) {
         this.firebaseFirestore = db;
@@ -158,7 +153,7 @@ public class FireStoreRepository {
         return planMealList;
     }
 
-    public int checkFavouriteMeals(){
+    public int checkFavouriteMealsCount(){
         firebaseFirestore.collection("Users")
                 .document(Objects.requireNonNull(firebaseAuth.getUid()))
                 .collection("Favourite Meals")
@@ -169,6 +164,20 @@ public class FireStoreRepository {
                     }
                 });
         return favoriteMealsCount;
+    }
+
+    public int checkPlanMealCount(){
+        firebaseFirestore.collection("Users")
+                .document(Objects.requireNonNull(firebaseAuth.getUid()))
+                .collection("Planned Meals")
+                .count().get(AggregateSource.SERVER)
+                .addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
+                        planMealsCount= (int) task.getResult().getCount();
+                    }
+                });
+        return planMealsCount;
     }
 
 }
