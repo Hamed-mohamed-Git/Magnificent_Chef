@@ -167,6 +167,7 @@ public class BaseFragment extends Fragment implements BaseInterfce, FavouriteMea
 
     @Override
     public void onGuestUser() {
+
     }
 
     @Override

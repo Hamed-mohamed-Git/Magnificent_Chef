@@ -165,6 +165,7 @@ public class FireStoreRepository {
                 .count().get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
+                        Log.i("hamed", "onComplete: " + task.getResult().getCount());
                         favoriteMealsCount = (int)task.getResult().getCount();
                     }
                 });

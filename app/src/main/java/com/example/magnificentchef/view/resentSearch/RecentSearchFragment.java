@@ -28,11 +28,13 @@ import com.example.magnificentchef.model.remote.Remote;
 import com.example.magnificentchef.model.remote.Repository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.view.base.BaseFragmentDirections;
+import com.example.magnificentchef.view.common.Constants;
 import com.example.magnificentchef.view.common.MealsAdapter;
 import com.example.magnificentchef.view.common.OnMealClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import io.reactivex.rxjava3.core.Observable;
 
@@ -47,7 +49,7 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
     private EditText search;
     private NavController navController;
     private FavouriteRepository favouriteRepository;
-
+    private Pattern pattern;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -58,6 +60,7 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
                 Remote.getRetrofitInstance()),
                 new FavouriteRepository(Local.getLocal(requireContext()),
                         this),getActivity().getApplicationContext(),this);
+        pattern = Pattern.compile(Constants.SEARCH_PATTERN);
     }
 
     @Override
@@ -108,10 +111,10 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        if(charSequence.length()==1){
+        if(charSequence.length()==1 && pattern.matcher(charSequence.toString()).matches()) {
             recentSearchPresenter.getMealsByKey(charSequence.toString());
         }
-        else{
+        else if (charSequence.length() > 1&& pattern.matcher(charSequence.toString()).matches()){
             Observable<MealsItem> mealsItemObservable=Observable.fromIterable(mealsItems);
             mealsItemObservable.filter(mealsItem -> mealsItem.getStrMeal()
                             .startsWith(charSequence.toString()))

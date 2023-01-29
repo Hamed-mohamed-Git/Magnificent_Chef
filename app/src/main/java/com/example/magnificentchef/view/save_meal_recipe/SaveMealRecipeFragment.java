@@ -83,7 +83,7 @@ public class SaveMealRecipeFragment extends Fragment implements NetworkDelegate<
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        if(charSequence.length()==1){
+        if(charSequence.length()==1 && !charSequence.toString().contains("\n")){
             saveMealRecipePresenter.getMealsByKey(charSequence.toString());
         }
         else if (charSequence.length() > 1){
