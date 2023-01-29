@@ -1,6 +1,8 @@
 package com.example.magnificentchef.model.remote.firebase;
 
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.magnificentchef.model.local.common.MealsDelegate;
@@ -96,7 +98,7 @@ public class FireStoreRepository {
     public void getSavedMeals(FireStoreDelegate fireStoreDelegate){
         List<FavouriteMeal> favouriteMealList = new ArrayList<>();
         firebaseFirestore.collection("Users")
-                .document(Objects.requireNonNull(firebaseAuth.getUid()))
+                .document(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser().getUid()))
                 .collection("Favourite Meals")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -107,25 +109,26 @@ public class FireStoreRepository {
                                 FavouriteMeal favouriteMeal = new FavouriteMeal();
                                 favouriteMeal.setArea((String)document.getData().get("area"));
                                 favouriteMeal.setCategory((String)document.getData().get("category"));
-                                favouriteMeal.setMeal_id((String)document.getData().get("meal_id"));
-                                favouriteMeal.setMeasure((String)document.getData().get("measure"));
                                 favouriteMeal.setDirections((String)document.getData().get("directions"));
                                 favouriteMeal.setImage((String)document.getData().get("image"));
-                                favouriteMeal.setName((String)document.getData().get("name"));
                                 favouriteMeal.setIngredients((String)document.getData().get("ingredients"));
+                                favouriteMeal.setMeal_id((String)document.getData().get("meal_id"));
+                                favouriteMeal.setMeasure((String)document.getData().get("measure"));
+                                favouriteMeal.setName((String)document.getData().get("name"));
                                 favouriteMeal.setVideoUrl((String)document.getData().get("videoUrl"));
                                 favouriteMealList.add(favouriteMeal);
+                                Log.i("hamed", "onComplete: "+FirebaseAuth.getInstance().getCurrentUser().getUid());
                             }
-                            fireStoreDelegate.onFavouriteMealList(favouriteMealList);
+                            //fireStoreDelegate.onFavouriteMealList(favouriteMealList);
                         }
                     }
                 });
     }
 
-    public void getPlannedMeals(FireStoreDelegate fireStoreDelegate){
+    public void getPlannedMeals(FireStoreGetPlane fireStoreDelegate){
         List<PlanMeal> planMealList = new ArrayList<>();
         firebaseFirestore.collection("Users")
-                .document(Objects.requireNonNull(firebaseAuth.getUid()))
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .collection("Planned Meals")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -145,6 +148,7 @@ public class FireStoreRepository {
                                 planMeal.setVideoUrl((String)document.getData().get("videoUrl"));
                                 planMeal.setDate((String)document.getData().get("date"));
                                 planMealList.add(planMeal);
+                                Log.i("hamed", "onComplete: "+FirebaseAuth.getInstance().getCurrentUser().getUid() );
                             }
                             fireStoreDelegate.onPlannedMealList(planMealList);
                         }
@@ -155,23 +159,27 @@ public class FireStoreRepository {
 
     public void checkFavouriteMealsCount(MealsDelegate mealsDelegate){
         firebaseFirestore.collection("Users")
-                .document(Objects.requireNonNull(firebaseAuth.getCurrentUser().getUid()))
+                .document(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser().getUid()))
                 .collection("Favourite Meals")
                 .count().get(AggregateSource.SERVER).addOnCompleteListener(new OnCompleteListener<AggregateQuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<AggregateQuerySnapshot> task) {
                         mealsDelegate.onFavouriteMealCount((int)task.getResult().getCount());
+                        Log.i("hamed", "checkPlanMealCount: " + firebaseAuth.getCurrentUser().getUid());
                     }
                 });
     }
 
     public void checkPlanMealCount(MealsDelegate mealsDelegate){
         firebaseFirestore.collection("Users")
-                .document(Objects.requireNonNull(firebaseAuth.getCurrentUser().getUid()))
+                .document(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser().getUid()))
                 .collection("Planned Meals")
                 .count().get(AggregateSource.SERVER)
-                .addOnCompleteListener(task ->
-                        mealsDelegate.onPlannedMealCount((int) task.getResult().getCount()));
+                .addOnCompleteListener(task -> {
+                    mealsDelegate.onPlannedMealCount((int) task.getResult().getCount());
+                    Log.i("hamed", "checkPlanMealCount: " + firebaseAuth.getCurrentUser().getUid());
+                        }
+                );
 
     }
 

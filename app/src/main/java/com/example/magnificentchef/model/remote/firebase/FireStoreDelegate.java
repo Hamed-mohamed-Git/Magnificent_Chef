@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface FireStoreDelegate {
     void onFavouriteMealList(List<FavouriteMeal> favouriteMeals);
-    void onPlannedMealList(List<PlanMeal> planMeals);
+
 }

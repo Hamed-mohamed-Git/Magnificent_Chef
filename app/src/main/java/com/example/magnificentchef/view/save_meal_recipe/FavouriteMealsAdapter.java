@@ -49,7 +49,12 @@ public class FavouriteMealsAdapter extends RecyclerView.Adapter<FavouriteMealsAd
         Glide.with(context).load(meal.getStrMealThumb()).into(holder.cardMealImageView);
         holder.cardMealNameTextView.setText(meal.getStrMeal());
         holder.mealCardCategoryTextView.setText(meal.getStrCategory());
-
+        holder.cardMealAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAddMealPlan.onAddClickMealListener(meal);
+            }
+        });
 
     }
 

@@ -12,7 +12,9 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepository;
+import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
 import com.example.magnificentchef.model.remote.Repository;
+import com.example.magnificentchef.model.remote.firebase.FireStoreDelegate;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.utils.SaveFiles;
@@ -21,8 +23,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.List;
 
-public class HomePresenter {
+public class HomePresenter{
     private Repository repository;
     private String ingredients="";
     private String measure="";

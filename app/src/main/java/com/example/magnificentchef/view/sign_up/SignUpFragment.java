@@ -18,6 +18,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
+import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
+import com.example.magnificentchef.model.remote.firebase.FireStoreDelegate;
 import com.example.magnificentchef.view.common.Constants;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.view.common.RegistrationError;
@@ -28,6 +31,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
 
 public class SignUpFragment extends Fragment implements SignUpInterface, TextWatcher {
     private SignUpPresenter signUpPresenter;
@@ -155,6 +160,7 @@ public class SignUpFragment extends Fragment implements SignUpInterface, TextWat
     @Override
     public void afterTextChanged(Editable editable) {
     }
+
 
 
 }

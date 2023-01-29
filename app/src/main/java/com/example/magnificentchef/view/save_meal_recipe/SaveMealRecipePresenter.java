@@ -10,9 +10,11 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
 import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
 import com.example.magnificentchef.model.local.plan_meal.PlanSaveRepository;
 import com.example.magnificentchef.model.remote.Repository;
+import com.example.magnificentchef.model.remote.firebase.FireStoreDelegate;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.utils.SaveFiles;
@@ -21,8 +23,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.List;
 
-public class SaveMealRecipePresenter {
+public class SaveMealRecipePresenter{
     private Repository repository;
     private PlanSaveRepository planSaveRepository;
     private String ingredientList = "";
@@ -41,7 +44,6 @@ public class SaveMealRecipePresenter {
     }
 
     public void savePlaneMeal(MealsItem mealsItem,String day){
-
 
         Glide.with(context).asBitmap().load(mealsItem.getStrMealThumb()).into(new CustomTarget<Bitmap>() {
             @Override
@@ -69,7 +71,6 @@ public class SaveMealRecipePresenter {
                 planMeal.setMeasure(measures);
                 planMeal.setDirections(mealsItem.getStrInstructions());
                 planSaveRepository.insertPlanMeal(planMeal);
-                planMeal.setImage(mealsItem.getStrMealThumb());
                 new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
                         .createPlannedMeals(planMeal);
             }
@@ -99,5 +100,6 @@ public class SaveMealRecipePresenter {
         }
 
     }
+
 
 }

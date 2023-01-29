@@ -21,6 +21,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
+import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
+import com.example.magnificentchef.model.remote.firebase.FireStoreDelegate;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.view.common.Constants;
 import com.example.magnificentchef.view.login.presenter.OnAuthLoginComplete;
@@ -32,8 +35,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.List;
 
-public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
+
+public class RegisterFragment extends Fragment implements OnAuthLoginComplete{
     Button btn_google;
     private Button signUpButton, skipButton;
     private TextView login;
@@ -96,7 +101,8 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
         skipButton.setOnClickListener((view1) -> {
             sharedPrefEditor.putString(getString(R.string.preference_file_key),Constants.REGISTERED);
             sharedPrefEditor.apply();
-            Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_baseFragment);
+            Navigation.findNavController(requireView()).navigate(RegisterFragmentDirections
+                    .actionRegisterFragmentToBaseFragment("none").setKey("google"));
         });
         btn_google.setOnClickListener(view1 -> {
             activityResultLauncher.launch(GoogleSignIn
@@ -130,4 +136,5 @@ public class RegisterFragment extends Fragment implements OnAuthLoginComplete {
         super.onResume();
         //((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
+
 }

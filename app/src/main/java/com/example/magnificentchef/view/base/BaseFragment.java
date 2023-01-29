@@ -35,6 +35,7 @@ import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
 import com.example.magnificentchef.model.local.plan_meal.PlanSaveRepository;
 import com.example.magnificentchef.model.local.plan_meal.SavePlanMealDelegate;
 import com.example.magnificentchef.model.remote.firebase.FireStoreDelegate;
+import com.example.magnificentchef.model.remote.firebase.FireStoreGetPlane;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.view.base.presenter.BaseInterfce;
 import com.example.magnificentchef.view.base.presenter.BasePresenter;
@@ -50,7 +51,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class BaseFragment extends Fragment implements BaseInterfce,
-        FavouriteMealDelegate,SavePlanMealDelegate, MealsDelegate, FireStoreDelegate {
+        FavouriteMealDelegate,SavePlanMealDelegate, MealsDelegate, FireStoreDelegate, FireStoreGetPlane {
     private BottomNavigationView bottomNavigationView;
     private NavController navcontroller;
     private AppBarConfiguration appBarConfiguration;
@@ -84,7 +85,7 @@ public class BaseFragment extends Fragment implements BaseInterfce,
                 new FavouriteRepository(Local.getLocal(requireContext()),this),
                 new PlanSaveRepository(Local.getLocal(requireContext()),this),
                 new FireStoreRepository(FirebaseFirestore.getInstance(),FirebaseAuth.getInstance()),
-                this,this);
+                this,this,this);
 
         connectivityManager =
                 requireContext().getSystemService(ConnectivityManager.class);
@@ -166,7 +167,13 @@ public class BaseFragment extends Fragment implements BaseInterfce,
         }
         if (key.equals("google") || key.equals("signin")){
             basePresenter.checkSaveFavouriteMeal();
-            basePresenter.checkSavePlanMeal();
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    basePresenter.checkSavePlanMeal();
+                }
+            },50000L);
+
         }
     }
 

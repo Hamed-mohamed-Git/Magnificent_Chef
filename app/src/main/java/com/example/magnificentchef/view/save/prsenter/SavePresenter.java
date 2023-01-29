@@ -2,11 +2,15 @@ package com.example.magnificentchef.view.save.prsenter;
 
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepository;
+import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
+import com.example.magnificentchef.model.remote.firebase.FireStoreDelegate;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class SavePresenter {
+import java.util.List;
+
+public class SavePresenter{
     private FavouriteRepository favouriteRepository;
 
     public SavePresenter(FavouriteRepository favouriteRepository) {
