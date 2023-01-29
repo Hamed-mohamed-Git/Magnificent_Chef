@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "563217519122",
+    "project_id": "magnificentchef-bc2b6",
+    "storage_bucket": "magnificentchef-bc2b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563217519122:android:232d3e6007d8695ae8becb",
+        "android_client_info": {
+          "package_name": "com.example.magnificentchef"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "563217519122-gkl49uub3o55n0t3771bd5j5ojnkt1ai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.magnificentchef",
+            "certificate_hash": "f94958b022a1a985cce37440f93afe2ef2ec1f9e"
+          }
+        },
+        {
+          "client_id": "563217519122-qeuuq573pg3q7gfj09ll8kmp74mbeqb9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWy4TrShOIQE2RIyjj6a0jDEo5zX6-Ja4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563217519122-qeuuq573pg3q7gfj09ll8kmp74mbeqb9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph2"
+    app:startDestination="@id/home_screen">
+    <fragment
+        android:id="@+id/home_screen"
+        android:name="com.example.magnificentchef.view.home.HomeFragment"
+        android:label="@string/Home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/plan_meal_screen"
+        android:name="com.example.magnificentchef.view.plan.PlanMealFragment"
+        android:label="@string/PlanMeal"
+        tools:layout="@layout/fragment_plan_meal" >
+        <action
+            android:id="@+id/action_plan_meal_screen_to_saveMealRecipeFragment"
+            app:destination="@id/saveMealRecipeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/save_screen"
+        android:name="com.example.magnificentchef.view.save.saveFragment"
+        android:label="@string/Save"
+        tools:layout="@layout/fragment_save" />
+    <fragment
+        android:id="@+id/search_screen"
+        android:name="com.example.magnificentchef.view.search.SearchFragment"
+        android:label="@string/search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/saveMealRecipeFragment"
+        android:name="com.example.magnificentchef.view.save_meal_recipe.SaveMealRecipeFragment"
+        android:label="fragment_save_meal_recipe"
+        tools:layout="@layout/fragment_save_meal_recipe" >
+        <argument
+            android:name="day"
+            app:argType="string" />
+    </fragment>
+</navigation>
