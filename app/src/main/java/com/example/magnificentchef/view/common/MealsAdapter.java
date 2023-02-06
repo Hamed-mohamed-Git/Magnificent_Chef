@@ -36,6 +36,16 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
         this.onMealClickListener=onMealClickListener;
     }
 
+    public void addMeal(MealsItem mealsItem){
+        mealList.add(mealsItem);
+        notifyItemInserted(mealList.size() + 1);
+    }
+
+    public void remove(){
+        mealList.clear();
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public MealsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -65,9 +65,6 @@ public class BaseFragment extends Fragment implements BaseInterfce,
     private BasePresenter basePresenter;
     private SharedPreferences.Editor sharedPrefEditor;
     private View logout;
-    private ConnectivityManager connectivityManager;
-    private ConnectivityManager.NetworkCallback networkCallback;
-    private Group group;
     private String key;
 
 
@@ -86,36 +83,6 @@ public class BaseFragment extends Fragment implements BaseInterfce,
                 new PlanSaveRepository(Local.getLocal(requireContext()),this),
                 new FireStoreRepository(FirebaseFirestore.getInstance(),FirebaseAuth.getInstance()),
                 this,this,this);
-
-        connectivityManager =
-                requireContext().getSystemService(ConnectivityManager.class);
-        networkCallback = new ConnectivityManager.NetworkCallback() {
-            @Override
-            public void onAvailable(@NonNull Network network) {
-                super.onAvailable(network);
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    group.setVisibility(View.GONE);
-                });
-
-            }
-
-            @Override
-            public void onLost(@NonNull Network network) {
-                super.onLost(network);
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    group.setVisibility(View.VISIBLE);
-                });
-
-            }
-            @Override
-            public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
-                super.onCapabilitiesChanged(network, networkCapabilities);
-                //final boolean unmetered = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
-
-            }
-        };
-
-
     }
 
     @Override
@@ -135,9 +102,7 @@ public class BaseFragment extends Fragment implements BaseInterfce,
         user_email=view.findViewById(R.id.email_tv);
         user_image=view.findViewById(R.id.circleImageView);
         application_name=view.findViewById(R.id.application_name);
-        group = view.findViewById(R.id.base_view_group);
         logout = view.findViewById(R.id.logoutButton);
-        connectivityManager.registerDefaultNetworkCallback(networkCallback);
         key = BaseFragmentArgs.fromBundle(getArguments()).getKey();
         logout.setOnClickListener(view1 -> {
             basePresenter.clearDatabaseTables();

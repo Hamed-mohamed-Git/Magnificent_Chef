@@ -4,13 +4,14 @@ package com.example.magnificentchef.model.remote;
 import com.example.magnificentchef.model.remote.model.RandomMealResponse;
 import com.example.magnificentchef.model.remote.model.ingredient_model.IngredientResponse;
 
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface MealApiService {
     @GET("random.php")
-    Single<RandomMealResponse> getMeal();
+    Flowable<RandomMealResponse> getMeal();
 
     @GET("search.php")
     Single<RandomMealResponse> getSearchLetter(@Query("f") String letter);
@@ -29,8 +30,5 @@ public interface MealApiService {
 
     @GET("list.php?i=list")
     Single<IngredientResponse> getIngredients();
-
-
-
 
 }

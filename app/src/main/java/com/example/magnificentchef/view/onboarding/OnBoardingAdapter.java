@@ -59,7 +59,6 @@ public class OnBoardingAdapter extends PagerAdapter {
                 circle1.setImageResource(R.drawable.selected);
                 circle2.setImageResource(R.drawable.unselected);
                 circle3.setImageResource(R.drawable.unselected);
-                title.setText("Magnifient Chef");
                 description.setText("The key to a good meal is simplicity and the right seasoning");
                 started.setVisibility(View.GONE);
 
@@ -69,7 +68,6 @@ public class OnBoardingAdapter extends PagerAdapter {
                 circle1.setImageResource(R.drawable.unselected);
                 circle2.setImageResource(R.drawable.selected);
                 circle3.setImageResource(R.drawable.unselected);
-                title.setText("Magnifient Chef");
                 description.setText("A recipe is a story that ends with a good meal");
                 started.setVisibility(View.GONE);
                 break;
@@ -78,7 +76,6 @@ public class OnBoardingAdapter extends PagerAdapter {
                 circle1.setImageResource(R.drawable.unselected);
                 circle2.setImageResource(R.drawable.unselected);
                 circle3.setImageResource(R.drawable.selected);
-                title.setText("Magnifient Chef");
                 description.setText("The secret ingredient to every meal is love");
                 skip.setVisibility(View.GONE);
                 next.setVisibility(View.GONE);

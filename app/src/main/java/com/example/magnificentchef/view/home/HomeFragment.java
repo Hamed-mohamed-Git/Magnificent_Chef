@@ -1,5 +1,8 @@
 package com.example.magnificentchef.view.home;
 
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,7 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +28,7 @@ import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteMealDelegate;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepository;
 import com.example.magnificentchef.model.remote.NetworkDelegate;
+import com.example.magnificentchef.model.remote.RandomMealDelegate;
 import com.example.magnificentchef.model.remote.Remote;
 import com.example.magnificentchef.model.remote.Repository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
@@ -34,25 +41,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>, OnMealClickListener, FavouriteMealDelegate {
+public class HomeFragment extends Fragment implements RandomMealDelegate, NetworkDelegate<MealsItem>, OnMealClickListener, FavouriteMealDelegate {
 
-    private RecyclerView dailyInspirationRecyclerView;
+    private ViewPager2 dailyInspirationRecyclerView;
     private HomePresenter homePresenter;
     private RecyclerView mealRecyclerView;
     private RecyclerView moreYouLikeRecyclerView;
     private NavController navController;
-    private TextView loading;
-    private ImageView lottieAnimationView;
-    private Group homeGroup;
+    private MealsAdapter inspirationMealAdapter,mealsAdapter,moreYouMightLikeAdapter;
+    private int currentMealsCount;
+    private ConnectivityManager connectivityManager;
+    private ConnectivityManager.NetworkCallback networkCallback;
+    private Group group;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        currentMealsCount = 0;
         navController =
                 ((NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment)).getNavController();
         homePresenter = new HomePresenter(new Repository(this,
                 Remote.getRetrofitInstance()),
                 new FavouriteRepository(Local.getLocal(requireContext()),this),getActivity().getApplicationContext());
+        inspirationMealAdapter = new MealsAdapter(R.layout.daily_inspiration_card,new ArrayList<MealsItem>(),navController,this);
+        mealsAdapter = new MealsAdapter(R.layout.meal_home_card,new ArrayList<MealsItem>(),navController,this);
+        moreYouMightLikeAdapter = new MealsAdapter(R.layout.more_you_might_card,new ArrayList<MealsItem>(),navController,this);
+        connectivityManager =
+                requireContext().getSystemService(ConnectivityManager.class);
+        networkCallback = new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(@NonNull Network network) {
+                super.onAvailable(network);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    group.setVisibility(View.GONE);
+                });
+
+            }
+
+            @Override
+            public void onLost(@NonNull Network network) {
+                super.onLost(network);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    group.setVisibility(View.VISIBLE);
+                });
+
+            }
+            @Override
+            public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
+                super.onCapabilitiesChanged(network, networkCapabilities);
+                //final boolean unmetered = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
+
+            }
+        };
     }
 
     @Override
@@ -72,20 +112,33 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
         dailyInspirationRecyclerView = view.findViewById(R.id.dailyInspirationRecyclerView);
         mealRecyclerView = view.findViewById(R.id.mealRecyclerView);
         moreYouLikeRecyclerView = view.findViewById(R.id.moreYouLikeRecyclerView);
-        lottieAnimationView = view.findViewById(R.id.animationView_loading);
-        loading = view.findViewById(R.id.textView31);
-        homeGroup = view.findViewById(R.id.home_group);
-        homePresenter.getRandomMeal(17);
+        group = view.findViewById(R.id.base_view_group);
+        connectivityManager.registerDefaultNetworkCallback(networkCallback);
+        dailyInspirationRecyclerView.setOffscreenPageLimit(10);
+        dailyInspirationRecyclerView.setPageTransformer(new InspirationTransFormer(10));
+        dailyInspirationRecyclerView.setAdapter(inspirationMealAdapter);
+        mealRecyclerView.setAdapter(mealsAdapter);
+        moreYouLikeRecyclerView.setAdapter(moreYouMightLikeAdapter);
+        if (currentMealsCount < 40)
+            homePresenter.getRandomMeal(40,this);
     }
 
     @Override
     public void onSuccessResult(List<MealsItem> itemList) {
-        setAdapterMealItems(itemList);
-        lottieAnimationView.setVisibility(View.GONE);
-        loading.setVisibility(View.GONE);
-        homeGroup.setVisibility(View.VISIBLE);
+
     }
 
+
+    @Override
+    public void onSuccessResult(MealsItem mealsItem) {
+        if (currentMealsCount < 10){
+            inspirationMealAdapter.addMeal(mealsItem);
+        }else if (currentMealsCount < 20)
+            mealsAdapter.addMeal(mealsItem);
+        else if (currentMealsCount < 40)
+            moreYouMightLikeAdapter.addMeal(mealsItem);
+        currentMealsCount++;
+    }
 
     @Override
     public void onFailureResult(String message) {
@@ -96,27 +149,6 @@ public class HomeFragment extends Fragment implements NetworkDelegate<MealsItem>
     public void onResume() {
         super.onResume();
     }
-
-    private void setAdapterMealItems(List<MealsItem> itemList) {
-        List<MealsItem> inspirationMealList = new ArrayList<>();
-        List<MealsItem> mealItemList = new ArrayList<>();
-        List<MealsItem> moreYouLikeMealList = new ArrayList<>();
-
-        for (int itemLoop = 0; itemLoop < 4;itemLoop++){
-            inspirationMealList.add(itemList.get(itemLoop));
-        }
-        dailyInspirationRecyclerView.setAdapter(new MealsAdapter(R.layout.daily_inspiration_card,inspirationMealList,navController,this));
-        for (int itemLoop = 4; itemLoop < 10;itemLoop++){
-            mealItemList.add(itemList.get(itemLoop));
-        }
-        mealRecyclerView.setAdapter(new MealsAdapter(R.layout.meal_home_card,mealItemList,navController,this));
-        for (int itemLoop = 10; itemLoop < itemList.size();itemLoop++){
-
-            moreYouLikeMealList.add(itemList.get(itemLoop));
-        }
-        moreYouLikeRecyclerView.setAdapter(new MealsAdapter(R.layout.more_you_might_card,moreYouLikeMealList,navController,this));
-    }
-
 
 
 

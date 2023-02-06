@@ -95,23 +95,23 @@ public class MealDetailsFragment extends Fragment {
             intent.setPackage("com.google.android.youtube");
             startActivity(intent);
         });
-        char[] chars =   mealsItem.getStrYoutube().toCharArray();
-        int code = 0;
-        for (int loop = 0; loop < chars.length; loop++){
-            if (chars[loop] == '='){
-                code = loop + 1;
-            }
-
-        }
-        int finalCode = code;
-        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                super.onReady(youTubePlayer);
-                youTubePlayer.loadVideo(mealsItem.getStrYoutube().substring(finalCode),0f);
-                youTubePlayer.pause();
-            }
-        });
+//        char[] chars =   mealsItem.getStrYoutube().toCharArray();
+//        int code = 0;
+//        for (int loop = 0; loop < chars.length; loop++){
+//            if (chars[loop] == '='){
+//                code = loop + 1;
+//            }
+//
+//        }
+//        int finalCode = code;
+//        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+//            @Override
+//            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+//                super.onReady(youTubePlayer);
+//                youTubePlayer.loadVideo(mealsItem.getStrYoutube().substring(finalCode),0f);
+//                youTubePlayer.pause();
+//            }
+//        });
     }
 
 

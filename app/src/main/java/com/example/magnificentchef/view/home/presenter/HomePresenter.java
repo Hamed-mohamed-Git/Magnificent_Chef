@@ -13,6 +13,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
 import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepository;
 import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
+import com.example.magnificentchef.model.remote.RandomMealDelegate;
 import com.example.magnificentchef.model.remote.Repository;
 import com.example.magnificentchef.model.remote.firebase.FireStoreDelegate;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
@@ -37,8 +38,8 @@ public class HomePresenter{
         this.favouriteRepository = favouriteRepository;
         this.context=context;
     }
-    public void getRandomMeal(int mealCount){
-        repository.getRandomMeal(mealCount);
+    public void getRandomMeal(int mealCount,RandomMealDelegate randomMealDelegate){
+        repository.getRandomMeal(mealCount,randomMealDelegate);
     }
 
     public void favouriteMeal(MealsItem favouriteMeal) throws NoSuchFieldException, IllegalAccessException {

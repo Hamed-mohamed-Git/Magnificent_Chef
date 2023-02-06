@@ -16,6 +16,7 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subscribers.DisposableSubscriber;
 
 public class Repository {
     private MealApiService mealApiService;
@@ -33,36 +34,45 @@ public class Repository {
         mealList = new ArrayList<>();
     }
 
-    public void getRandomMeal(int mealCount){
+    public void getRandomMeal(int mealCount,RandomMealDelegate randomMealDelegate) {
         final int[] count = {0};
         mealApiService.getMeal()
                 .subscribeOn(Schedulers.io())
-                .repeatUntil(()-> count[0] == mealCount)
+                .repeatUntil(() -> count[0] == mealCount)
                 .distinct()
-                .doOnNext(t -> count[0]++)
-                .toList()
+                .doOnNext(ignored -> count[0]++)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<List<RandomMealResponse>>() {
+                .subscribe(new DisposableSubscriber<RandomMealResponse>() {
+                    int count=1;
                     @Override
-                    public void onSubscribe(@NonNull Disposable d) {
+                    protected void onStart() {
+                        //request(Long.MAX_VALUE);
+                        request(count++);
                     }
 
                     @Override
-                    public void onSuccess(@NonNull List<RandomMealResponse> responses) {
-                        setMealItemsToMealList(responses);
+                    public void onNext(RandomMealResponse randomMealResponses) {
+                        randomMealDelegate.onSuccessResult(randomMealResponses.getMeals().get(0));
+                        request(count++);
                     }
+
                     @Override
-                    public void onError(@NonNull Throwable e) {
-                        networkDelegate.onFailureResult(e.getMessage());
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        cancel();
                     }
                 });
-
     }
-    private void setMealItemsToMealList(List<RandomMealResponse> RandomMealResponses){
+
+    private void setMealItemsToMealList(List<RandomMealResponse> RandomMealResponses) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                for (RandomMealResponse randomMealResponse : RandomMealResponses){
+                for (RandomMealResponse randomMealResponse : RandomMealResponses) {
                     mealList.add(randomMealResponse.getMeals().get(0));
                 }
                 networkDelegate.onSuccessResult(mealList);
@@ -70,10 +80,10 @@ public class Repository {
         });
     }
 
-    public void getMealsByKey(String letter){
+    public void getMealsByKey(String letter) {
         mealApiService.getSearchLetter(letter)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers .mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<RandomMealResponse>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
@@ -92,7 +102,8 @@ public class Repository {
                     }
                 });
     }
-    public void getMealsByIngredient(String name){
+
+    public void getMealsByIngredient(String name) {
         mealApiService.getSearchIngredients(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -104,7 +115,7 @@ public class Repository {
 
                     @Override
                     public void onSuccess(@NonNull RandomMealResponse randomMealResponse) {
-                           networkDelegate.onSuccessResult(randomMealResponse.getMeals());
+                        networkDelegate.onSuccessResult(randomMealResponse.getMeals());
 
                     }
 
@@ -116,7 +127,7 @@ public class Repository {
                 });
     }
 
-    public void getMealsByArea(String area){
+    public void getMealsByArea(String area) {
         mealApiService.getSearchArea(area)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -139,7 +150,8 @@ public class Repository {
                     }
                 });
     }
-    public void getMealById (String id,String key,MealNetworkDelegate mealNetworkDelegate){
+
+    public void getMealById(String id, String key, MealNetworkDelegate mealNetworkDelegate) {
 
         mealApiService.getMealById(id)
                 .subscribeOn(Schedulers.io())
@@ -152,7 +164,7 @@ public class Repository {
 
                     @Override
                     public void onSuccess(@NonNull RandomMealResponse randomMealResponse) {
-                        mealNetworkDelegate.onSuccessMealResult(randomMealResponse.getMeals(),key);
+                        mealNetworkDelegate.onSuccessMealResult(randomMealResponse.getMeals(), key);
 
                     }
 
@@ -163,7 +175,8 @@ public class Repository {
                     }
                 });
     }
-    public void getMealByCategory(String category){
+
+    public void getMealByCategory(String category) {
         remote.getMealsApiService()
                 .getMealsByCategory(category)
                 .subscribeOn(Schedulers.io())
@@ -187,7 +200,7 @@ public class Repository {
 
     }
 
-    public void getIngredientsDetail(IngredientNetworkDelegate ingredientNetworkDelegate){
+    public void getIngredientsDetail(IngredientNetworkDelegate ingredientNetworkDelegate) {
         mealApiService.getIngredients()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
