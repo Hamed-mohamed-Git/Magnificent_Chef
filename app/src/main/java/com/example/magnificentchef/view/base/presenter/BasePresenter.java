@@ -54,7 +54,7 @@ public class BasePresenter {
     }
 
     public void clearDatabaseTables(){
-        //favouriteRepository.clearFavouriteMealsTableData();
+        favouriteRepository.clearFavouriteMealsTableData();
         planSaveRepository.clearPlannedMealsTableData();
     }
     public  void checkSavePlanMeal(){

@@ -35,13 +35,19 @@ import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.view.base.BaseFragmentDirections;
 import com.example.magnificentchef.view.common.MealsAdapter;
 import com.example.magnificentchef.view.common.OnMealClickListener;
+import com.example.magnificentchef.view.home.presenter.HomeInterface;
 import com.example.magnificentchef.view.home.presenter.HomePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements RandomMealDelegate, NetworkDelegate<MealsItem>, OnMealClickListener, FavouriteMealDelegate {
+public class HomeFragment extends Fragment implements
+        RandomMealDelegate,
+        NetworkDelegate<MealsItem>,
+        OnMealClickListener,
+        FavouriteMealDelegate,
+        HomeInterface {
 
     private ViewPager2 dailyInspirationRecyclerView;
     private HomePresenter homePresenter;
@@ -49,50 +55,33 @@ public class HomeFragment extends Fragment implements RandomMealDelegate, Networ
     private RecyclerView moreYouLikeRecyclerView;
     private NavController navController;
     private MealsAdapter inspirationMealAdapter,mealsAdapter,moreYouMightLikeAdapter;
-    private int currentMealsCount;
-    private ConnectivityManager connectivityManager;
-    private ConnectivityManager.NetworkCallback networkCallback;
-    private Group group;
+    private Group failedConnection, connection;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        currentMealsCount = 0;
         navController =
-                ((NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment)).getNavController();
+                ((NavHostFragment) requireActivity()
+                        .getSupportFragmentManager()
+                        .findFragmentById(R.id.nav_host_fragment))
+                        .getNavController();
         homePresenter = new HomePresenter(new Repository(this,
                 Remote.getRetrofitInstance()),
-                new FavouriteRepository(Local.getLocal(requireContext()),this),getActivity().getApplicationContext());
-        inspirationMealAdapter = new MealsAdapter(R.layout.daily_inspiration_card,new ArrayList<MealsItem>(),navController,this);
-        mealsAdapter = new MealsAdapter(R.layout.meal_home_card,new ArrayList<MealsItem>(),navController,this);
-        moreYouMightLikeAdapter = new MealsAdapter(R.layout.more_you_might_card,new ArrayList<MealsItem>(),navController,this);
-        connectivityManager =
-                requireContext().getSystemService(ConnectivityManager.class);
-        networkCallback = new ConnectivityManager.NetworkCallback() {
-            @Override
-            public void onAvailable(@NonNull Network network) {
-                super.onAvailable(network);
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    group.setVisibility(View.GONE);
-                });
-
-            }
-
-            @Override
-            public void onLost(@NonNull Network network) {
-                super.onLost(network);
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    group.setVisibility(View.VISIBLE);
-                });
-
-            }
-            @Override
-            public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
-                super.onCapabilitiesChanged(network, networkCapabilities);
-                //final boolean unmetered = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
-
-            }
-        };
+                new FavouriteRepository(Local.getLocal(requireContext()),this),
+                this,
+                getActivity().getApplicationContext());
+        inspirationMealAdapter = new MealsAdapter(R.layout.daily_inspiration_card,
+                new ArrayList<>(),
+                navController,
+                this);
+        mealsAdapter = new MealsAdapter(R.layout.meal_home_card,
+                new ArrayList<>(),
+                navController,
+                this);
+        moreYouMightLikeAdapter = new MealsAdapter(R.layout.more_you_might_card,
+                new ArrayList<>(),
+                navController,
+                this);
     }
 
     @Override
@@ -106,21 +95,20 @@ public class HomeFragment extends Fragment implements RandomMealDelegate, Networ
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
+        homePresenter.checkConnection();
     }
 
     private void initView(View view){
         dailyInspirationRecyclerView = view.findViewById(R.id.dailyInspirationRecyclerView);
         mealRecyclerView = view.findViewById(R.id.mealRecyclerView);
         moreYouLikeRecyclerView = view.findViewById(R.id.moreYouLikeRecyclerView);
-        group = view.findViewById(R.id.base_view_group);
-        connectivityManager.registerDefaultNetworkCallback(networkCallback);
+        connection = view.findViewById(R.id.internet_connection_view);
+        failedConnection = view.findViewById(R.id.failed_internet_connection_view);
         dailyInspirationRecyclerView.setOffscreenPageLimit(10);
         dailyInspirationRecyclerView.setPageTransformer(new InspirationTransFormer(10));
         dailyInspirationRecyclerView.setAdapter(inspirationMealAdapter);
         mealRecyclerView.setAdapter(mealsAdapter);
         moreYouLikeRecyclerView.setAdapter(moreYouMightLikeAdapter);
-        if (currentMealsCount < 40)
-            homePresenter.getRandomMeal(40,this);
     }
 
     @Override
@@ -131,13 +119,7 @@ public class HomeFragment extends Fragment implements RandomMealDelegate, Networ
 
     @Override
     public void onSuccessResult(MealsItem mealsItem) {
-        if (currentMealsCount < 10){
-            inspirationMealAdapter.addMeal(mealsItem);
-        }else if (currentMealsCount < 20)
-            mealsAdapter.addMeal(mealsItem);
-        else if (currentMealsCount < 40)
-            moreYouMightLikeAdapter.addMeal(mealsItem);
-        currentMealsCount++;
+        homePresenter.divideMeals(mealsItem);
     }
 
     @Override
@@ -149,8 +131,6 @@ public class HomeFragment extends Fragment implements RandomMealDelegate, Networ
     public void onResume() {
         super.onResume();
     }
-
-
 
     @Override
     public void onMealClickListener(MealsItem meal) {
@@ -187,10 +167,41 @@ public class HomeFragment extends Fragment implements RandomMealDelegate, Networ
     @Override
     public void onError(String errorMessage) {}
 
+    @Override
+    public void setDailyInspirationMeal(MealsItem mealsItem) {
+        inspirationMealAdapter.addMeal(mealsItem);
+    }
 
-    //mealRecyclerView.setAdapter(new MealsAdapter(R.layout.meal_home_card,mealList));
-    //moreYouLikeRecyclerView.setAdapter(new MealsAdapter(R.layout.more_you_might_card,mealList));
-    //DisplayMetrics displayMetrics=new DisplayMetrics();
-    //requireActivity().getWindow().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-    //displayMetrics.widthPixels
+    @Override
+    public void setMealData(MealsItem mealsItem) {
+        mealsAdapter.addMeal(mealsItem);
+    }
+
+    @Override
+    public void setMoreYouLikeMeal(MealsItem mealsItem) {
+        moreYouMightLikeAdapter.addMeal(mealsItem);
+    }
+
+    @Override
+    public void onInternetAvailable() {
+        homePresenter.getRandomMeal(40,this);
+        failedConnection.setVisibility(View.GONE);
+        connection.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onInternetLost() {
+        failedConnection.setVisibility(View.VISIBLE);
+        connection.setVisibility(View.GONE);
+    }
 }
+
+
+
+
+
+//mealRecyclerView.setAdapter(new MealsAdapter(R.layout.meal_home_card,mealList));
+//moreYouLikeRecyclerView.setAdapter(new MealsAdapter(R.layout.more_you_might_card,mealList));
+//DisplayMetrics displayMetrics=new DisplayMetrics();
+//requireActivity().getWindow().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//displayMetrics.widthPixels

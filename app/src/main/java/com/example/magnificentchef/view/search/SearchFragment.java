@@ -1,9 +1,12 @@
 package com.example.magnificentchef.view.search;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -31,6 +34,7 @@ import com.example.magnificentchef.view.search.presenter.OnSearchItemListener;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterCategories;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterCountres;
 import com.example.magnificentchef.view.search.presenter.SearchAdapterIngredients;
+import com.example.magnificentchef.view.search.presenter.SearchInterface;
 import com.example.magnificentchef.view.search.presenter.SearchPresenter;
 
 import java.util.ArrayList;
@@ -38,16 +42,20 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class SearchFragment extends Fragment implements TextWatcher, OnSearchItemListener, OnAreaItemClickListener, OnCategoryClickListener, NetworkDelegate<com.example.magnificentchef.model.remote.model.MealsItem>, IngredientNetworkDelegate {
-    private RecyclerView recyclerView, recyclerView2,recyclerView3;
+public class SearchFragment extends Fragment implements TextWatcher,
+        OnSearchItemListener,
+        OnAreaItemClickListener,
+        OnCategoryClickListener,
+        NetworkDelegate<com.example.magnificentchef.model.remote.model.MealsItem>,
+        IngredientNetworkDelegate,
+        SearchInterface {
+    private RecyclerView countriesRecyclerView, ingredientsRecyclerView, mealCategoryRecyclerView;
     private SearchAdapterIngredients searchAdapterIngredients;
     private SearchAdapterCategories SearchAdapterCategories;
     private SearchAdapterCountres searchAdapterCountres;
     private List<Custom> countryList;
     private List<Custom> categoryList;
-    private String[]country_name;
-    private int[]country_images;
-    private View view;
+    private Group failedConnection, connection;
     private EditText search;
     private NavHostFragment navHostFragment;
     private NavController navController;
@@ -55,16 +63,20 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
 
 
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        searchPresenter=new SearchPresenter(new Repository(this,Remote.getRetrofitInstance()),this);
+        searchPresenter=new SearchPresenter(new Repository(this,Remote.getRetrofitInstance()),
+                this,
+                this,
+                requireContext());
         countryList = new ArrayList<>();
         categoryList = new ArrayList<>();
-        navHostFragment =(NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        navHostFragment =(NavHostFragment) requireActivity()
+                .getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
         navController= navHostFragment.getNavController();
+
     }
 
 
@@ -76,25 +88,21 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.view=view;
+        initView(view);
+        searchPresenter.checkConnection();
+    }
+
+    private void initView(View view){
         search=view.findViewById(R.id.editTextTextPersonName);
+        connection = view.findViewById(R.id.internet_connection_view);
+        failedConnection = view.findViewById(R.id.failed_internet_connection_view);
+        countriesRecyclerView = view.findViewById(R.id.country_recycle_view);
+        mealCategoryRecyclerView = view.findViewById(R.id.recyclerView);
+        ingredientsRecyclerView = view.findViewById(R.id.recyclerView2);
+        ingredientsRecyclerView.setHasFixedSize(true);
+        mealCategoryRecyclerView.setHasFixedSize(true);
+        countriesRecyclerView.setHasFixedSize(true);
         search.addTextChangedListener(this);
-        searchPresenter.getIngredientData();
-
-        recyclerView = view.findViewById(R.id.country_recycle_view);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext());
-        linearLayoutManager2.setOrientation(RecyclerView.HORIZONTAL);
-        recyclerView.setLayoutManager(linearLayoutManager2);
-
-        SearchCountry();
-        recyclerView3 = view.findViewById(R.id.recyclerView);
-        recyclerView3.setHasFixedSize(true);
-        SearchCategory();
-
-
-
-
     }
 
     @Override
@@ -121,7 +129,6 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
     public void afterTextChanged(Editable editable) {
 
     }
-
 
     @Override
     public void onSuccessClickItemListener(String itemData) {
@@ -160,13 +167,8 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
 
     @Override
     public void onSuccessIngredientsResult(List<MealsItem> ingredientsListList) {
-        recyclerView2 = view.findViewById(R.id.recyclerView2);
-        recyclerView2.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
-        recyclerView2.setLayoutManager(linearLayoutManager);
-        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
         searchAdapterIngredients = new SearchAdapterIngredients(ingredientsListList,SearchFragment.this::onSuccessClickItemListener);
-        recyclerView2.setAdapter(searchAdapterIngredients);
+        ingredientsRecyclerView.setAdapter(searchAdapterIngredients);
 
     }
 
@@ -175,7 +177,21 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
 
     }
 
-    public void SearchCountry (){
+    @Override
+    public void onInternetAvailable() {
+        setSearchCountry();
+        setSearchCategory();
+        searchPresenter.getIngredientData();
+        failedConnection.setVisibility(View.GONE);
+        connection.setVisibility(View.VISIBLE);
+    }
+    @Override
+    public void onInternetLost() {
+        failedConnection.setVisibility(View.VISIBLE);
+        connection.setVisibility(View.GONE);
+    }
+
+    public void setSearchCountry (){
 
         countryList = Arrays.asList(
                 new Custom("American", R.drawable.usa),
@@ -190,10 +206,10 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
                 new Custom("Japanese", R.drawable.japan)
         );
         searchAdapterCountres = new SearchAdapterCountres(countryList,this);
-        recyclerView.setAdapter(searchAdapterCountres);
+        countriesRecyclerView.setAdapter(searchAdapterCountres);
     }
 
-    public void SearchCategory(){
+    public void setSearchCategory(){
         categoryList = Arrays.asList(
                 new Custom("Breakfast", R.drawable.breakfast),
                 new Custom("Beef", R.drawable.lunch),
@@ -203,7 +219,7 @@ public class SearchFragment extends Fragment implements TextWatcher, OnSearchIte
                 new Custom("Starter", R.drawable.appetizer)
         );
         SearchAdapterCategories = new SearchAdapterCategories(categoryList,this);
-        recyclerView3.setAdapter(SearchAdapterCategories);
+        mealCategoryRecyclerView.setAdapter(SearchAdapterCategories);
 
     }
 }

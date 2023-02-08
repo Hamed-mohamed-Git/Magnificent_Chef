@@ -40,8 +40,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline21"
@@ -73,13 +74,21 @@
         />
 
 
-    <View
+
+    <Button
         android:id="@+id/logoutButton"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="1dp"
+        android:textAllCaps="false"
         android:layout_marginEnd="15dp"
+        android:fontFamily="@font/nunito_bold"
         android:background="@drawable/check_button_card_background"
+        android:text="@string/log_out"
+        android:textColor="@drawable/check_button_text_background"
+        android:textSize="11sp"
         app:backgroundTint="@null"
+        android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/email_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/name_tv" />
@@ -105,18 +114,7 @@
         app:layout_constraintTop_toTopOf="@+id/circleImageView"
         app:layout_constraintVertical_bias="0.50" />
 
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/log_out"
-        android:textColor="@drawable/check_button_text_background"
-        android:textSize="12sp"
-        android:fontFamily="@font/nunito_bold"
-        app:layout_constraintBottom_toBottomOf="@+id/logoutButton"
-        app:layout_constraintEnd_toEndOf="@+id/logoutButton"
-        app:layout_constraintStart_toStartOf="@+id/logoutButton"
-        app:layout_constraintTop_toTopOf="@+id/logoutButton" />
+
 
 
 

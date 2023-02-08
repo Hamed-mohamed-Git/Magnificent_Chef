@@ -17,11 +17,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.reactivestreams.Subscriber;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import io.reactivex.rxjava3.core.Flowable;
 
 public class FireStoreRepository {
     FirebaseFirestore firebaseFirestore;
@@ -96,12 +100,51 @@ public class FireStoreRepository {
     }
 
     public void getSavedMeals(FireStoreDelegate fireStoreDelegate){
+//        Flowable.fromPublisher(publisher->{
+//
+//            firebaseFirestore.collection("Users")
+//                    .document(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+//                    .collection("Favourite Meals")
+//                    .get()
+//                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                            if (task.isSuccessful()) {
+//                                for (QueryDocumentSnapshot document : task.getResult()) {
+//                                    FavouriteMeal favouriteMeal = new FavouriteMeal();
+//                                    favouriteMeal.setArea((String)document.getData().get("area"));
+//                                    favouriteMeal.setCategory((String)document.getData().get("category"));
+//                                    favouriteMeal.setDirections((String)document.getData().get("directions"));
+//                                    favouriteMeal.setImage((String)document.getData().get("image"));
+//                                    favouriteMeal.setIngredients((String)document.getData().get("ingredients"));
+//                                    favouriteMeal.setMeal_id((String)document.getData().get("meal_id"));
+//                                    favouriteMeal.setMeasure((String)document.getData().get("measure"));
+//                                    favouriteMeal.setName((String)document.getData().get("name"));
+//                                    favouriteMeal.setVideoUrl((String)document.getData().get("videoUrl"));
+//                       //             favouriteMealList.add(favouriteMeal);
+//
+//                                    publisher.onNext(favouriteMeal);
+//                                    Log.i("hamed", "onComplete: "+FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                                }
+//                                //fireStoreDelegate.onFavouriteMealList(favouriteMealList);
+//                            }
+//                        }
+//                    });
+//
+//
+//        });
+//
+//
+//
+//
+//
         List<FavouriteMeal> favouriteMealList = new ArrayList<>();
         firebaseFirestore.collection("Users")
                 .document(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser().getUid()))
                 .collection("Favourite Meals")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    final List<FavouriteMeal> favouriteMealList = new ArrayList<>();
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -117,9 +160,8 @@ public class FireStoreRepository {
                                 favouriteMeal.setName((String)document.getData().get("name"));
                                 favouriteMeal.setVideoUrl((String)document.getData().get("videoUrl"));
                                 favouriteMealList.add(favouriteMeal);
-                                Log.i("hamed", "onComplete: "+FirebaseAuth.getInstance().getCurrentUser().getUid());
                             }
-                            //fireStoreDelegate.onFavouriteMealList(favouriteMealList);
+                            fireStoreDelegate.onFavouriteMealList(favouriteMealList);
                         }
                     }
                 });
@@ -148,7 +190,6 @@ public class FireStoreRepository {
                                 planMeal.setVideoUrl((String)document.getData().get("videoUrl"));
                                 planMeal.setDate((String)document.getData().get("date"));
                                 planMealList.add(planMeal);
-                                Log.i("hamed", "onComplete: "+FirebaseAuth.getInstance().getCurrentUser().getUid() );
                             }
                             fireStoreDelegate.onPlannedMealList(planMealList);
                         }

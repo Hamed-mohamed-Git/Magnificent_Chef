@@ -106,6 +106,9 @@ public class BaseFragment extends Fragment implements BaseInterfce,
         key = BaseFragmentArgs.fromBundle(getArguments()).getKey();
         logout.setOnClickListener(view1 -> {
             basePresenter.clearDatabaseTables();
+            FirebaseAuth.getInstance().signOut();
+            sharedPrefEditor.putString(getString(R.string.preference_file_key), Constants.UN_REGISTERED);
+            sharedPrefEditor.apply();
             Navigation
                     .findNavController(view1)
                     .navigate(R.id.action_baseFragment_to_registerFragment);
@@ -132,13 +135,7 @@ public class BaseFragment extends Fragment implements BaseInterfce,
         }
         if (key.equals("google") || key.equals("signin")){
             basePresenter.checkSaveFavouriteMeal();
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    basePresenter.checkSavePlanMeal();
-                }
-            },50000L);
-
+            basePresenter.checkSavePlanMeal();
         }
     }
 
@@ -151,9 +148,6 @@ public class BaseFragment extends Fragment implements BaseInterfce,
 
     @Override
     public void onComplete() {
-        FirebaseAuth.getInstance().signOut();
-        sharedPrefEditor.putString(getString(R.string.preference_file_key), Constants.UN_REGISTERED);
-        sharedPrefEditor.apply();
     }
 
 
