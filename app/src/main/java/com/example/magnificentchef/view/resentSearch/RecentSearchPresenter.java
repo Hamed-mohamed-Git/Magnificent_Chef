@@ -3,6 +3,11 @@ package com.example.magnificentchef.view.resentSearch;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -69,7 +74,7 @@ public class RecentSearchPresenter {
         }
     }
 
-    public void RecentSearchfavouriteMeal(MealsItem favouriteMeal) throws NoSuchFieldException, IllegalAccessException {
+    public void RecentSearchFavouriteMeal(MealsItem favouriteMeal) throws NoSuchFieldException, IllegalAccessException {
         getFields(favouriteMeal);
 
         Glide.with(context).asBitmap().load(favouriteMeal.getStrMealThumb()).into(new CustomTarget<Bitmap>() {
@@ -121,6 +126,33 @@ public class RecentSearchPresenter {
         favouriteMeal.setMeasure(measure);
         favouriteMeal.setCategory(mealsItem.getStrCategory());
         return favouriteMeal;
+    }
+
+    public void checkConnectionChange(){
+        context.getSystemService(ConnectivityManager.class).registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(@NonNull Network network) {
+                new Handler(Looper.getMainLooper()).post(onSearchCheckListener::onInternetAvailable);
+                super.onAvailable(network);
+
+            }
+
+            @Override
+            public void onLost(@NonNull Network network) {
+                new Handler(Looper.getMainLooper()).post(onSearchCheckListener::onInternetLost);
+                super.onLost(network);
+
+            }
+            @Override
+            public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
+                super.onCapabilitiesChanged(network, networkCapabilities);
+            }
+        });
+        if (context.getSystemService(ConnectivityManager.class).getActiveNetworkInfo()!=null)
+            onSearchCheckListener.onInternetAvailable();
+        else {
+            onSearchCheckListener.onInternetLost();
+        }
     }
 
 }

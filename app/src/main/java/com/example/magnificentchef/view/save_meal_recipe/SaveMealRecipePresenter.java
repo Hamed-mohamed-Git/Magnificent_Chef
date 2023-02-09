@@ -3,6 +3,11 @@ package com.example.magnificentchef.view.save_meal_recipe;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +23,7 @@ import com.example.magnificentchef.model.remote.firebase.FireStoreDelegate;
 import com.example.magnificentchef.model.remote.firebase.FireStoreRepository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
 import com.example.magnificentchef.utils.SaveFiles;
+import com.example.magnificentchef.view.common.ConnectionState;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -26,18 +32,18 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 public class SaveMealRecipePresenter{
-    private Repository repository;
-    private PlanSaveRepository planSaveRepository;
+    private final Repository repository;
+    private final PlanSaveRepository planSaveRepository;
     private String ingredientList = "";
     private String measures = "";
-    private Context context;
-    private String imageURI;
+    private final Context context;
+    private final ConnectionState connectionState;
 
-    public SaveMealRecipePresenter(Repository repository, PlanSaveRepository planSaveRepository, Context context) {
+    public SaveMealRecipePresenter(Repository repository, PlanSaveRepository planSaveRepository, ConnectionState connectionState, Context context) {
         this.repository = repository;
         this.planSaveRepository = planSaveRepository;
         this.context = context;
-        imageURI = "";
+        this.connectionState = connectionState;
     }
     public void getMealsByKey(String keyLetter){
         repository.getMealsByKey(keyLetter);
@@ -100,6 +106,31 @@ public class SaveMealRecipePresenter{
         }
 
     }
+    public void checkConnectionChange(){
+        context.getSystemService(ConnectivityManager.class).registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(@NonNull Network network) {
+                new Handler(Looper.getMainLooper()).post(connectionState::onInternetAvailable);
+                super.onAvailable(network);
 
+            }
+
+            @Override
+            public void onLost(@NonNull Network network) {
+                new Handler(Looper.getMainLooper()).post(connectionState::onInternetLost);
+                super.onLost(network);
+
+            }
+            @Override
+            public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
+                super.onCapabilitiesChanged(network, networkCapabilities);
+            }
+        });
+        if (context.getSystemService(ConnectivityManager.class).getActiveNetworkInfo()!=null)
+            connectionState.onInternetAvailable();
+        else {
+            connectionState.onInternetLost();
+        }
+    }
 
 }

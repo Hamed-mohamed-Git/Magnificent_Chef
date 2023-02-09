@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.magnificentchef.R;
 import com.example.magnificentchef.model.local.Local;
@@ -33,6 +35,7 @@ import com.example.magnificentchef.view.common.OnMealClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import io.reactivex.rxjava3.core.Observable;
@@ -49,6 +52,8 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
     private NavController navController;
     private FavouriteRepository favouriteRepository;
     private Pattern pattern;
+    private ImageView closeButton;
+    private Group failedConnection, connection;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -71,7 +76,6 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
                         findFragmentById(R.id.nav_host_fragment)).
                         getNavController();
 
-
     }
 
     @Override
@@ -85,17 +89,28 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initView(view);
+        recentSearchPresenter.checkConnectionChange();
+        closeButton.setOnClickListener(view1 -> {
+            navController.popBackStack();
+        });
+        search.addTextChangedListener(this);
+    }
+
+    private void initView(View view){
         recyclerView =view.findViewById(R.id.result_search);
         search = view.findViewById(R.id.search_edt);
-        search.addTextChangedListener(this);
-        recentSearchPresenter.checkSearchType(RecentSearchFragmentArgs.fromBundle(getArguments()).getKey()
-                ,RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
+        closeButton = view.findViewById(R.id.closeButton);
+        connection = view.findViewById(R.id.internet_connection_view);
+        failedConnection = view.findViewById(R.id.failed_internet_connection_view);
     }
 
     @Override
     public void onSuccessResult(List<MealsItem> itemList) {
-       mealsAdapter.setMealItemList(itemList);
-       mealsItems=itemList;
+        if (itemList != null){
+            mealsAdapter.setMealItemList(itemList);
+            mealsItems=itemList;
+        }
     }
 
     @Override
@@ -115,8 +130,8 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
         }
         else if (charSequence.length() > 1&& pattern.matcher(charSequence.toString()).matches()){
             Observable<MealsItem> mealsItemObservable=Observable.fromIterable(mealsItems);
-            mealsItemObservable.filter(mealsItem -> mealsItem.getStrMeal()
-                            .startsWith(charSequence.toString()))
+            mealsItemObservable.filter(mealsItem -> mealsItem.getStrMeal().toLowerCase()
+                            .startsWith(charSequence.toString().toLowerCase()))
                     .toList()
                     .doOnSuccess(mealsAdapter::setMealItemList)
                     .subscribe();
@@ -152,7 +167,7 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
         }
         else{
             try {
-                recentSearchPresenter.RecentSearchfavouriteMeal(mealResponseList.get(0));
+                recentSearchPresenter.RecentSearchFavouriteMeal(mealResponseList.get(0));
             } catch (NoSuchFieldException e) {
                 throw new RuntimeException(e);
             } catch (IllegalAccessException e) {
@@ -208,5 +223,19 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
     public void onSearchIngredientListener(String key) {
         recentSearchPresenter.getMealsByIngredient(key);
         recyclerView.setAdapter(mealsAdapter);
+    }
+
+    @Override
+    public void onInternetAvailable() {
+        recentSearchPresenter.checkSearchType(RecentSearchFragmentArgs.fromBundle(getArguments()).getKey()
+                ,RecentSearchFragmentArgs.fromBundle(getArguments()).getLetters());
+        failedConnection.setVisibility(View.GONE);
+        connection.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onInternetLost() {
+        failedConnection.setVisibility(View.VISIBLE);
+        connection.setVisibility(View.GONE);
     }
 }

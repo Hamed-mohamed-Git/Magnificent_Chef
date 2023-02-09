@@ -11,11 +11,6 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        NetworkRequest networkRequest = new NetworkRequest.Builder()
-                .build();
-
-
     }
 
 }

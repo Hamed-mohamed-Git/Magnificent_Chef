@@ -1,16 +1,19 @@
 package com.example.magnificentchef.view.search;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.Group;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
@@ -76,7 +79,6 @@ public class SearchFragment extends Fragment implements TextWatcher,
                 .getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
         navController= navHostFragment.getNavController();
-
     }
 
 
@@ -89,7 +91,7 @@ public class SearchFragment extends Fragment implements TextWatcher,
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        searchPresenter.checkConnection();
+        searchPresenter.checkConnectionChange();
     }
 
     private void initView(View view){
@@ -223,6 +225,29 @@ public class SearchFragment extends Fragment implements TextWatcher,
 
     }
 }
-
+//class name extends Drawable{
+//
+//    @Override
+//    public void draw(@NonNull Canvas canvas) {
+//        Path path = new Path();
+//        path.to
+//        canvas.drawPath(path,new Paint());
+//    }
+//
+//    @Override
+//    public void setAlpha(int i) {
+//
+//    }
+//
+//    @Override
+//    public void setColorFilter(@Nullable ColorFilter colorFilter) {
+//
+//    }
+//
+//    @Override
+//    public int getOpacity() {
+//        return 0;
+//    }
+//}
 
 

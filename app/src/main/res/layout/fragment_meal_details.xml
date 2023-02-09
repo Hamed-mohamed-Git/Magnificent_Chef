@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
+
+
         <ImageView
             android:id="@+id/mealImage"
             android:layout_width="0dp"
@@ -23,12 +25,55 @@
 
 
         <View
+            android:id="@+id/view1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/save_tag_background"
+            android:backgroundTint="#30000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/saveButtonImageView1"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/exite__button_background"
+            app:layout_constraintBottom_toBottomOf="@+id/view1"
+            app:layout_constraintEnd_toEndOf="@+id/view1"
+            app:layout_constraintStart_toStartOf="@+id/view1"
+            app:layout_constraintTop_toTopOf="@+id/view1" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/save_tag_background"
+            android:backgroundTint="#30000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/saveButtonImageView"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toTopOf="@+id/view"
+            android:background="@drawable/save_background" />
+
+        <View
             android:id="@+id/view5"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginTop="364dp"
             android:background="@drawable/back_button_background"
-
             android:backgroundTint="@color/white"
             android:elevation="3dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,15 +84,19 @@
 
         <TextView
             android:id="@+id/mealNameTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:elevation="3dp"
+            android:ellipsize="end"
             android:fontFamily="@font/capriola"
+            android:lines="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:text="Bigos (Hunters Stew)"
             android:textColor="@color/black"
             android:textSize="17sp"
-            android:lines="1"
-            android:ellipsize="end"
+            android:gravity="center"
+
             app:layout_constraintBottom_toBottomOf="@+id/view5"
             app:layout_constraintEnd_toEndOf="@+id/view5"
             app:layout_constraintHorizontal_bias="0.497"

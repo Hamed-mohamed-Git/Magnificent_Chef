@@ -12,8 +12,6 @@ import androidx.annotation.NonNull;
 import com.example.magnificentchef.model.remote.IngredientNetworkDelegate;
 import com.example.magnificentchef.model.remote.Repository;
 
-import java.util.Objects;
-
 public class SearchPresenter {
     private final Repository repository;
     private final IngredientNetworkDelegate ingredientNetworkDelegate;
@@ -33,7 +31,7 @@ public class SearchPresenter {
     public void getIngredientData(){
         repository.getIngredientsDetail(ingredientNetworkDelegate);
     }
-    public void checkConnection(){
+    public void checkConnectionChange(){
         context.getSystemService(ConnectivityManager.class).registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(@NonNull Network network) {
@@ -51,10 +49,11 @@ public class SearchPresenter {
                 super.onCapabilitiesChanged(network, networkCapabilities);
             }
         });
-        if (context.getSystemService(ConnectivityManager.class).getActiveNetworkInfo()!=null && !context.getSystemService(ConnectivityManager.class).getActiveNetworkInfo().isConnected())
+        if (context.getSystemService(ConnectivityManager.class).getActiveNetworkInfo()!=null)
             searchInterface.onInternetAvailable();
         else {
             searchInterface.onInternetLost();
         }
     }
+
 }
