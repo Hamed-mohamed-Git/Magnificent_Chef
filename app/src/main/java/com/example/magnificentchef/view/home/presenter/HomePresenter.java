@@ -52,7 +52,6 @@ public class HomePresenter{
     }
     public void favouriteMeal(MealsItem favouriteMeal) throws NoSuchFieldException, IllegalAccessException {
         getFields(favouriteMeal);
-
         Glide.with(context).asBitmap().load(favouriteMeal.getStrMealThumb()).into(new CustomTarget<Bitmap>() {
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -60,8 +59,10 @@ public class HomePresenter{
                     FavouriteMeal favouriteMealConverted = convertToFavouriteMeal(favouriteMeal,
                             SaveFiles.saveImage(context,resource,favouriteMeal.getStrMeal()));
                     favouriteRepository.insertFavouriteMeal(favouriteMealConverted);
+                    FavouriteMeal anotherFavouriteMealConverted = convertToFavouriteMeal(favouriteMeal,
+                           favouriteMeal.getStrMealThumb());
                     new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
-                            .createSavedMeals(favouriteMealConverted);
+                            .createSavedMeals(anotherFavouriteMealConverted);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

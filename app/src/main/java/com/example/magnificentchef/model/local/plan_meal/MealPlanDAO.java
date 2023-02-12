@@ -23,4 +23,7 @@ public interface MealPlanDAO {
 
     @Query("DELETE FROM PlanMeal")
     Completable delete();
+
+    @Query("SELECT * FROM PlanMeal WHERE MEAL_ID LIKE :key")
+    Single<PlanMeal> getMealByID(String key);
 }

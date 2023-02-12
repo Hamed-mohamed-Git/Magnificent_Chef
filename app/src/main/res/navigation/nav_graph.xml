@@ -86,9 +86,11 @@
         android:label="fragment_meal_details"
         tools:layout="@layout/fragment_meal_details" >
         <argument
-            android:name="MealItem"
-            app:argType="com.example.magnificentchef.model.remote.model.MealsItem"
-            app:nullable="true" />
+            android:name="mealID"
+            app:argType="string" />
+        <argument
+            android:name="mealResourceType"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/recentSearchFragment"

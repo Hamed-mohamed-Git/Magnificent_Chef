@@ -1,5 +1,6 @@
 package com.example.magnificentchef.view.base.presenter;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -76,12 +77,12 @@ public class BasePresenter {
 
     }
 
-    public void setMealsPlanMeals(List<PlanMeal> planMealList){
-        planSaveRepository.addPlannedMealList(planMealList);
+    public void setMealsPlanMeals(List<PlanMeal> planMealList, Context context){
+        planSaveRepository.addPlannedMealList(planMealList,context);
     }
 
-    public void setMealsFavouriteMeals(List<FavouriteMeal> favouriteMealList){
-       favouriteRepository.addFavouriteMealList(favouriteMealList);
+    public void setMealsFavouriteMeals(List<FavouriteMeal> favouriteMealList, Context context){
+       favouriteRepository.addFavouriteMealList(favouriteMealList,context);
     }
 
 }

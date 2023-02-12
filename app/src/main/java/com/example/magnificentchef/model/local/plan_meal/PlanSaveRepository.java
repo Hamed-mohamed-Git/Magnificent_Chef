@@ -1,6 +1,9 @@
 package com.example.magnificentchef.model.local.plan_meal;
 
+import android.content.Context;
+
 import com.example.magnificentchef.model.local.Local;
+import com.example.magnificentchef.utils.SaveFiles;
 
 import java.util.List;
 
@@ -85,6 +88,28 @@ public class PlanSaveRepository {
                 });
     }
 
+    public void getPlannedMealByID(String id, PlannedDelegate plannedDelegate){
+        local.mealPlanDAO().getMealByID(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull PlanMeal planMeal) {
+                        plannedDelegate.onGetPlannedMeal(planMeal);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
+
     public void clearPlannedMealsTableData(){
         local.mealPlanDAO()
                 .delete()
@@ -109,8 +134,9 @@ public class PlanSaveRepository {
 
     }
 
-    public void addPlannedMealList(List<PlanMeal> planMealList){
+    public void addPlannedMealList(List<PlanMeal> planMealList, Context context){
         for (PlanMeal planMeal : planMealList){
+            planMeal.setImage(SaveFiles.saveImage(context,planMeal.getImage(),planMeal.getName()));
             insertPlanMeal(planMeal);
         }
     }

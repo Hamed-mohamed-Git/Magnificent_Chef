@@ -36,8 +36,8 @@ public class SearchAdapterCountres extends RecyclerView.Adapter<SearchAdapterCou
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         country =countries.get(position);
         holder.image.setImageResource(countries.get(position).getImage());
+        //holder.image.getResources().getc
         holder.label.setText(countries.get(position).getLabel());
-        //Glide.with(holder.image.getContext()).load(ingredient.getIngredientImage()).into(holder.image);
         holder.constraintLayout.setOnClickListener(view -> onAreaItemClickListener.onClickItemListener(holder.label.getText().toString()));
 
 
@@ -50,7 +50,7 @@ public class SearchAdapterCountres extends RecyclerView.Adapter<SearchAdapterCou
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
+        //private final View elementView;
         View view;
         TextView label;
         ImageView image;
@@ -58,10 +58,10 @@ public class SearchAdapterCountres extends RecyclerView.Adapter<SearchAdapterCou
 
        public ViewHolder(@NonNull View itemView) {
            super(itemView);
-          label=itemView.findViewById(R.id.label);
-          image=itemView.findViewById(R.id.circle);
+           label=itemView.findViewById(R.id.label);
+           image=itemView.findViewById(R.id.circle);
            constraintLayout=itemView.findViewById(R.id.search_float_card);
-
+           //elementView = view.findViewById(R.id.view4);
 
        }
 

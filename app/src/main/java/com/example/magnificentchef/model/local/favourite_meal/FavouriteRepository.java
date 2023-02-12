@@ -1,6 +1,9 @@
 package com.example.magnificentchef.model.local.favourite_meal;
 
+import android.content.Context;
+
 import com.example.magnificentchef.model.local.Local;
+import com.example.magnificentchef.utils.SaveFiles;
 
 import java.util.List;
 
@@ -41,7 +44,6 @@ public class FavouriteRepository {
                     }
                 });
     }
-
     public void deleteFavouriteMeal(FavouriteMeal favouriteMeal){
         local.favouriteDAO().delete(favouriteMeal)
                 .subscribeOn(Schedulers.io())
@@ -63,7 +65,6 @@ public class FavouriteRepository {
                     }
                 });
     }
-
     public void FavouriteMeals(){
         local.favouriteDAO().getFavouriteMeals()
                 .subscribeOn(Schedulers.io())
@@ -85,7 +86,6 @@ public class FavouriteRepository {
                     }
                 });
     }
-
     public void clearFavouriteMealsTableData(){
         local.favouriteDAO().delete()
                 .subscribeOn(Schedulers.io())
@@ -106,9 +106,33 @@ public class FavouriteRepository {
                     }
                 });
     }
-    public void addFavouriteMealList(List<FavouriteMeal> favouriteMealList){
+    public void addFavouriteMealList(List<FavouriteMeal> favouriteMealList, Context context){
         for (FavouriteMeal favouriteMeal : favouriteMealList){
+            favouriteMeal.setImage(SaveFiles.saveImage(context,favouriteMeal.getImage(),favouriteMeal.getName()));
             insertFavouriteMeal(favouriteMeal);
         }
+    }
+
+
+    public void getFavouriteMealByID(String id,FavouriteDelegate favouriteDelegate){
+        local.favouriteDAO().getFavouriteMealByID(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<FavouriteMeal>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull FavouriteMeal favouriteMeal) {
+                        favouriteDelegate.onFavouriteMeal(favouriteMeal);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
     }
 }

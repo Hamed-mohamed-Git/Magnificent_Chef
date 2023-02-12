@@ -137,8 +137,10 @@ public class PlanMealFragment extends Fragment implements ClickAddPlanListener<P
                 .findFragmentById(R.id.nav_host_fragment))
                 .getNavController()
                 .navigate(BaseFragmentDirections
-                .actionBaseFragmentToMealDetailsFragment(new MealsItem())
-                        .setMealItem(Mapper.convert(planMeal)));
+                .actionBaseFragmentToMealDetailsFragment("00000","")
+                        .setMealResourceType("localPlanMeal")
+                        .setMealID(planMeal.getMeal_id()));
+                //Mapper.convert(planMeal))
     }
 
     @Override

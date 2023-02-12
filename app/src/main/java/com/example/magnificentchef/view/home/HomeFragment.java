@@ -127,7 +127,10 @@ public class HomeFragment extends Fragment implements
 
     @Override
     public void onMealClickListener(MealsItem meal) {
-        navController.navigate(BaseFragmentDirections.actionBaseFragmentToMealDetailsFragment(meal).setMealItem(meal));
+        navController.navigate(BaseFragmentDirections
+                .actionBaseFragmentToMealDetailsFragment("00000","")
+                .setMealResourceType("retrofit")
+                .setMealID(meal.getIdMeal()));
     }
 
     @Override

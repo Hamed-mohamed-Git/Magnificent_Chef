@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <View
-        android:id="@+id/view7"
+        android:id="@+id/ingredientView"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginStart="20dp"
@@ -20,10 +20,10 @@
         android:id="@+id/ingredientImage"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view7"
-        app:layout_constraintEnd_toEndOf="@+id/view7"
-        app:layout_constraintStart_toStartOf="@+id/view7"
-        app:layout_constraintTop_toTopOf="@+id/view7"
+        app:layout_constraintBottom_toBottomOf="@+id/ingredientView"
+        app:layout_constraintEnd_toEndOf="@+id/ingredientView"
+        app:layout_constraintStart_toStartOf="@+id/ingredientView"
+        app:layout_constraintTop_toTopOf="@+id/ingredientView"
         app:srcCompat="@drawable/egg_img" />
 
     <TextView
@@ -34,9 +34,9 @@
         android:fontFamily="@font/capriola"
         android:text="55 g"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/view7"
-        app:layout_constraintStart_toEndOf="@+id/view7"
-        app:layout_constraintTop_toTopOf="@+id/view7" />
+        app:layout_constraintBottom_toBottomOf="@+id/ingredientView"
+        app:layout_constraintStart_toEndOf="@+id/ingredientView"
+        app:layout_constraintTop_toTopOf="@+id/ingredientView" />
 
     <TextView
         android:id="@+id/ingredientTextView"

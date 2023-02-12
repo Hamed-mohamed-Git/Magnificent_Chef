@@ -79,14 +79,16 @@ public class saveFragment extends Fragment implements ClickAddPlanListener<Favou
 
     @Override
     public void onPlannedMealClick(FavouriteMeal favouriteMeal) {
-
         ((NavHostFragment) requireActivity()
                 .getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment))
                 .getNavController()
                 .navigate(BaseFragmentDirections
-                        .actionBaseFragmentToMealDetailsFragment(new MealsItem())
-                        .setMealItem(Mapper.convert(favouriteMeal)));
+                        .actionBaseFragmentToMealDetailsFragment("00000","")
+                        .setMealResourceType("localFavouriteMeal")
+                        .setMealID(favouriteMeal.getMeal_id()));
+//         .actionBaseFragmentToMealDetailsFragment(new MealsItem())
+//                .setMealItem(Mapper.convert(favouriteMeal)));
     }
 
     @Override

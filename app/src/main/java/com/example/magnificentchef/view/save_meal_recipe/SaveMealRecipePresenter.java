@@ -64,21 +64,32 @@ public class SaveMealRecipePresenter{
                 }
                 try {
                     planMeal.setImage(SaveFiles.saveImage(context,resource,mealsItem.getStrMeal()));
+                    planMeal.setMeal_id(mealsItem.getIdMeal() + day);
+                    planMeal.setName(mealsItem.getStrMeal());
+                    planMeal.setArea(mealsItem.getStrArea());
+                    planMeal.setVideoUrl(mealsItem.getStrYoutube());
+                    planMeal.setCategory(mealsItem.getStrCategory());
+                    planMeal.setDate(day);
+                    planMeal.setRecipe(ingredientList);
+                    planMeal.setMeasure(measures);
+                    planMeal.setDirections(mealsItem.getStrInstructions());
+                    planSaveRepository.insertPlanMeal(planMeal);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                planMeal.setMeal_id(mealsItem.getIdMeal() + day);
-                planMeal.setName(mealsItem.getStrMeal());
-                planMeal.setArea(mealsItem.getStrArea());
-                planMeal.setVideoUrl(mealsItem.getStrYoutube());
-                planMeal.setCategory(mealsItem.getStrCategory());
-                planMeal.setDate(day);
-                planMeal.setRecipe(ingredientList);
-                planMeal.setMeasure(measures);
-                planMeal.setDirections(mealsItem.getStrInstructions());
-                planSaveRepository.insertPlanMeal(planMeal);
+                PlanMeal anotherPlanMeal = new PlanMeal();
+                anotherPlanMeal.setMeal_id(mealsItem.getIdMeal() + day);
+                anotherPlanMeal.setName(mealsItem.getStrMeal());
+                anotherPlanMeal.setArea(mealsItem.getStrArea());
+                anotherPlanMeal.setVideoUrl(mealsItem.getStrYoutube());
+                anotherPlanMeal.setCategory(mealsItem.getStrCategory());
+                anotherPlanMeal.setDate(day);
+                anotherPlanMeal.setRecipe(ingredientList);
+                anotherPlanMeal.setMeasure(measures);
+                anotherPlanMeal.setDirections(mealsItem.getStrInstructions());
+                anotherPlanMeal.setImage(mealsItem.getStrMealThumb());
                 new FireStoreRepository(FirebaseFirestore.getInstance(), FirebaseAuth.getInstance())
-                        .createPlannedMeals(planMeal);
+                        .createPlannedMeals(anotherPlanMeal);
             }
 
             @Override

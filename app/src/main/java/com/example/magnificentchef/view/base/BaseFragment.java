@@ -183,12 +183,12 @@ public class BaseFragment extends Fragment implements BaseInterfce,
 
     @Override
     public void onFavouriteMealList(List<FavouriteMeal> favouriteMeals) {
-        basePresenter.setMealsFavouriteMeals(favouriteMeals);
+        basePresenter.setMealsFavouriteMeals(favouriteMeals,requireActivity().getApplicationContext());
     }
 
     @Override
     public void onPlannedMealList(List<PlanMeal> planMeals) {
-        basePresenter.setMealsPlanMeals(planMeals);
+        basePresenter.setMealsPlanMeals(planMeals, requireActivity().getApplicationContext());
     }
 }
 

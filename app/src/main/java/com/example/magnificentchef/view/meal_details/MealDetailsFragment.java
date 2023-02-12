@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -18,7 +19,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.model.local.Local;
+import com.example.magnificentchef.model.local.favourite_meal.FavouriteDelegate;
+import com.example.magnificentchef.model.local.favourite_meal.FavouriteMeal;
+import com.example.magnificentchef.model.local.favourite_meal.FavouriteMealDelegate;
+import com.example.magnificentchef.model.local.favourite_meal.FavouriteRepository;
+import com.example.magnificentchef.model.local.plan_meal.PlanMeal;
+import com.example.magnificentchef.model.local.plan_meal.PlanSaveRepository;
+import com.example.magnificentchef.model.local.plan_meal.PlannedDelegate;
+import com.example.magnificentchef.model.local.plan_meal.SavePlanMealDelegate;
+import com.example.magnificentchef.model.remote.NetworkDelegate;
+import com.example.magnificentchef.model.remote.Remote;
+import com.example.magnificentchef.model.remote.Repository;
 import com.example.magnificentchef.model.remote.model.MealsItem;
+import com.example.magnificentchef.utils.Mapper;
 import com.example.magnificentchef.view.common.Ingredient;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -29,24 +43,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MealDetailsFragment extends Fragment {
+public class MealDetailsFragment extends
+        Fragment
+        implements NetworkDelegate<MealsItem>,
+        MealDetailsPresenterInterface,
+        PlannedDelegate,
+        SavePlanMealDelegate,
+        FavouriteMealDelegate,
+        FavouriteDelegate {
 
-    private MealsItem mealsItem;
+    private String mealsItemID;
+    private String mealResourceType;
+    private MealDetailsPresenter mealDetailsPresenter;
     private TextView categoryTextView, mealNameTextView, countryTextView, directionTextView;
     private ImageView mealImageView;
     private Button watchButton;
     private RecyclerView ingredientsRecyclerView;
     private Intent intent;
-    private List<Ingredient> ingredientsList;
     private YouTubePlayerView youTubePlayerView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mealsItem = MealDetailsFragmentArgs
+        mealsItemID = MealDetailsFragmentArgs
                 .fromBundle(getArguments())
-                .getMealItem();
+                .getMealID();
+        mealResourceType = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealResourceType();
         intent  = new Intent(Intent.ACTION_VIEW);
-        ingredientsList = new ArrayList<>();
+        mealDetailsPresenter = new MealDetailsPresenter(new Repository(this,
+                Remote.getRetrofitInstance()),this,
+                new PlanSaveRepository(Local.getLocal(requireContext()),this),
+                new FavouriteRepository(Local.getLocal(requireContext()),this));
     }
 
     @Override
@@ -56,20 +83,11 @@ public class MealDetailsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_meal_details, container, false);
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        setMealItemIntoViews(mealsItem);
-        try {
-            getFields();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-        ingredientsRecyclerView.setAdapter(new IngredientsAdapter(ingredientsList));
+        mealDetailsPresenter.checkMealResourceType(mealResourceType);
     }
 
     private void initView(View view){
@@ -81,6 +99,10 @@ public class MealDetailsFragment extends Fragment {
         mealImageView =  view.findViewById(R.id.mealImage);
         ingredientsRecyclerView =  view.findViewById(R.id.ingredientsRecyclerView);
         youTubePlayerView = view.findViewById(R.id.youtubeVideo);
+        View back = view.findViewById(R.id.back);
+        back.setOnClickListener(view1 -> {
+            Navigation.findNavController(view).popBackStack();
+        });
         getLifecycle().addObserver(youTubePlayerView);
     }
 
@@ -95,40 +117,83 @@ public class MealDetailsFragment extends Fragment {
             intent.setPackage("com.google.android.youtube");
             startActivity(intent);
         });
-//        char[] chars =   mealsItem.getStrYoutube().toCharArray();
-//        int code = 0;
-//        for (int loop = 0; loop < chars.length; loop++){
-//            if (chars[loop] == '='){
-//                code = loop + 1;
-//            }
-//
-//        }
-//        int finalCode = code;
-//        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-//            @Override
-//            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-//                super.onReady(youTubePlayer);
-//                youTubePlayer.loadVideo(mealsItem.getStrYoutube().substring(finalCode),0f);
-//                youTubePlayer.pause();
-//            }
-//        });
+        try {
+
+            ingredientsRecyclerView
+                    .setAdapter(new IngredientsAdapter(mealDetailsPresenter
+                            .getIngredient(mealsItem)));
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                super.onReady(youTubePlayer);
+                youTubePlayer.cueVideo(mealDetailsPresenter.getYoutubeCode(mealsItem.getStrYoutube()),0f);
+            }
+        });
     }
 
+    @Override
+    public void onSuccessResult(List<MealsItem> itemList) {
+        setMealItemIntoViews(itemList.get(0));
+    }
 
-    private void getFields() throws IllegalAccessException, NoSuchFieldException {
-        Field[] fieldList =  mealsItem.getClass().getDeclaredFields();
-        for (Field field : fieldList) {
-            if (field.getName().startsWith("strIngredient")) {
-                field.setAccessible(true);
-                if (field.get(mealsItem) != null && !field.get(mealsItem).toString().isEmpty()) {
-                    Field measureField = mealsItem.getClass().getDeclaredField("strMeasure" + field.getName().substring(13, field.getName().length()));
-                    measureField.setAccessible(true);
-                    ingredientsList.add(new Ingredient((String) field.get(mealsItem),
-                            (String) measureField.get(mealsItem)));
-                }
-            }
+    @Override
+    public void onFailureResult(String message) {
 
-        }
+    }
 
+    @Override
+    public void onGetMealFromRetrofit() {
+        mealDetailsPresenter.getMealByLetter(mealsItemID);
+    }
+
+    @Override
+    public void onGetPlannedMealFromDatabase() {
+        mealDetailsPresenter.getPlannedMealByID(mealsItemID,this);
+    }
+
+    @Override
+    public void onGetFavouriteMealFromDatabase() {
+        mealDetailsPresenter.getFavouriteMealByID(mealsItemID,this);
+    }
+
+    @Override
+    public void onComplete() {
+
+    }
+
+    @Override
+    public void onSubscribe() {
+
+    }
+
+    @Override
+    public void onError(String errorMessage) {
+
+    }
+
+    @Override
+    public void onSuccessSavePlannedMeal(List<PlanMeal> planMealList) {
+
+    }
+
+    @Override
+    public void onGetPlannedMeal(PlanMeal planMeal) {
+        setMealItemIntoViews(Mapper.convert(planMeal));
+    }
+
+    @Override
+    public void onSuccess(List<FavouriteMeal> favouriteMeals) {
+
+    }
+
+    @Override
+    public void onFavouriteMeal(FavouriteMeal favouriteMeal) {
+        setMealItemIntoViews(Mapper.convert(favouriteMeal));
     }
 }

@@ -25,4 +25,6 @@ public interface FavouriteDAO {
     @Query("DELETE FROM FavouriteMeal")
     Completable delete();
 
+    @Query("SELECT * FROM FavouriteMeal WHERE MEAL_ID LIKE :id")
+    Single<FavouriteMeal> getFavouriteMealByID(String id);
 }

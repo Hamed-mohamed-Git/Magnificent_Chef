@@ -162,8 +162,13 @@ public class RecentSearchFragment extends Fragment implements NetworkDelegate<Me
     public void onSuccessMealResult(List<MealsItem> mealResponseList,String key) {
         if (key.equals("check")) {
             navController.navigate(RecentSearchFragmentDirections
-                    .actionRecentSearchFragmentToMealDetailsFragment(mealResponseList.get(0))
-                    .setMealItem(mealResponseList.get(0)));
+                    .actionRecentSearchFragmentToMealDetailsFragment("00000","")
+                    .setMealResourceType("retrofit")
+                    .setMealID(mealResponseList.get(0).getIdMeal()));
+
+//            .actionRecentSearchFragmentToMealDetailsFragment(mealResponseList.get(0))
+//                    .setMealItem(mealResponseList.get(0)));
+
         }
         else{
             try {
