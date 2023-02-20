@@ -4,24 +4,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
+import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.databinding.OnboardingCardBinding;
 
 public class OnBoardingAdapter extends PagerAdapter {
     Context context;
-    private ImageView photo,circle1,circle2,circle3;
-    private TextView title,description,skip;
-    private Button next,started;
-    private ViewPager viewPager;
-    private OnBoardingInterface onBoardingInterface;
+       private OnBoardingInterface onBoardingInterface;
+    private OnboardingCardBinding onboardingCardBinding;
 
     public OnBoardingAdapter(Context context, OnBoardingInterface onBoardingInterface) {
         this.context = context;
@@ -41,51 +34,45 @@ public class OnBoardingAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        LayoutInflater layoutInflater=(LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        View view=layoutInflater.inflate(R.layout.onboarding_card,container,false);
-        photo =view.findViewById(R.id.photo);
-        circle1=view.findViewById(R.id.circle1);
-        circle2=view.findViewById(R.id.circle2);
-        circle3=view.findViewById(R.id.circle3);
-        title=view.findViewById(R.id.onboarding_title);
-        description=view.findViewById(R.id.onboarding_description);
-        next=view.findViewById(R.id.next_btn);
-        skip=view.findViewById(R.id.skip);
-        started=view.findViewById(R.id.get_Started_onboarding);
-
+        onboardingCardBinding= DataBindingUtil.inflate((LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE),
+                R.layout.onboarding_card,container,false);
+       onboardingCardBinding.setAction(onBoardingInterface);
         switch (position) {
             case 0:
-                photo.setImageResource(R.drawable.onboard);
-                circle1.setImageResource(R.drawable.selected);
-                circle2.setImageResource(R.drawable.unselected);
-                circle3.setImageResource(R.drawable.unselected);
-                description.setText("The key to a good meal is simplicity and the right seasoning");
-                started.setVisibility(View.GONE);
-
-                break;
+                onboardingCardBinding.setOnBoardingInformation(new BoardingInformation(R.drawable.selected,
+                        R.drawable.unselected,
+                        R.drawable.unselected,
+                        R.drawable.onboard,
+                        "The key to a good meal is simplicity and the right seasoning",
+                        0));
+                         break;
             case 1:
-                photo.setImageResource(R.drawable.story_bording);
-                circle1.setImageResource(R.drawable.unselected);
-                circle2.setImageResource(R.drawable.selected);
-                circle3.setImageResource(R.drawable.unselected);
-                description.setText("A recipe is a story that ends with a good meal");
-                started.setVisibility(View.GONE);
-                break;
+                onboardingCardBinding.setOnBoardingInformation(new BoardingInformation(R.drawable.unselected,
+                        R.drawable.selected,
+                        R.drawable.unselected,
+                        R.drawable.story_bording,
+                        "A recipe is a story that ends with a good meal",
+                        1));
+                        break;
             case 2:
-                photo.setImageResource(R.drawable.meet);
-                circle1.setImageResource(R.drawable.unselected);
-                circle2.setImageResource(R.drawable.unselected);
-                circle3.setImageResource(R.drawable.selected);
-                description.setText("The secret ingredient to every meal is love");
-                skip.setVisibility(View.GONE);
-                next.setVisibility(View.GONE);
-                circle1.setVisibility(View.GONE);
-                circle2.setVisibility(View.GONE);
-                circle3.setVisibility(View.GONE);
+                onboardingCardBinding.setOnBoardingInformation(new BoardingInformation(R.drawable.unselected,
+                        R.drawable.unselected,
+                        R.drawable.selected,
+                        R.drawable.meet,
+                        "The secret ingredient to every meal is love",
+                        2));
+                onboardingCardBinding.skip.setVisibility(View.GONE);
+                onboardingCardBinding.nextBtn.setVisibility(View.GONE);
+                onboardingCardBinding.circle1.setVisibility(View.GONE);
+                onboardingCardBinding.circle2.setVisibility(View.GONE);
+                onboardingCardBinding.circle3.setVisibility(View.GONE);
+                onboardingCardBinding.getStartedOnboarding.setVisibility(View.VISIBLE);
+
+
                 break;
 
         }
-        skip.setOnClickListener(new View.OnClickListener() {
+        /*skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBoardingInterface.skip();
@@ -106,9 +93,9 @@ public class OnBoardingAdapter extends PagerAdapter {
                 onBoardingInterface.started();
             }
         });
-
-        container.addView(view);
-        return view;
+*/
+        container.addView(onboardingCardBinding.getRoot());
+        return onboardingCardBinding.getRoot();
 
     }
 

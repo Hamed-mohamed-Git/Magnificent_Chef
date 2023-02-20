@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
@@ -18,21 +19,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.magnificentchef.R;
+import com.example.magnificentchef.databinding.FragmentOnBoardingBinding;
 import com.example.magnificentchef.view.common.Constants;
 
 public class OnBoardingFragment extends Fragment implements OnBoardingInterface {
 
-    public static ViewPager viewPager;
-    private OnBoardingAdapter onBoardingAdapter;
     private View view;
     private SharedPreferences.Editor sharedPrefEditor;
+    private FragmentOnBoardingBinding fragmentOnBoardingBinding;
 
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        onBoardingAdapter=new OnBoardingAdapter(requireContext(),this);
+
         sharedPrefEditor  =  requireContext().getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE).edit();
 
@@ -43,18 +44,15 @@ public class OnBoardingFragment extends Fragment implements OnBoardingInterface 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_on_boarding, container, false);
-
-
+        fragmentOnBoardingBinding=DataBindingUtil.inflate(inflater,R.layout.fragment_on_boarding,container,false);
+        return fragmentOnBoardingBinding.getRoot();
 
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-         viewPager=view.findViewById(R.id.slideViewPager);
-        viewPager.setAdapter(onBoardingAdapter);
+        fragmentOnBoardingBinding.setAdapter(new OnBoardingAdapter(requireContext(),this));
         this.view=view;
 
 
@@ -63,7 +61,7 @@ public class OnBoardingFragment extends Fragment implements OnBoardingInterface 
 
     @Override
     public void next(int position) {
-        OnBoardingFragment.viewPager.setCurrentItem(position+1);
+       fragmentOnBoardingBinding.slideViewPager.setCurrentItem(position+1);
     }
 
     @Override
