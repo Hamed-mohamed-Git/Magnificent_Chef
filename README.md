@@ -1,4 +1,4 @@
-# Magnificent_Chef
+# Magnificent Chef
 
 <h2>Objective</h2>
 
