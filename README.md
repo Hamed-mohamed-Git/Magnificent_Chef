@@ -2,13 +2,13 @@
 
 <h2>Objective</h2>
 
-- This project aims to develop a Magnificent_Chef using Android and java .
+- This project aims to develop a Magnificent_Chef using Android and java.
 - It mainly consists of developing and implementing a Mobile application that display Random Meal and add to favourite page, search by ingredient,area,category and search by first letter and add Plan Meal to days of week.   
 - In order to understand what Magnificent Chef is and how to add meal and display it, below is the description.
 
 
 <hr>
-<h2>DESCRIPTION:</h2>
+<h2>Description:</h2>
 
 - In this application, There is home page that display random meal, search page that search by ingredients, area, category and search by letters, favourite page add meal chosen to favourite list, plan Meal page that add choosen daily meal to weak day by using backend fireStore and room    
 
@@ -24,7 +24,7 @@
 
 
 <hr>
-<h2>Application Features</h2>
+<h2>Features</h2>
 
 -  Onboarding Sceen
 -  Login/Register
@@ -35,7 +35,7 @@
 
 <hr>
 
-<h2>team member</h2>
+<h2>Members</h2>
 
 -  Hamed Mohamed Hamed Mohamed
 -  Aya Mohamed Ahmed 
@@ -43,7 +43,7 @@
 
 
 ## Screens: 
-<img src="https://user-images.githubusercontent.com/88452118/215288405-e2192c23-b43a-419b-a08e-22e312c196e1.jpg" alt="Screenshot 1"
+<img src="https://github.com/Hamed-mohamed-Git/WheatherApplication/blob/main/images/splash.jpg?raw=true" alt="Screenshot 1"
      style="width: 400px" >
 <img src="https://user-images.githubusercontent.com/88452118/215288794-51bc1c0a-60c5-4803-8fa8-465dca788260.jpg" alt="Screenshot 1"
      style="width: 400px" >
@@ -61,7 +61,7 @@
      style="width: 400px" >
 <img src="https://user-images.githubusercontent.com/88452118/215288971-d36beb0b-60a0-4015-a574-c89bf9dd49dc.jpg" alt="Screenshot 1"
      style="width: 400px" >
-<img src="https://user-images.githubusercontent.com/88452118/215288979-6a12487d-5146-49b9-9a40-45941f15084d.jpg" alt="Screenshot 1"
+<img src="https://github.com/Hamed-mohamed-Git/WheatherApplication/blob/main/images/Home.jpg?raw=true" alt="Screenshot 1"
      style="width: 400px" >
 <img src="https://user-images.githubusercontent.com/88452118/215289112-d5c5c916-57f6-4cc4-920f-dd29765a3481.jpg" alt="Screenshot 1"
      style="width: 400px" >
@@ -74,4 +74,8 @@
 <img src="https://user-images.githubusercontent.com/88452118/215289252-79815d89-8439-4752-86db-45edf1296f06.jpg" alt="Screenshot 1"
      style="width: 400px" >
 <img src="https://user-images.githubusercontent.com/88452118/215289212-6861bf0d-1e31-40f6-9822-4a832e3584f7.jpg" alt="Screenshot 1"
+     style="width: 400px" >
+<img src="https://github.com/Hamed-mohamed-Git/WheatherApplication/blob/main/images/Ingredients.jpg?raw=true" alt="Screenshot 1"
+     style="width: 400px" >
+<img src="https://github.com/Hamed-mohamed-Git/WheatherApplication/blob/main/images/connection.jpg?raw=true" alt="Screenshot 1"
      style="width: 400px" >
